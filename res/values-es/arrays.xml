@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="colorSchemes">
+        <item>Oscuro (Por defecto)</item>
+        <item>Claro</item>
+    </string-array>
+    
+    <string-array name="colorSchemes_values">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    
+    <string-array name="functions_array">
+        <item>f(x)</item>
+        <item>g(x)</item>
+        <item>h(x)</item>
+    </string-array>
+</resources>

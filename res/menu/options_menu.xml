@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android"> 
+ 
+  <!-- 
+<item android:id="@+id/menu_version" android:title="switch LITE/PRO"></item> -->   
+<item android:icon="@drawable/ic_menu_screenshot" android:id="@+id/menu_screenshot" android:title="@string/menu_screenshot_str"></item>    
+ 
+<item android:icon="@drawable/ic_menu_add" android:id="@+id/menu_upgrade" android:title="@string/menu_upgrade_str"></item>
+<!-- -->
+<item android:id="@+id/menu_about" android:title="@string/menu_about_str" android:icon="@drawable/ic_menu_info_details"></item>
+<item android:id="@+id/menu_prefs" android:title="@string/prefs_title" android:icon="@drawable/settings"></item>
+
+</menu>

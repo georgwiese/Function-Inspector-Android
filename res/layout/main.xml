@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/all"
+    >
+<LinearLayout
+	android:gravity="center_horizontal"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:layout_weight="1" >
+	<LinearLayout
+	android:id="@+id/ll_graphView"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:layout_weight="1"
+    android:visibility="visible" >
+
+</LinearLayout>
+
+<!--  
+<com.mobclix.android.sdk.MobclixMMABannerXLAdView
+android:id="@+id/adviewmoblix"
+android:layout_width="320dip"
+android:layout_height="50dip"
+android:layout_gravity="center"
+android:visibility="gone"
+ />  
+-->
+<com.google.ads.AdView android:id="@+id/adView"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         ads:adUnitId="a14cf957c728954"
+                         ads:adSize="BANNER"
+                         android:visibility="gone"
+                         ads:loadAdOnCreate="true"/>
+</LinearLayout>  
+</LinearLayout>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content">
+  <ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1" android:padding="10dip">
+    <TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/ic_text" />
+  </ScrollView>
+  <LinearLayout android:gravity="center_horizontal" android:padding="0dip" android:background="#ffffff" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+    <TextView android:text="@string/ic_market" android:gravity="center" android:textSize="20dip" android:textColor="#67B32D" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+    <ImageButton android:id="@+id/bt_ic_market" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/ic" />
+  </LinearLayout>
+</LinearLayout>
