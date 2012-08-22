@@ -1,10 +1,13 @@
 package de.georgwiese.functionInspector.uiClasses;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import de.georgwiese.functionInspectorLite.R;
 
 public class MenuView extends LinearLayout {
@@ -16,6 +19,9 @@ public class MenuView extends LinearLayout {
 		
 		inflate(context, R.layout.menu, (ViewGroup)getRootView());
 		body = (LinearLayout) getRootView().findViewById(R.id.menu_body);
+		String title = context.getResources().getString(attrs.getAttributeResourceValue("http://schemas.android.com/apk/lib/de.georgwiese.functionInspector", "menuTitle", 0));
+		if (title != null)
+			((TextView) getRootView().findViewById(R.id.menu_heading)).setText(title);
 	}
 
 	@Override
