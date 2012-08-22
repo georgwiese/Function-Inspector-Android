@@ -1,42 +1,239 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
-    android:orientation="vertical"
+    xmlns:fi="http://schemas.android.com/apk/lib/de.georgwiese.functionInspector"
+    android:id="@+id/all"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:id="@+id/all"
-    >
-<LinearLayout
-	android:gravity="center_horizontal"
-	android:orientation="vertical"
-	android:layout_width="fill_parent"
-	android:layout_height="wrap_content"
-	android:layout_weight="1" >
-	<LinearLayout
-	android:id="@+id/ll_graphView"
-	android:orientation="vertical"
-	android:layout_width="fill_parent"
-	android:layout_height="wrap_content"
-	android:layout_weight="1"
-    android:visibility="visible" >
+    android:orientation="vertical" >
 
-</LinearLayout>
+    <de.georgwiese.functionInspector.uiClasses.FktCanvas
+        android:id="@+id/fktCanvas"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="1" >
 
-<!--  
-<com.mobclix.android.sdk.MobclixMMABannerXLAdView
-android:id="@+id/adviewmoblix"
-android:layout_width="320dip"
-android:layout_height="50dip"
-android:layout_gravity="center"
-android:visibility="gone"
- />  
--->
-<com.google.ads.AdView android:id="@+id/adView"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         ads:adUnitId="a14cf957c728954"
-                         ads:adSize="BANNER"
-                         android:visibility="gone"
-                         ads:loadAdOnCreate="true"/>
-</LinearLayout>  
+        <de.georgwiese.functionInspector.uiClasses.MyActionBar
+            android:id="@+id/actionBar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <ImageButton
+                android:id="@+id/menuButtonFkt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bt_bar"
+                android:src="@drawable/bt_bar_fkt" />
+
+            <ImageButton
+                android:id="@+id/menuButtonParam"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bt_bar"
+                android:src="@drawable/bt_bar_param" />
+
+            <ImageButton
+                android:id="@+id/menuButtonPoints"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bt_bar"
+                android:src="@drawable/bt_bar_points" />
+
+            <ImageButton
+                android:id="@+id/menuButtonMode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bt_bar"
+                android:src="@drawable/bt_bar_mode_pan" />
+        </de.georgwiese.functionInspector.uiClasses.MyActionBar>
+
+        <LinearLayout
+            android:id="@+id/MenuLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <de.georgwiese.functionInspector.uiClasses.MenuView
+                android:id="@+id/menuFunction"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="gone"
+            	android:orientation="vertical"
+                fi:menuTitle="@string/fkt_enterFkt" >
+            </de.georgwiese.functionInspector.uiClasses.MenuView>
+
+            <de.georgwiese.functionInspector.uiClasses.MenuView
+                android:id="@+id/menuParam"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="gone"
+            	android:orientation="vertical"
+                fi:menuTitle="@string/param_setParam" >
+
+                <de.georgwiese.functionInspector.SwitchButtonSet
+                    android:id="@+id/mv_param_sbs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="10dip" >
+                </View>
+
+                <SeekBar
+                    android:id="@+id/mv_param_sb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+                </SeekBar>
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dip" >
+                </View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <Button
+                        android:id="@+id/mv_param_btMin"
+                        android:layout_width="0pt"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Button" >
+                    </Button>
+
+                    <Button
+                        android:id="@+id/mv_param_btParam"
+                        android:layout_width="0pt"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Button" >
+                    </Button>
+
+                    <Button
+                        android:id="@+id/mv_param_btMax"
+                        android:layout_width="0pt"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Button" >
+                    </Button>
+                </LinearLayout>
+            </de.georgwiese.functionInspector.uiClasses.MenuView>
+
+            <de.georgwiese.functionInspector.uiClasses.MenuView
+                android:id="@+id/menuPoints"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="visible"
+            	android:orientation="vertical"
+                fi:menuTitle="@string/points_specialPoints" >
+
+                <CheckBox
+                    android:id="@+id/mv_points_roots"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/points_roots"
+                    android:textColor="#000000" >
+                </CheckBox>
+
+                <CheckBox
+                    android:id="@+id/mv_points_extrema"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/points_extrema"
+                    android:textColor="#000000" >
+                </CheckBox>
+
+                <CheckBox
+                    android:id="@+id/mv_points_inflections"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/points_inflection"
+                    android:textColor="#000000" >
+                </CheckBox>
+
+                <CheckBox
+                    android:id="@+id/mv_points_discontinuities"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/points_discontinuities"
+                    android:textColor="#000000" >
+                </CheckBox>
+
+                <CheckBox
+                    android:id="@+id/mv_points_intersections"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/points_intersections"
+                    android:textColor="#000000" >
+                </CheckBox>
+
+                <Button
+                    android:id="@+id/mv_points_btPro"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/points_pro" >
+                </Button>
+            </de.georgwiese.functionInspector.uiClasses.MenuView>
+
+            <de.georgwiese.functionInspector.uiClasses.MenuView
+                android:id="@+id/menuMode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="gone"
+            	android:orientation="vertical"
+                fi:menuTitle="@string/mode_title" >
+
+                <Button
+                    android:id="@+id/mv_mode_pan"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/bt_mode_pan"
+                    android:gravity="center"
+                    android:text="@string/mode_pan_name"
+                    android:textSize="12dip" />
+
+                <Button
+                    android:id="@+id/mv_mode_trace"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/bt_mode_trace"
+                    android:gravity="center"
+                    android:text="@string/mode_trace_name"
+                    android:textSize="12dip" />
+
+                <Button
+                    android:id="@+id/mv_mode_slope"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/bt_mode_slope"
+                    android:gravity="center"
+                    android:text="@string/mode_slope_name"
+                    android:textSize="12dip" />
+            </de.georgwiese.functionInspector.uiClasses.MenuView>
+        </LinearLayout>
+    </de.georgwiese.functionInspector.uiClasses.FktCanvas>
+
+    <com.google.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:adSize="BANNER"
+        ads:adUnitId="a14cf957c728954"
+        ads:loadAdOnCreate="true"
+        android:visibility="visible" />
+
 </LinearLayout>

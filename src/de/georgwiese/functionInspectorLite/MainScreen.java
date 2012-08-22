@@ -112,7 +112,7 @@ public class MainScreen extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        showSplashScreen();
+        //showSplashScreen();
         
         // Licensing (not done corrently)
         /*
@@ -135,7 +135,7 @@ public class MainScreen extends Activity {
     	setContentView(R.layout.main);
     	mContext=this;
     	mActivity=this;
-    	
+    	/*
     	graphView=(LinearLayout)findViewById(R.id.ll_graphView);
         
     	graphView.postDelayed(new Runnable() {
@@ -235,6 +235,7 @@ public class MainScreen extends Activity {
 	        	}
 			}
 		}, 1000);
+		*/
     }
     
    /**

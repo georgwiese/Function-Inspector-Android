@@ -351,16 +351,7 @@ public class FunctionView extends LinearLayout {
 			return result*Math.PI/180;
 		else
 			return result;
-	}/*
-	private void setColors (int bg, int axes, int lines, int g1, int g2, int g3, int ap){
-		COLOR_BACKGROUND=bg;
-		COLOR_AXES=axes;
-		COLOR_LINES=lines;
-		COLORS_GRAPHS[0]=g1;
-		COLORS_GRAPHS[1]=g2;
-		COLORS_GRAPHS[2]=g3;
-		COLOR_ACTIVE_POINT=ap;
-	}*/
+	}
 	public void setColorSchema(int schema){
 		switch (schema){
 		case COLORSCHEMA_LIGHT:
@@ -376,7 +367,6 @@ public class FunctionView extends LinearLayout {
 			COLORS_GRAPHS[4] = Color.parseColor("#FF00DD");
 			COLORS_GRAPHS[5] = Color.CYAN;
 			COLORS_GRAPHS[6] = Color.YELLOW;
-			//setColors(Color.WHITE, Color.BLACK, Color.parseColor("#DDDDDD"), Color.RED, Color.parseColor("#00780A"), Color.BLUE, Color.parseColor("#9F6105"));
 			break;
 		case COLORSCHEMA_DARK:
 			COLOR_BACKGROUND=Color.BLACK;
@@ -391,10 +381,6 @@ public class FunctionView extends LinearLayout {
 			COLORS_GRAPHS[4] = Color.parseColor("#FF00DD");
 			COLORS_GRAPHS[5] = Color.BLUE;
 			COLORS_GRAPHS[6] = Color.YELLOW;
-			//COLORS_GRAPHS[7] = Color.CYAN;
-			//COLORS_GRAPHS[8] = Color.CYAN;
-			//COLORS_GRAPHS[9] = Color.CYAN;
-			//setColors(Color.BLACK, Color.WHITE, Color.parseColor("#222222"), Color.RED, Color.GREEN, Color.CYAN, Color.YELLOW);
 			break;
 		}
 		colorSchema=schema;
@@ -420,8 +406,8 @@ public class FunctionView extends LinearLayout {
 		paint.setTextAlign(Align.CENTER);
 		paint.setTextSize(15);
 		paint.setStyle(Style.FILL_AND_STROKE);
-		double rightBorder=new Double(pxToUnitX(getWidth())/stepsX).intValue()+1;
-		for (double i=new Double(pxToUnitX(0)/stepsX).intValue()-1; i<=rightBorder;i++){
+		double rightBorder = Double.valueOf(pxToUnitX(getWidth())/stepsX).intValue()+1;
+		for (double i = Double.valueOf(pxToUnitX(0)/stepsX).intValue()-1; i<=rightBorder;i++){
 			paint.setColor(COLOR_LINES);
 			canvas.drawLine(unitToPxX(i*stepsX), 0, unitToPxX(i*stepsX), getHeight(), paint);
 			paint.setColor(COLOR_AXES);
@@ -447,8 +433,8 @@ public class FunctionView extends LinearLayout {
 			paint.setStrokeWidth(2);
 		}
 		paint.setTextAlign(Align.RIGHT);
-		double bottomBorder=new Double(pxToUnitY(getHeight())/stepsY).intValue()-1;
-		for (int i=new Double(pxToUnitY(0)/stepsY).intValue()+1; i>=bottomBorder; i--){
+		double bottomBorder = Double.valueOf(pxToUnitY(getHeight())/stepsY).intValue()-1;
+		for (int i = Double.valueOf(pxToUnitY(0)/stepsY).intValue()+1; i>=bottomBorder; i--){
 			paint.setColor(COLOR_LINES);
 			canvas.drawLine(0, unitToPxY(i*stepsY), getWidth(), unitToPxY(i*stepsY), paint);
 			paint.setColor(COLOR_AXES);
@@ -487,18 +473,16 @@ public class FunctionView extends LinearLayout {
 			for (Path p:paths)
 				p.offset(offsetX, offsetY);
 			
-			//if (bZoom|bZoomDyn){	
-				Matrix matrix = new Matrix();
-				lastZoomX=zoomFactorX/totalZoomX;
-				totalZoomX*=lastZoomX;
-				lastZoomY=zoomFactorY/totalZoomY;
-				totalZoomY*=lastZoomY;
-				matrix.setScale((float)(lastZoomX),(float)(lastZoomY),unitToPxX(0),unitToPxY(0));
-				for (Path p:paths)
-					p.transform(matrix);
-				stepsX=getSteps(zoomFactorX, factorX);
-				stepsY=getSteps(zoomFactorY, factorY);
-			//}}
+			Matrix matrix = new Matrix();
+			lastZoomX=zoomFactorX/totalZoomX;
+			totalZoomX*=lastZoomX;
+			lastZoomY=zoomFactorY/totalZoomY;
+			totalZoomY*=lastZoomY;
+			matrix.setScale((float)(lastZoomX),(float)(lastZoomY),unitToPxX(0),unitToPxY(0));
+			for (Path p:paths)
+				p.transform(matrix);
+			stepsX=getSteps(zoomFactorX, factorX);
+			stepsY=getSteps(zoomFactorY, factorY);
 		for (int i=0; i<paths.size();i++){
 			paint.setColor(COLORS_GRAPHS[i%COLORS_GRAPHS.length]);
 			if (disRoots | disExtrema | disInflections |disDiscon){
