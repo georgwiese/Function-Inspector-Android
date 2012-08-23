@@ -23,37 +23,40 @@
             <ImageButton
                 android:id="@+id/menuButtonFkt"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_weight="1"
-                android:background="@drawable/bt_bar"
+                android:background="#000000"
                 android:onClick="onButtonClick"
                 android:src="@drawable/bt_bar_fkt" />
 
             <ImageButton
                 android:id="@+id/menuButtonParam"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_weight="1"
-                android:background="@drawable/bt_bar"
+                android:background="#000000"
                 android:onClick="onButtonClick"
+                android:layout_marginLeft="1dp"
                 android:src="@drawable/bt_bar_param" />
 
             <ImageButton
                 android:id="@+id/menuButtonPoints"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_weight="1"
-                android:background="@drawable/bt_bar"
+                android:background="#000000"
                 android:onClick="onButtonClick"
+                android:layout_marginLeft="1dp"
                 android:src="@drawable/bt_bar_points" />
 
             <ImageButton
                 android:id="@+id/menuButtonMode"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_weight="0"
-                android:background="@drawable/bt_bar"
+                android:background="#000000"
                 android:onClick="onButtonClick"
+                android:layout_marginLeft="1dp"
                 android:src="@drawable/bt_bar_mode_pan" />
         </LinearLayout>
 
@@ -81,6 +84,8 @@
                 android:layout_weight="1"
                 android:visibility="visible"
             	android:orientation="vertical"
+                android:layout_marginLeft="1dp"
+                android:gravity="center"
                 fi:menuTitle="@string/param_setParam" >
 
                 <de.georgwiese.functionInspector.SwitchButtonSet
@@ -140,6 +145,7 @@
                 android:visibility="visible"
             	android:orientation="vertical"
             	android:gravity="left"
+                android:layout_marginLeft="1dp"
                 fi:menuTitle="@string/points_specialPoints" >
 
                 <CheckBox
@@ -197,6 +203,7 @@
                 android:layout_weight="0"
                 android:visibility="visible"
             	android:orientation="vertical"
+                android:layout_marginLeft="1dp"
                 fi:menuTitle="@string/mode_title" >
 
                 <Button
