@@ -11,6 +11,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -18,6 +20,7 @@ import android.os.Handler;
 import android.provider.ContactsContract.RawContacts.Data;
 import android.provider.Settings.Secure;
 import android.util.Log;
+import android.view.Display;
 import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -49,6 +52,10 @@ import de.georgwiese.calculationFunktions.Function;
 import de.georgwiese.functionInspector.FrameView;
 import de.georgwiese.functionInspector.MarketArrayAdapter;
 import de.georgwiese.functionInspector.MarketInfo;
+import de.georgwiese.functionInspector.controller.InputController;
+import de.georgwiese.functionInspector.controller.StateHolder;
+import de.georgwiese.functionInspector.controller.UIController;
+import de.georgwiese.functionInspector.uiClasses.MenuView;
 
 /*
  * - package
@@ -108,6 +115,12 @@ public class MainScreen extends Activity {
 	boolean[] choices;
 	ArrayList<String> savedFkts;
 	ArrayList<Function> fkts;
+	
+	
+	// Controllers
+	StateHolder stateHolder;
+	InputController inputController;
+	UIController uiController;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -135,6 +148,16 @@ public class MainScreen extends Activity {
     	setContentView(R.layout.main);
     	mContext=this;
     	mActivity=this;
+    	
+    	Display display = getWindowManager().getDefaultDisplay();
+    	//Point size = new Point();
+    	//display.getSize(size);
+    	int width = display.getWidth();
+    	int height = display.getHeight();
+    	
+    	stateHolder = new StateHolder();
+    	uiController = new UIController(mContext, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
+    	inputController = new InputController(mContext, stateHolder, uiController);
     	/*
     	graphView=(LinearLayout)findViewById(R.id.ll_graphView);
         
@@ -237,6 +260,8 @@ public class MainScreen extends Activity {
 		}, 1000);
 		*/
     }
+    
+    
     
    /**
     * Shows the splash screen over the full Activity
@@ -665,6 +690,17 @@ public class MainScreen extends Activity {
     		return super.onTrackballEvent(event);
     	else
     		return true;
+    }
+    
+    public void onButtonClick(View v){
+    	inputController.onButtonClick(v.getId());
+    }
+    
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+    	super.onConfigurationChanged(newConfig);
+    	Log.d("Developer", "ConfigChange" + (newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE));
+    	uiController.setTabletLandscape(newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE);
     }
 /*
     private class MyLicenseCheckerCallback implements LicenseCheckerCallback{
