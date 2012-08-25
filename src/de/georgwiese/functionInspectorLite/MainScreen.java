@@ -152,7 +152,7 @@ public class MainScreen extends Activity {
     	
     	stateHolder = new StateHolder();
     	//TODO: Find a whether or not it is a tablet
-    	uiController = new UIController(mContext, true, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
+    	uiController = new UIController(mContext, stateHolder, true, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
     	inputController = new InputController(mContext, stateHolder, uiController);
     	
     	((FktCanvas) findViewById(R.id.fktCanvas)).setStateHolder(stateHolder);

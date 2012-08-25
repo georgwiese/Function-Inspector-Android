@@ -26,7 +26,7 @@ public class FktCanvas extends LinearLayout {
 	// Color constants
 	static final int COLOR_BACKGROUND   = Color.BLACK;
 	static final int COLOR_AXES         = Color.WHITE;
-	static final int COLOR_LINES        = Color.parseColor("#444444");
+	static final int COLOR_LINES        = Color.parseColor("#222222");
 	static final int[] COLORS_GRAPHS    = {Color.RED, Color.GREEN, Color.CYAN};
 	static final int COLOR_ACTIVE_POINT = Color.YELLOW;
 	static final int COLOR_INTERSECTION = Color.GRAY;
@@ -79,8 +79,8 @@ public class FktCanvas extends LinearLayout {
 		paint.setStyle(Style.FILL_AND_STROKE);
 		
 		// Calculate area to draw in coordinate system units
-		double leftBorder = Double.valueOf(Helper.pxToUnit( 0, sh.getZoom(0), sh.getMiddle(0), getWidth())/steps[0]).intValue()+1;
-		double rightBorder = Double.valueOf(Helper.pxToUnit( getWidth(), sh.getZoom(0), sh.getMiddle(0), getWidth())/steps[0]).intValue()-1;
+		double leftBorder = Double.valueOf(Helper.pxToUnit( 0, sh.getZoom(0), sh.getMiddle(0), getWidth())/steps[0]).intValue()-1;
+		double rightBorder = Double.valueOf(Helper.pxToUnit( getWidth(), sh.getZoom(0), sh.getMiddle(0), getWidth())/steps[0]).intValue()+1;
 		double bottomBorder = Double.valueOf(Helper.pxToUnit( 0, sh.getZoom(1), sh.getMiddle(1), getHeight())/steps[1]).intValue()-1;
 		double topBorder = Double.valueOf(Helper.pxToUnit( getHeight(), sh.getZoom(1), sh.getMiddle(1), getHeight())/steps[1]).intValue()+1;
 		float y0 = Helper.unitToPx(0, sh.getZoom(1), sh.getMiddle(1), getHeight());

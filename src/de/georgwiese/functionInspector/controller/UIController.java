@@ -3,6 +3,7 @@ package de.georgwiese.functionInspector.controller;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -37,10 +38,11 @@ public class UIController {
 	/**
 	 * UIController changes and animates all UI Elements
 	 * @param c: Current Context
+	 * @param stateHolder: StateHolder object
 	 * @param isTablet: whether or not we have a tablet
 	 * @param isLandscape: whether or not the device is in landscape orientation
 	 */
-	public UIController(Context c, boolean isTablet, boolean isLandscape){
+	public UIController(Context c, StateHolder stateHolder, boolean isTablet, boolean isLandscape){
 		this.c = c;
 		this.isTablet = isTablet;
 		menus = new MenuView[4];	// Assuming that no ID is higher than 3
@@ -54,6 +56,7 @@ public class UIController {
 		menuButtons[MENU_POINTS] = (ImageButton) ((MainScreen) c).findViewById(R.id.menuButtonPoints);
 		menuButtons[MENU_MODE] = (ImageButton) ((MainScreen) c).findViewById(R.id.menuButtonMode);
 		fktCanvas = (FktCanvas) ((MainScreen) c).findViewById(R.id.fktCanvas);
+		fktCanvas.setOnTouchListener(new FktCanvasTouchListener(stateHolder, fktCanvas));
 		for (MenuView menu:menus)
 			menu.setVisibility(View.GONE);
 		onConfigChange();
@@ -104,4 +107,6 @@ public class UIController {
 		menus[MENU_MODE].setMinimumWidth(menuModeWidth);
 		menuButtons[MENU_MODE].setMinimumWidth(menuModeWidth);
 	}
+	
+	
 }
