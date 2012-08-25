@@ -7,10 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageButton;
+import de.georgwiese.functionInspector.uiClasses.FktCanvas;
 import de.georgwiese.functionInspector.uiClasses.MenuView;
 import de.georgwiese.functionInspectorLite.MainScreen;
 import de.georgwiese.functionInspectorLite.R;
 
+/**
+ * Class to control verious UI Elements, for example
+ * hiding and showing menus.
+ * @author Georg Wiese
+ *
+ */
 public class UIController {
 	
 	public static final int MENU_FKT=0;
@@ -24,10 +31,18 @@ public class UIController {
 	MenuView menus[];
 	ImageButton menuButtons[];
 	Context c;
-	boolean tabletLandscape;
+	boolean isTablet, isLandscape;
+	FktCanvas fktCanvas;
 	
-	public UIController(Context c, boolean tabletLandscape){
+	/**
+	 * UIController changes and animates all UI Elements
+	 * @param c: Current Context
+	 * @param isTablet: whether or not we have a tablet
+	 * @param isLandscape: whether or not the device is in landscape orientation
+	 */
+	public UIController(Context c, boolean isTablet, boolean isLandscape){
 		this.c = c;
+		this.isTablet = isTablet;
 		menus = new MenuView[4];	// Assuming that no ID is higher than 3
 		menuButtons = new ImageButton[4];
 		menus[MENU_FKT] = (MenuView) ((MainScreen) c).findViewById(R.id.menuFunction);
@@ -38,22 +53,29 @@ public class UIController {
 		menuButtons[MENU_PARAM] = (ImageButton) ((MainScreen) c).findViewById(R.id.menuButtonParam);
 		menuButtons[MENU_POINTS] = (ImageButton) ((MainScreen) c).findViewById(R.id.menuButtonPoints);
 		menuButtons[MENU_MODE] = (ImageButton) ((MainScreen) c).findViewById(R.id.menuButtonMode);
+		fktCanvas = (FktCanvas) ((MainScreen) c).findViewById(R.id.fktCanvas);
 		for (MenuView menu:menus)
 			menu.setVisibility(View.GONE);
 		onConfigChange();
-		setTabletLandscape(tabletLandscape);
+		setLandscape(isLandscape);
 	}
 	
+	/**
+	 * This method will show or hide a menu and - if necessary - hide others
+	 * if there is't enough room on the screen
+	 * @param id: ID of the menu. Use static Integers of this class starting with MENU_
+	 */
 	public void toggleMenu(int id){
+		fktCanvas.invalidate();
 		if (menus[id].getVisibility()==View.GONE || menus[id].getVisibility()==View.INVISIBLE){
 			menus[id].setVisibility(View.VISIBLE);
 			menuButtons[id].setBackgroundColor(ACTIVE_COLOR);
 		}
 		else{
-			menus[id].setVisibility(tabletLandscape?View.INVISIBLE:View.GONE);
+			menus[id].setVisibility((isTablet && isLandscape)?View.INVISIBLE:View.GONE);
 			menuButtons[id].setBackgroundColor(NORMAL_COLOR);
 		}
-		if (!tabletLandscape){
+		if (!(isTablet && isLandscape)){
 			for (int i = 0; i < menus.length; i++){
 				if (i != id){
 					menus[i].setVisibility(View.GONE);
@@ -61,8 +83,8 @@ public class UIController {
 				}}}
 	}
 	
-	public void setTabletLandscape(boolean value){
-		tabletLandscape = value;
+	public void setLandscape(boolean value){
+		isLandscape = value;
 		onConfigChange();
 	}
 	
@@ -72,7 +94,7 @@ public class UIController {
 			if (first && menus[i].getVisibility()==View.VISIBLE)
 				first = false;
 			else{
-				menus[i].setVisibility(tabletLandscape?View.INVISIBLE:View.GONE);
+				menus[i].setVisibility((isTablet && isLandscape)?View.INVISIBLE:View.GONE);
 				menuButtons[i].setBackgroundColor(NORMAL_COLOR);
 			}
 		}

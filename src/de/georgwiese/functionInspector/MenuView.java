@@ -123,7 +123,6 @@ public class MenuView extends LinearLayout {
 	
 	@Override
 	public void removeAllViews() {
-		// TODO Auto-generated method stub
 		body.removeAllViews();
 	}
 }

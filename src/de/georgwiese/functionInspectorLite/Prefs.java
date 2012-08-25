@@ -190,7 +190,6 @@ public class Prefs extends PreferenceActivity {
 			pro.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 				@Override
 				public boolean onPreferenceClick(Preference preference) {
-					// TODO Auto-generated method stub
 					Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=de.georgwiese.functionInspectorPro"));
 					startActivity(intent);
 					return false;

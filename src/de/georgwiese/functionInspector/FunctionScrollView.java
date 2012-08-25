@@ -112,14 +112,12 @@ public class FunctionScrollView extends ScrollView {
 	
 	@Override
 	public void setOnClickListener(OnClickListener l) {
-		// TODO Auto-generated method stub
 		super.setOnClickListener(l);
 		ll.setOnClickListener(l);
 	}
 	/*
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		// TODO Auto-generated method stub
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 		setMeasuredDimension(widthMeasureSpec, Math.min(100, heightMeasureSpec));
 	}*/

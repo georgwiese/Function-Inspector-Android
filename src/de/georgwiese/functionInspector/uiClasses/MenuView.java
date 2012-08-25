@@ -11,6 +11,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import de.georgwiese.functionInspectorLite.R;
 
+/**
+ * Class that encapsulates an empty menu with title
+ * and content box.
+ * @author Georg Wiese
+ *
+ */
 public class MenuView extends LinearLayout {
 	
 	LinearLayout body;
@@ -18,8 +24,11 @@ public class MenuView extends LinearLayout {
 	public MenuView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		
+		// Inflate the menu Layout
 		inflate(context, R.layout.menu, (ViewGroup)getRootView());
+		// Find body view and store it
 		body = (LinearLayout) getRootView().findViewById(R.id.menu_body);
+		// Set title and gravity
 		String title = context.getResources().getString(attrs.getAttributeResourceValue("http://schemas.android.com/apk/lib/de.georgwiese.functionInspector", "menuTitle", 0));
 		if (title != null)
 			((TextView) getRootView().findViewById(R.id.menu_heading)).setText(title);

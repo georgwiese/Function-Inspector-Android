@@ -474,6 +474,7 @@ public class FunctionView extends LinearLayout {
 				p.offset(offsetX, offsetY);
 			
 			Matrix matrix = new Matrix();
+					
 			lastZoomX=zoomFactorX/totalZoomX;
 			totalZoomX*=lastZoomX;
 			lastZoomY=zoomFactorY/totalZoomY;

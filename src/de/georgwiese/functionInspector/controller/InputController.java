@@ -15,6 +15,10 @@ public class InputController {
 		this.uic = uic;
 	}
 	
+	/**
+	 * This function handles all click events from the UI
+	 * @param id: ID of the View the user clicked on.
+	 */
 	public void onButtonClick(int id){
 		switch(id){
 		case R.id.menuButtonFkt:

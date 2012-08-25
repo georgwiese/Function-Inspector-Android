@@ -1252,7 +1252,6 @@ public class FrameView extends FunctionView {
 	
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-		// TODO Auto-generated method stub
 		super.onSizeChanged(w, h, oldw, oldh);
 		menuParam.updateArrow((float)oldw);
 	}

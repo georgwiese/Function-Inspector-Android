@@ -55,6 +55,7 @@ import de.georgwiese.functionInspector.MarketInfo;
 import de.georgwiese.functionInspector.controller.InputController;
 import de.georgwiese.functionInspector.controller.StateHolder;
 import de.georgwiese.functionInspector.controller.UIController;
+import de.georgwiese.functionInspector.uiClasses.FktCanvas;
 import de.georgwiese.functionInspector.uiClasses.MenuView;
 
 /*
@@ -149,15 +150,13 @@ public class MainScreen extends Activity {
     	mContext=this;
     	mActivity=this;
     	
-    	Display display = getWindowManager().getDefaultDisplay();
-    	//Point size = new Point();
-    	//display.getSize(size);
-    	int width = display.getWidth();
-    	int height = display.getHeight();
-    	
     	stateHolder = new StateHolder();
-    	uiController = new UIController(mContext, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
+    	//TODO: Find a whether or not it is a tablet
+    	uiController = new UIController(mContext, true, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
     	inputController = new InputController(mContext, stateHolder, uiController);
+    	
+    	((FktCanvas) findViewById(R.id.fktCanvas)).setStateHolder(stateHolder);
+    	
     	/*
     	graphView=(LinearLayout)findViewById(R.id.ll_graphView);
         
@@ -700,7 +699,7 @@ public class MainScreen extends Activity {
     public void onConfigurationChanged(Configuration newConfig) {
     	super.onConfigurationChanged(newConfig);
     	Log.d("Developer", "ConfigChange" + (newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE));
-    	uiController.setTabletLandscape(newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE);
+    	uiController.setLandscape(newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE);
     }
 /*
     private class MyLicenseCheckerCallback implements LicenseCheckerCallback{
@@ -732,7 +731,6 @@ public class MainScreen extends Activity {
 
 		@Override
 		public void applicationError(ApplicationErrorCode errorCode) {
-			// TODO Auto-generated method stub
 			
 		}
     	
@@ -745,7 +743,6 @@ public class MainScreen extends Activity {
 		
 		@Override
 		public boolean allowAccess() {
-			// TODO Auto-generated method stub
 			return super.allowAccess();
 		}
     	
