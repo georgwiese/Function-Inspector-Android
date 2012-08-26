@@ -53,6 +53,8 @@ import de.georgwiese.functionInspector.FrameView;
 import de.georgwiese.functionInspector.MarketArrayAdapter;
 import de.georgwiese.functionInspector.MarketInfo;
 import de.georgwiese.functionInspector.controller.InputController;
+import de.georgwiese.functionInspector.controller.PathCollector;
+import de.georgwiese.functionInspector.controller.RedrawThread;
 import de.georgwiese.functionInspector.controller.StateHolder;
 import de.georgwiese.functionInspector.controller.UIController;
 import de.georgwiese.functionInspector.uiClasses.FktCanvas;
@@ -122,6 +124,11 @@ public class MainScreen extends Activity {
 	StateHolder stateHolder;
 	InputController inputController;
 	UIController uiController;
+	PathCollector pathCollector;
+	RedrawThread redrawThread;
+	
+	// UI Elements
+	FktCanvas canvas;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -149,13 +156,24 @@ public class MainScreen extends Activity {
     	setContentView(R.layout.main);
     	mContext=this;
     	mActivity=this;
-    	
+
     	stateHolder = new StateHolder();
+    	// For testing:
+    	stateHolder.addFkt("x^2");
+    	stateHolder.addFkt("sin(x)");
+    	stateHolder.addFkt("tan(x)");
+    	stateHolder.addFkt("e^x");
     	//TODO: Find a whether or not it is a tablet
     	uiController = new UIController(mContext, stateHolder, true, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
     	inputController = new InputController(mContext, stateHolder, uiController);
+    	pathCollector = new PathCollector();
     	
-    	((FktCanvas) findViewById(R.id.fktCanvas)).setStateHolder(stateHolder);
+    	canvas = (FktCanvas) findViewById(R.id.fktCanvas);
+    	redrawThread = new RedrawThread(null, stateHolder, canvas, pathCollector);
+    	
+    	canvas.setProps(stateHolder, pathCollector);
+    	redrawThread.start();
+    	
     	
     	/*
     	graphView=(LinearLayout)findViewById(R.id.ll_graphView);

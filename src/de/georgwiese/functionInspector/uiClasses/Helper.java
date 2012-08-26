@@ -6,13 +6,21 @@ package de.georgwiese.functionInspector.uiClasses;
  *
  */
 public class Helper {
-	
+	/*
 	public static double pxToUnit(float px, double zoom, double middle, float widthPx){
 		return (px-widthPx/2)/30/zoom+middle;
 	}
 	
 	public static float unitToPx(double unit, double zoom, double middle, float widthPx){
 		return Math.round((unit-middle)*30*zoom+widthPx/2);
+	}
+	*/
+	public static Point2D pxToUnit(double px, double py, double[] zoom, double[] middle, int width, int height){
+		return new Point2D((px-width/2)/30/zoom[0]+middle[0], (height/2-py)/30/zoom[1]+middle[1]);
+	}
+	
+	public static Point2D unitToPx(double ux, double uy, double[] zoom, double[] middle, int width, int height){
+		return new Point2D(Math.round((ux-middle[0])*30*zoom[0]+width/2), Math.round((middle[1] - uy)*30*zoom[1] + height/2));
 	}
 	
 	public static double getDeltaUnit(float deltaPixel, double z){

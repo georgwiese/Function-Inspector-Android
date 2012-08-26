@@ -19,6 +19,7 @@ public class StateHolder {
 	
 	public boolean redraw;			// whether or not FktCanvas needs to redraw the functions
 	ArrayList<Function> fkts;		// All the functions
+	double[] params;				// Parameters (a, b and c)
 	double[] zoom;					// current zoom factor, zoom[0] on x, zoom [1] in y axis
 	double[] factor;				// what number should be factored out when drawing the coordinate system
 	double[] middle;				// coordinate that is at the middle of the screen
@@ -27,6 +28,10 @@ public class StateHolder {
 	public StateHolder(){
 		redraw = true;
 		fkts = new ArrayList<Function>();
+		params = new double[3];
+		params[0] = 1.0;
+		params[1] = 1.0;
+		params[2] = 1.0;
 		zoom = new double[2];
 		zoom[0] = 1.0;
 		zoom[1] = 1.0;
@@ -50,6 +55,10 @@ public class StateHolder {
 		return zoom[dimension];
 	}
 	
+	public double[] getZoom(){
+		return zoom;
+	}
+	
 	public double getFactor(int dimension){
 		return factor[dimension];
 	}
@@ -58,8 +67,20 @@ public class StateHolder {
 		return middle[dimension];
 	}
 	
+	public double[] getMiddle(){
+		return middle;
+	}
+	
 	public int getMode(){
 		return mode;
+	}
+	
+	public ArrayList<Function> getFkts() {
+		return fkts;
+	}
+	
+	public double[] getParams() {
+		return params;
 	}
 	
 	public void move(double dx, double dy){

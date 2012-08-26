@@ -1,8 +1,10 @@
 package de.georgwiese.functionInspector.uiClasses;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 import de.georgwiese.calculationFunktions.Point;
+import de.georgwiese.functionInspector.controller.PathCollector;
 import de.georgwiese.functionInspector.controller.StateHolder;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -33,6 +35,7 @@ public class FktCanvas extends LinearLayout {
 	
 	Paint paint;
 	StateHolder sh;
+	PathCollector pathCollector;
 	double[] steps;
 	protected DecimalFormat df1,df2;
 	
@@ -51,13 +54,25 @@ public class FktCanvas extends LinearLayout {
 	 * Needs to be called before first drawing
 	 * @param sh: StateHolder object
 	 */
-	public void setStateHolder(StateHolder sh){
+	public void setProps(StateHolder sh, PathCollector pathCollector){
 		this.sh = sh;
+		this.pathCollector = pathCollector;
 	}
 
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
+		Log.d("Developer", "" + new Point2D(sh.getMiddle(0), sh.getMiddle(1)));
+		Log.d("Developer", "" + Helper.pxToUnit(0, 0, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()));
+		Log.d("Developer", "" + Helper.pxToUnit(getWidth(), getHeight(), sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()));
+
+		Log.d("Developer", "" + Helper.unitToPx(-6, -6, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()));
+		Log.d("Developer", "" + Helper.unitToPx( 6,  6, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()));
+		
+		Log.d("Developer", " --- ");
+		
+		// For testing:
+		sh.redraw = true;
 		
 		//if (!redrawThreadStarted){
 		//	redrawThreadStarted=true;
@@ -79,20 +94,21 @@ public class FktCanvas extends LinearLayout {
 		paint.setStyle(Style.FILL_AND_STROKE);
 		
 		// Calculate area to draw in coordinate system units
-		double leftBorder = Double.valueOf(Helper.pxToUnit( 0, sh.getZoom(0), sh.getMiddle(0), getWidth())/steps[0]).intValue()-1;
-		double rightBorder = Double.valueOf(Helper.pxToUnit( getWidth(), sh.getZoom(0), sh.getMiddle(0), getWidth())/steps[0]).intValue()+1;
-		double bottomBorder = Double.valueOf(Helper.pxToUnit( 0, sh.getZoom(1), sh.getMiddle(1), getHeight())/steps[1]).intValue()-1;
-		double topBorder = Double.valueOf(Helper.pxToUnit( getHeight(), sh.getZoom(1), sh.getMiddle(1), getHeight())/steps[1]).intValue()+1;
-		float y0 = Helper.unitToPx(0, sh.getZoom(1), sh.getMiddle(1), getHeight());
-		float x0 = Helper.unitToPx(0, sh.getZoom(0), sh.getMiddle(0), getWidth());
+		Point2D topLeft = Helper.pxToUnit(0, 0, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight());
+		Point2D bottomRight = Helper.pxToUnit(getWidth(), getHeight(), sh.getZoom(), sh.getMiddle(), getWidth(), getHeight());
+		double leftBorder = Double.valueOf(topLeft.x/steps[0]).intValue()-1;
+		double rightBorder = Double.valueOf(bottomRight.x/steps[0]).intValue()+1;
+		double bottomBorder = Double.valueOf(bottomRight.y/steps[1]).intValue()-1;
+		double topBorder = Double.valueOf(topLeft.y/steps[1]).intValue()+1;
+		Point2D zero = Helper.unitToPx(0, 0, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight());
 		
 		// Draw vertical lines of coordinate system
 		for (double i = leftBorder; i <= rightBorder; i++){
 			paint.setColor(COLOR_LINES);
-			float x = Helper.unitToPx(i*steps[0], sh.getZoom(0), sh.getMiddle(0), getWidth());
+			float x = (float) Helper.unitToPx(i*steps[0], 0, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).x;
 			canvas.drawLine(x, 0, x, getHeight(), paint);
 			paint.setColor(COLOR_AXES);
-			canvas.drawLine(x, y0, x, y0+5, paint);
+			canvas.drawLine(x, (float)zero.y, x, (float)zero.y+5, paint);
 			paint.setStrokeWidth(1);
 			if (i!=0 & i%2==0){
 				String text;
@@ -105,11 +121,11 @@ public class FktCanvas extends LinearLayout {
 				else
 					text=df1.format(i*steps[0]);
 				//TODO: Implement borderTop and borderBottom
-				if (y0 <= getHeight()-30 && y0>=0)
-					canvas.drawText(text, x, y0+20, paint);
-				else if (y0 > getHeight()-30)
+				if (zero.y <= getHeight()-30 && zero.y>=0)
+					canvas.drawText(text, x, (float)zero.y+20, paint);
+				else if (zero.y > getHeight()-30)
 					canvas.drawText(text, x, getHeight()-10, paint);
-				else if (y0 < 0)
+				else if (zero.y < 0)
 					canvas.drawText(text, x, 20, paint);
 			}
 			paint.setStrokeWidth(2);
@@ -119,10 +135,10 @@ public class FktCanvas extends LinearLayout {
 		paint.setTextAlign(Align.RIGHT);
 		for (double i = topBorder; i>=bottomBorder; i--){
 			paint.setColor(COLOR_LINES);
-			float y = Helper.unitToPx(i*steps[1], sh.getZoom(1), sh.getMiddle(1), getHeight());
+			float y = (float)Helper.unitToPx(0, i*steps[1], sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).y;
 			canvas.drawLine(0, y, getWidth(), y, paint);
 			paint.setColor(COLOR_AXES);
-			canvas.drawLine(x0, y, x0-3, y, paint);
+			canvas.drawLine((float) zero.x, y, (float) zero.x-3, y, paint);
 			paint.setStrokeWidth(1);
 			if (i!=0 & i%2==0){
 				String text;
@@ -135,11 +151,11 @@ public class FktCanvas extends LinearLayout {
 				else
 					text=df1.format(i*steps[1]);
 				
-				if (x0 <= getWidth() && x0>=45)
-					canvas.drawText(text, x0-10, y+5, paint);
-				else if (x0 > getWidth())
+				if (zero.x <= getWidth() && zero.x>=45)
+					canvas.drawText(text, (float) (zero.x-10), y+5, paint);
+				else if (zero.x > getWidth())
 					canvas.drawText(text, getWidth()-10, y-10, paint);
-				else if (x0 < 45){
+				else if (zero.x < 45){
 					paint.setTextAlign(Align.LEFT);
 					canvas.drawText(text, 5, y+5, paint);
 				}
@@ -149,8 +165,12 @@ public class FktCanvas extends LinearLayout {
 		
 		// Draw axes
 		paint.setColor(COLOR_AXES);
-		canvas.drawLine(x0, 0, x0, getHeight(), paint);
-		canvas.drawLine(0, y0, getWidth(), y0, paint);
+		canvas.drawLine((float)zero.x, 0, (float)zero.x, getHeight(), paint);
+		canvas.drawLine(0, (float)zero.y, getWidth(), (float) zero.y, paint);
+		canvas.drawCircle(100, 100, 10, paint);
+		canvas.drawCircle(200, 200, 20, paint);
+		Point2D helperPoint = Helper.unitToPx(0, 0, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight());
+		canvas.drawCircle((float)helperPoint.x, (float)helperPoint.y, 5, paint);
 		paint.setStyle(Style.STROKE);
 		
 		//synchronized (lockDrawing){
@@ -173,43 +193,49 @@ public class FktCanvas extends LinearLayout {
 			stepsX=getSteps(zoomFactorX, factorX);
 			stepsY=getSteps(zoomFactorY, factorY);
 			*/
-		/*
-		for (int i=0; i<paths.size();i++){
-			paint.setColor(COLORS_GRAPHS[i%COLORS_GRAPHS.length]);
-			if (disRoots | disExtrema | disInflections |disDiscon){
-				paint.setStyle(Style.FILL_AND_STROKE);
-				if (disRoots)
-					if (i<roots.size())
-						for (Point p:roots.get(i))
-							canvas.drawCircle(unitToPxX(p.getX()), unitToPxY(p.getY()), 5, paint);
-				if (disExtrema)
-					if (i<extrema.size())
-						for (Point p:extrema.get(i))
-							canvas.drawCircle(unitToPxX(p.getX()), unitToPxY(p.getY()), 5, paint);
-				if (disInflections)
-					if (i<inflections.size())
-						for (Point p:inflections.get(i))
-							canvas.drawCircle(unitToPxX(p.getX()), unitToPxY(p.getY()), 5, paint);
-				paint.setStyle(Style.STROKE);
-				if (disDiscon){
-					if (i<discontinuities.size()){
-						for (Double d:discontinuities.get(i)){
-							if (unitToPxX(d)>-5 && unitToPxX(d)<getWidth()+5){
-								Path p = new Path();
-								p.moveTo(unitToPxX(d), -30 + unitToPxY(0)%30);
-								p.lineTo(unitToPxX(d), getHeight());
-								float[] intervals = {20,10};
-								paint.setStrokeWidth(4);
-								paint.setPathEffect(new DashPathEffect(intervals, 0));
-								canvas.drawPath(p, paint);
-								paint.setStrokeWidth(2);
-								paint.setPathEffect(null);	
-							}
-						}}}
-				paint.setStyle(Style.STROKE);
+
+		synchronized(pathCollector){
+			ArrayList<Path> paths = pathCollector.paths;
+			for (int i=0; i<paths.size();i++){
+				paint.setColor(COLORS_GRAPHS[i%COLORS_GRAPHS.length]);
+				/*
+				if (disRoots | disExtrema | disInflections |disDiscon){
+					paint.setStyle(Style.FILL_AND_STROKE);
+					if (disRoots)
+						if (i<roots.size())
+							for (Point p:roots.get(i))
+								canvas.drawCircle(unitToPxX(p.getX()), unitToPxY(p.getY()), 5, paint);
+					if (disExtrema)
+						if (i<extrema.size())
+							for (Point p:extrema.get(i))
+								canvas.drawCircle(unitToPxX(p.getX()), unitToPxY(p.getY()), 5, paint);
+					if (disInflections)
+						if (i<inflections.size())
+							for (Point p:inflections.get(i))
+								canvas.drawCircle(unitToPxX(p.getX()), unitToPxY(p.getY()), 5, paint);
+					paint.setStyle(Style.STROKE);
+					if (disDiscon){
+						if (i<discontinuities.size()){
+							for (Double d:discontinuities.get(i)){
+								if (unitToPxX(d)>-5 && unitToPxX(d)<getWidth()+5){
+									Path p = new Path();
+									p.moveTo(unitToPxX(d), -30 + unitToPxY(0)%30);
+									p.lineTo(unitToPxX(d), getHeight());
+									float[] intervals = {20,10};
+									paint.setStrokeWidth(4);
+									paint.setPathEffect(new DashPathEffect(intervals, 0));
+									canvas.drawPath(p, paint);
+									paint.setStrokeWidth(2);
+									paint.setPathEffect(null);	
+								}
+							}}}
+					paint.setStyle(Style.STROKE);
+				}
+				*/
+				canvas.drawPath(paths.get(i), paint);
 			}
-			canvas.drawPath(paths.get(i), paint);
 		}
+		/*
 		if (disIntersections){
 			paint.setColor(COLOR_INTERSECTION);
 			paint.setStyle(Style.FILL_AND_STROKE);
