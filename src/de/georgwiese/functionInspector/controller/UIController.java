@@ -104,8 +104,10 @@ public class UIController {
 		
 		// TODO: When called at initialization, this is still 0 
 		int menuModeWidth = Math.max(menus[MENU_MODE].getWidth(), menuButtons[MENU_MODE].getWidth());
+		Log.d("Developer", "onConfigChange() --> " + menus[MENU_MODE].getWidth() + ", " + menuButtons[MENU_MODE].getWidth() + ", " + menuModeWidth);
 		menus[MENU_MODE].setMinimumWidth(menuModeWidth);
 		menuButtons[MENU_MODE].setMinimumWidth(menuModeWidth);
+		menus[MENU_MODE].invalidate();
 	}
 	
 	

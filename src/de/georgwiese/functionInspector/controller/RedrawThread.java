@@ -34,8 +34,6 @@ public class RedrawThread extends Thread{
 	public void run() {
 		while (true){
 			if(sh.redraw){ // && !(bZoom | bZoomDyn)){//|bZoom|bZoomDyn){
-				
-				//synchronized (lockDrawing) {
 				sh.redraw = false;
 				Point2D _lastOrigin = Helper.unitToPx(0, 0, sh.getZoom(), sh.getMiddle(), canvas.getWidth(), canvas.getHeight());
 				double _totalZoomX = sh.getZoom(0);
@@ -79,7 +77,7 @@ public class RedrawThread extends Thread{
 					f.setB(params[1]);
 					f.setC(params[2]);
 					
-					hDiscon.add(PointMaker.getDiscontinuities(f, Helper.pxToUnit(-_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.pxToUnit(_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.getDeltaUnit(15,_zoomFactor[0])));
+					hDiscon.add(PointMaker.getDiscontinuities(f, Helper.pxToUnit(-_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.pxToUnit(2*_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.getDeltaUnit(15,_zoomFactor[0])));
 					/*
 					if (disExtrema2 | disRoots2)
 						hExtrema.add(PointMaker.getExtrema(f, hDiscon.get(j), quality==QUALITY_PREVIEW?pxToUnitX(0,_zoomFactorX,_middleX):pxToUnitX(-getWidth(),_zoomFactorX,_middleX), quality==QUALITY_PREVIEW?pxToUnitX(getWidth(),_zoomFactorX,_middleX):pxToUnitX(2*getWidth(),_zoomFactorX,_middleX), getDeltaUnit(15,_zoomFactorX)));
@@ -103,11 +101,11 @@ public class RedrawThread extends Thread{
 						}
 						if (!Double.isNaN(y)){
 							//if (!(quality==QUALITY_PREVIEW & x>getWidth())){
-							if ((x>=-50 & x <= _width+50) | x % 5==0){
+							if ((x>=-PathCollector.TOLERANCE_SIDE && x <= _width+PathCollector.TOLERANCE_SIDE) | x % 5==0){
 								float yPx = (float) Helper.unitToPx(0, y, _zoomFactor, _middle, _width, _height).y;
 								// TODO: Find out why there is need to cut of y-values which have a high
 								// absolute value.
-								yPx = Math.max(Math.min(yPx, 2*_height), -_height);
+								yPx = Math.max(Math.min(yPx, _height + PathCollector.TOLERANCE_UPB), -PathCollector.TOLERANCE_UPB);
 								
 								if (first)
 									p.moveTo(x, yPx);
@@ -142,19 +140,20 @@ public class RedrawThread extends Thread{
 					totalZoomX=_totalZoomX;
 					totalZoomY=_totalZoomY;
 					*/
-					pathCollector.paths = helperPaths;
+					pathCollector.setPaths(helperPaths, _middle);
 					//roots = new ArrayList<ArrayList<Point>>(hRoots);
 					//extrema = new ArrayList<ArrayList<Point>>(hExtrema);
 					//inflections = new ArrayList<ArrayList<Point>>(hInflections);
 					//intersections = new ArrayList<Point>(hIntersections);
 					//discontinuities = new ArrayList<ArrayList<Double>>(hDiscon);
 				}
+				canvas.postInvalidate();
 				//Looper.prepare();
 				if (handler!=null)
 					handler.sendEmptyMessage(0);
 				//Looper.loop();
 			}
-			try{sleep(10);}catch(Exception e){}
+			try{sleep(500);}catch(Exception e){}
 		}
 	}
 }

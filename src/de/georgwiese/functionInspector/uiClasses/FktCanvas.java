@@ -38,6 +38,7 @@ public class FktCanvas extends LinearLayout {
 	PathCollector pathCollector;
 	double[] steps;
 	protected DecimalFormat df1,df2;
+	OnSizeChangedListener oscl;
 	
 	public FktCanvas(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -48,6 +49,10 @@ public class FktCanvas extends LinearLayout {
 		steps[1] = 1;
 		df1 = new DecimalFormat("0.0##");
 		df2 = new DecimalFormat("0.00");
+	}
+	
+	public void setOnSizeChangedListener(OnSizeChangedListener oscl){
+		this.oscl = oscl;
 	}
 	
 	/**
@@ -64,7 +69,7 @@ public class FktCanvas extends LinearLayout {
 		super.onDraw(canvas);
 		
 		// For testing:
-		sh.redraw = true;
+		//sh.redraw = true;
 		
 		//if (!redrawThreadStarted){
 		//	redrawThreadStarted=true;
@@ -183,9 +188,13 @@ public class FktCanvas extends LinearLayout {
 			*/
 
 		synchronized(pathCollector){
-			ArrayList<Path> paths = pathCollector.paths;
+			pathCollector.updateCurrentPos();
+			
+			ArrayList<Path> paths = pathCollector.getPaths();
+			
 			for (int i=0; i<paths.size();i++){
 				paint.setColor(COLORS_GRAPHS[i%COLORS_GRAPHS.length]);
+				
 				/*
 				if (disRoots | disExtrema | disInflections |disDiscon){
 					paint.setStyle(Style.FILL_AND_STROKE);
@@ -235,5 +244,20 @@ public class FktCanvas extends LinearLayout {
 		//paint.setColor(COLOR_AXES);
 		//paint.setStrokeWidth(2);
 	}
+	
+	@Override
+	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+		super.onSizeChanged(w, h, oldw, oldh);
+		if (oscl != null)
+			oscl.onSizeChanged(w, h, oldw, oldh);
+		// Clear paths and tell it to redraw
+		synchronized (pathCollector) {
+			pathCollector.clearPaths();
+		}
+		sh.redraw = true;
+	}
 
+	public interface OnSizeChangedListener{
+		public void onSizeChanged(int w, int h, int oldw, int oldh);
+	}
 }

@@ -27,6 +27,10 @@ public class Helper {
 		return deltaPixel/30/z;
 	}
 	
+	public static float getDeltaPx(double deltaUnit, double z){
+		return (float)(deltaUnit*30*z);
+	}
+	
 	public static double getSteps(double z, double factor){
 		int exponent = 0;
 		double steps = getDeltaUnit(25,z);

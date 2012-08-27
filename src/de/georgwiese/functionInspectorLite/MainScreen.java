@@ -58,6 +58,7 @@ import de.georgwiese.functionInspector.controller.RedrawThread;
 import de.georgwiese.functionInspector.controller.StateHolder;
 import de.georgwiese.functionInspector.controller.UIController;
 import de.georgwiese.functionInspector.uiClasses.FktCanvas;
+import de.georgwiese.functionInspector.uiClasses.FktCanvas.OnSizeChangedListener;
 import de.georgwiese.functionInspector.uiClasses.MenuView;
 
 /*
@@ -159,8 +160,8 @@ public class MainScreen extends Activity {
 
     	stateHolder = new StateHolder();
     	// For testing:
-    	stateHolder.addFkt("x^2");
-    	stateHolder.addFkt("-x^2");
+    	//stateHolder.addFkt("x^2");
+    	//stateHolder.addFkt("-x^2");
     	stateHolder.addFkt("sin(x)");
     	stateHolder.addFkt("tan(x)");
     	//stateHolder.addFkt("e^x");
@@ -168,11 +169,17 @@ public class MainScreen extends Activity {
     	//TODO: Find a whether or not it is a tablet
     	uiController = new UIController(mContext, stateHolder, true, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
     	inputController = new InputController(mContext, stateHolder, uiController);
-    	pathCollector = new PathCollector();
     	
     	canvas = (FktCanvas) findViewById(R.id.fktCanvas);
+    	canvas.setOnSizeChangedListener(new FktCanvas.OnSizeChangedListener() {
+			@Override
+			public void onSizeChanged(int w, int h, int oldw, int oldh) {
+				// Update uiController because at initialization time, size of canvas is still zero
+				uiController.onConfigChange();
+			}
+		});
+    	pathCollector = new PathCollector(stateHolder, canvas);
     	redrawThread = new RedrawThread(null, stateHolder, canvas, pathCollector);
-    	
     	canvas.setProps(stateHolder, pathCollector);
     	redrawThread.start();
     	
@@ -428,7 +435,6 @@ public class MainScreen extends Activity {
 				}
 			});
     	}
-        Log.d("Developer", "onStart finished");
     }
     
     public boolean onCreateOptionsMenu(Menu m){
