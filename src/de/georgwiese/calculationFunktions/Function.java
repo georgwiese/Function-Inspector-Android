@@ -443,5 +443,9 @@ public class Function {
 			return result;
 		}
 	}
+	@Override
+	public String toString() {
+		return super.toString() + ": " + string;
+	}
 }
 

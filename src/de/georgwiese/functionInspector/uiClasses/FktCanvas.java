@@ -62,14 +62,6 @@ public class FktCanvas extends LinearLayout {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		Log.d("Developer", "" + new Point2D(sh.getMiddle(0), sh.getMiddle(1)));
-		Log.d("Developer", "" + Helper.pxToUnit(0, 0, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()));
-		Log.d("Developer", "" + Helper.pxToUnit(getWidth(), getHeight(), sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()));
-
-		Log.d("Developer", "" + Helper.unitToPx(-6, -6, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()));
-		Log.d("Developer", "" + Helper.unitToPx( 6,  6, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()));
-		
-		Log.d("Developer", " --- ");
 		
 		// For testing:
 		sh.redraw = true;
@@ -167,10 +159,6 @@ public class FktCanvas extends LinearLayout {
 		paint.setColor(COLOR_AXES);
 		canvas.drawLine((float)zero.x, 0, (float)zero.x, getHeight(), paint);
 		canvas.drawLine(0, (float)zero.y, getWidth(), (float) zero.y, paint);
-		canvas.drawCircle(100, 100, 10, paint);
-		canvas.drawCircle(200, 200, 20, paint);
-		Point2D helperPoint = Helper.unitToPx(0, 0, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight());
-		canvas.drawCircle((float)helperPoint.x, (float)helperPoint.y, 5, paint);
 		paint.setStyle(Style.STROKE);
 		
 		//synchronized (lockDrawing){

@@ -3,6 +3,7 @@ package de.georgwiese.functionInspector.controller;
 import java.util.ArrayList;
 import android.graphics.Path;
 import android.os.Handler;
+import android.util.Log;
 import de.georgwiese.calculationFunktions.Function;
 import de.georgwiese.calculationFunktions.PointMaker;
 import de.georgwiese.functionInspector.uiClasses.FktCanvas;
@@ -40,8 +41,8 @@ public class RedrawThread extends Thread{
 				double _totalZoomX = sh.getZoom(0);
 				double _totalZoomY = sh.getZoom(0);
 				
-				double[] _zoomFactor = sh.getZoom();
-				double[] _middle = sh.getMiddle();
+				double[] _zoomFactor = sh.getZoom().clone();
+				double[] _middle = sh.getMiddle().clone();
 				int _width = canvas.getWidth();
 				int _height = canvas.getHeight();
 				ArrayList<Function> _fkts = new ArrayList<Function>(sh.getFkts());
@@ -94,16 +95,20 @@ public class RedrawThread extends Thread{
 					for (float x=-_width; x<2*_width; x++){ //x+=quality){
 						//if (quality==QUALITY_PREVIEW && x<-2*QUALITY_PREVIEW)
 						//	x=-2*QUALITY_PREVIEW;
-						double xPx = Helper.pxToUnit(x, 0, _zoomFactor, _middle, _width, _height).x;
-						double y = f.calculate(xPx);
-						if (inIndex<discons.size() && xPx >= discons.get(inIndex)){
+						double xU = Helper.pxToUnit(x, 0, _zoomFactor, _middle, _width, _height).x;
+						double y = f.calculate(xU);
+						if (inIndex<discons.size() && xU >= discons.get(inIndex)){
 							first=true;
 							inIndex++;
 						}
 						if (!Double.isNaN(y)){
 							//if (!(quality==QUALITY_PREVIEW & x>getWidth())){
-							float yPx = (float) Helper.unitToPx(0, y, _zoomFactor, _middle, _width, _height).y;
 							if ((x>=-50 & x <= _width+50) | x % 5==0){
+								float yPx = (float) Helper.unitToPx(0, y, _zoomFactor, _middle, _width, _height).y;
+								// TODO: Find out why there is need to cut of y-values which have a high
+								// absolute value.
+								yPx = Math.max(Math.min(yPx, 2*_height), -_height);
+								
 								if (first)
 									p.moveTo(x, yPx);
 								first=false;
@@ -137,7 +142,7 @@ public class RedrawThread extends Thread{
 					totalZoomX=_totalZoomX;
 					totalZoomY=_totalZoomY;
 					*/
-					pathCollector.paths = new ArrayList<Path>(helperPaths);
+					pathCollector.paths = helperPaths;
 					//roots = new ArrayList<ArrayList<Point>>(hRoots);
 					//extrema = new ArrayList<ArrayList<Point>>(hExtrema);
 					//inflections = new ArrayList<ArrayList<Point>>(hInflections);

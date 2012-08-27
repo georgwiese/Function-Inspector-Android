@@ -160,9 +160,11 @@ public class MainScreen extends Activity {
     	stateHolder = new StateHolder();
     	// For testing:
     	stateHolder.addFkt("x^2");
+    	stateHolder.addFkt("-x^2");
     	stateHolder.addFkt("sin(x)");
     	stateHolder.addFkt("tan(x)");
-    	stateHolder.addFkt("e^x");
+    	//stateHolder.addFkt("e^x");
+    	//stateHolder.addFkt("-e^x");
     	//TODO: Find a whether or not it is a tablet
     	uiController = new UIController(mContext, stateHolder, true, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
     	inputController = new InputController(mContext, stateHolder, uiController);
