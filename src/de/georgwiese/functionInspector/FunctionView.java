@@ -620,10 +620,12 @@ public class FunctionView extends LinearLayout {
 								if (!Double.isNaN(y)){
 									if (!(quality==QUALITY_PREVIEW & x>getWidth())){
 										if ((x>=-50 & x<=getWidth()+50) | x % 5==0){
+											float yPx = unitToPxY(y,_zoomFactorY,_middleY);
+											yPx = Math.min(Math.max(yPx, -getHeight()), 2*getHeight());
 											if (first)
-												p.moveTo(x, unitToPxY(y,_zoomFactorY,_middleY));
+												p.moveTo(x, yPx);
 											first=false;
-											p.lineTo(x, unitToPxY(y,_zoomFactorY,_middleY));
+											p.lineTo(x, yPx);
 										}
 									}
 								}

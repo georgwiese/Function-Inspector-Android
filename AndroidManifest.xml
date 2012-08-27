@@ -2,10 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="de.georgwiese.functionInspectorLite" android:versionName="3.2" android:versionCode="21">
     <uses-sdk android:minSdkVersion="6" 
-          android:targetSdkVersion="16" />
+          android:targetSdkVersion="9" />
     <application android:icon="@drawable/icon_lite" android:label="@string/app_name_lite">
         <activity android:name=".SplashScreen" android:theme="@style/SplashscreenTheme"
-                  android:label="@string/app_name_lite" android:configChanges="touchscreen|keyboard|keyboardHidden|orientation" android:windowSoftInputMode="adjustPan">
+                  android:label="@string/app_name_lite" android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenSize" android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
