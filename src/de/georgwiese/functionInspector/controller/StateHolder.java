@@ -59,6 +59,15 @@ public class StateHolder {
 		return zoom;
 	}
 	
+	public void zoom(double factor){
+		zoom(factor, factor);
+	}
+	
+	public void zoom(double factorX, double factorY){
+		zoom[0] = zoom[0] * factorX;
+		zoom[1] = zoom[1] * factorY;
+	}
+	
 	public double getFactor(int dimension){
 		return factor[dimension];
 	}

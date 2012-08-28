@@ -3,9 +3,12 @@ package de.georgwiese.functionInspector.controller;
 import java.util.ArrayList;
 
 import de.georgwiese.calculationFunktions.Point;
+import de.georgwiese.functionInspector.controller.FktCanvasGestureListener.SpanStorage;
 import de.georgwiese.functionInspector.uiClasses.FktCanvas;
 import de.georgwiese.functionInspector.uiClasses.Helper;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.animation.AnimationUtils;
@@ -21,9 +24,17 @@ public class FktCanvasTouchListener implements OnTouchListener {
 	FktCanvas canvas;
 	float firstTouchX, firstTouchY, lastTouchX, lastTouchY;		// Store first and last touch position
 	
+	FktCanvasGestureListener gListener;
+	ScaleGestureDetector scaleGestDet;
+	SpanStorage ss;
+	
 	public FktCanvasTouchListener(StateHolder sh, FktCanvas canvas){
 		this.sh = sh;
 		this.canvas = canvas;
+		
+		ss = new SpanStorage();
+		gListener = new FktCanvasGestureListener(canvas, sh, ss);
+		this.scaleGestDet = new ScaleGestureDetector(canvas.getContext(), gListener);
 	}
 
 	@Override
@@ -45,26 +56,21 @@ public class FktCanvasTouchListener implements OnTouchListener {
 				yPrevSpan=0;
 				xSpan=0;
 				xSpan=0;
-			}
-			else if (event.getPointerCount()==2){
-				if (xPrevSpan==0){
-					xPrevSpan=Math.abs(event.getX(1)-event.getX(0));
-					if (xPrevSpan<20) xPrevSpan=0;
-				}
-				if (yPrevSpan==0){
-					yPrevSpan=Math.abs(event.getY(1)-event.getY(0));
-					if (yPrevSpan<20) yPrevSpan=0;
-				}
-				xSpan=Math.abs(event.getX(1)-event.getX(0));
-				if (xSpan<20) xSpan=0;
-				ySpan=Math.abs(event.getY(1)-event.getY(0));
-				if (ySpan<20) ySpan=0;
-				mScaleDetector.onTouchEvent(event);
-			}
+			}*/
+		if (event.getPointerCount()==2){
+			// assign span values, minimum of 20
+			ss.currentSpanX = Math.max(Math.abs(event.getX(1)-event.getX(0)), 20);
+			ss.currentSpanY = Math.max(Math.abs(event.getY(1)-event.getY(0)), 20);
 		}
-		*/
+		//}
+		
+		scaleGestDet.onTouchEvent(event);
+		
+		// If user just finished zooming don't move (otherwise it may
+		// move pretty quickly when the user lifts both fingers
+		if (gListener.getTimeLastZoomStop() > AnimationUtils.currentAnimationTimeMillis() - 300)
+			return true;
 		/*
-		mGestDetector.onTouchEvent(event);
 		if (!init){
 			init=true;
 			dynamics.run();

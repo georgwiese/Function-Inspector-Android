@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -34,6 +35,7 @@ public class UIController {
 	Context c;
 	boolean isTablet, isLandscape;
 	FktCanvas fktCanvas;
+	
 	
 	/**
 	 * UIController changes and animates all UI Elements

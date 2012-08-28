@@ -37,7 +37,7 @@ public class FktCanvas extends LinearLayout {
 	StateHolder sh;
 	PathCollector pathCollector;
 	double[] steps;
-	protected DecimalFormat df1,df2;
+	protected DecimalFormat df1, df2;
 	OnSizeChangedListener oscl;
 	
 	public FktCanvas(Context context, AttributeSet attrs) {
@@ -75,10 +75,11 @@ public class FktCanvas extends LinearLayout {
 		//	redrawThreadStarted=true;
 		//	redrawThread.start();
 		//}
-		if(sh.redraw){
+		// TODO: Don't do this every single frame
+		//if(sh.redraw){
 			steps[0] = Helper.getSteps(sh.getZoom(0), sh.getFactor(0));
-			steps[0] = Helper.getSteps(sh.getZoom(0), sh.getFactor(0));
-		}
+			steps[1] = Helper.getSteps(sh.getZoom(1), sh.getFactor(1));
+		//}
 		//if(bZoom | bZoomDyn){
 		//	middleX=zoomToX-((zoomToX-lastMiddleX)*oldZoomX/totalZoomX);
 		//	middleY=zoomToY-((zoomToY-lastMiddleY)*oldZoomY/totalZoomY);
@@ -188,7 +189,7 @@ public class FktCanvas extends LinearLayout {
 			*/
 
 		synchronized(pathCollector){
-			pathCollector.updateCurrentPos();
+			pathCollector.update();
 			
 			ArrayList<Path> paths = pathCollector.getPaths();
 			

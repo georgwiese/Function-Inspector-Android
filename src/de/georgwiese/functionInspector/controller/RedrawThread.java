@@ -140,7 +140,7 @@ public class RedrawThread extends Thread{
 					totalZoomX=_totalZoomX;
 					totalZoomY=_totalZoomY;
 					*/
-					pathCollector.setPaths(helperPaths, _middle);
+					pathCollector.setPaths(helperPaths, _middle, _zoomFactor);
 					//roots = new ArrayList<ArrayList<Point>>(hRoots);
 					//extrema = new ArrayList<ArrayList<Point>>(hExtrema);
 					//inflections = new ArrayList<ArrayList<Point>>(hInflections);
