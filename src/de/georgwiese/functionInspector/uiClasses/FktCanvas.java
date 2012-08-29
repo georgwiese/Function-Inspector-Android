@@ -188,6 +188,7 @@ public class FktCanvas extends LinearLayout {
 			stepsY=getSteps(zoomFactorY, factorY);
 			*/
 
+		
 		synchronized(pathCollector){
 			pathCollector.update();
 			

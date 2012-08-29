@@ -60,6 +60,10 @@ public class PathCollector {
 	}
 	
 	public void update(){
+		
+		// Update stateHolder
+		//sh.update();
+		
 		// get Old and new positions in Units as Point2D
 		Point2D newCurrentPos = new Point2D(sh.getMiddle(0), sh.getMiddle(1));
 		Point2D oldCurrentPos = new Point2D(currentPos[0], currentPos[1]);

@@ -57,6 +57,7 @@ import de.georgwiese.functionInspector.controller.PathCollector;
 import de.georgwiese.functionInspector.controller.RedrawThread;
 import de.georgwiese.functionInspector.controller.StateHolder;
 import de.georgwiese.functionInspector.controller.UIController;
+import de.georgwiese.functionInspector.controller.UpdateThread;
 import de.georgwiese.functionInspector.uiClasses.FktCanvas;
 import de.georgwiese.functionInspector.uiClasses.FktCanvas.OnSizeChangedListener;
 import de.georgwiese.functionInspector.uiClasses.MenuView;
@@ -127,6 +128,7 @@ public class MainScreen extends Activity {
 	UIController uiController;
 	PathCollector pathCollector;
 	RedrawThread redrawThread;
+	UpdateThread updateThread;
 	
 	// UI Elements
 	FktCanvas canvas;
@@ -181,7 +183,9 @@ public class MainScreen extends Activity {
     	pathCollector = new PathCollector(stateHolder, canvas);
     	redrawThread = new RedrawThread(null, stateHolder, canvas, pathCollector);
     	canvas.setProps(stateHolder, pathCollector);
+    	updateThread = new UpdateThread(canvas, stateHolder);
     	redrawThread.start();
+    	updateThread.start();
     	
     	
     	/*

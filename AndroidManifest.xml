@@ -17,7 +17,6 @@
             android:theme="@style/SplashscreenTheme"
             android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="adjustPan" >
-            <!--android:configChanges="touchscreen|keyboard|keyboardHidden|orientation"-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

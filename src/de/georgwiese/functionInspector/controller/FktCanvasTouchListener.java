@@ -26,6 +26,7 @@ public class FktCanvasTouchListener implements OnTouchListener {
 	
 	FktCanvasGestureListener gListener;
 	ScaleGestureDetector scaleGestDet;
+	GestureDetector gestureDetector;
 	SpanStorage ss;
 	
 	public FktCanvasTouchListener(StateHolder sh, FktCanvas canvas){
@@ -34,11 +35,13 @@ public class FktCanvasTouchListener implements OnTouchListener {
 		
 		ss = new SpanStorage();
 		gListener = new FktCanvasGestureListener(canvas, sh, ss);
-		this.scaleGestDet = new ScaleGestureDetector(canvas.getContext(), gListener);
+		scaleGestDet = new ScaleGestureDetector(canvas.getContext(), gListener);
+		gestureDetector = new GestureDetector(gListener);
 	}
 
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
+		gestureDetector.onTouchEvent(event);
 		/*
 		if (SHOW_TOUCH_POSITION){
 			xs = new ArrayList<Float>();
@@ -84,6 +87,7 @@ public class FktCanvasTouchListener implements OnTouchListener {
 			lastTouchY = event.getY();
 			firstTouchX = lastTouchX;
 			firstTouchY = lastTouchY;
+			sh.doDyn = false;
 			/*
 			velStoreX=0.0;
 			velStoreY=0.0;
@@ -149,6 +153,7 @@ public class FktCanvasTouchListener implements OnTouchListener {
 			//	redraw=true;
 			break;
 		case MotionEvent.ACTION_UP:
+			sh.doDyn = true;
 			/*
 			xs=null;
 			velocityX=velStoreX;
