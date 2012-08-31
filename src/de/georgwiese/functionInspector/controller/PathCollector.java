@@ -14,8 +14,6 @@ public class PathCollector {
 	
 	// Number of pixels plus width that are drawn in best quality
 	static final int TOLERANCE_SIDE = 50;
-	// Number of pixels plus height that are drawn
-	static final int TOLERANCE_UPB  = 800;
 	
 	StateHolder sh;
 	FktCanvas canvas;
@@ -88,7 +86,6 @@ public class PathCollector {
 		currentPos  = sh.getMiddle().clone();
 				
 		if(Helper.getDeltaPx(Math.abs(currentPos[0] - originalPos[0]), sh.getZoom(0)) > TOLERANCE_SIDE ||
-				Helper.getDeltaPx(Math.abs(currentPos[1] - originalPos[1]), sh.getZoom(1)) > TOLERANCE_UPB ||
 				oldCurrentZoom[0] != newCurrentZoom[0] || oldCurrentZoom[1] != newCurrentZoom[1])
 			sh.redraw = true;
 	}

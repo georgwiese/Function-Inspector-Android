@@ -160,7 +160,7 @@ public class MainScreen extends Activity {
     	mContext=this;
     	mActivity=this;
 
-    	stateHolder = new StateHolder();
+    	stateHolder = new StateHolder(this);
     	// For testing:
     	//stateHolder.addFkt("x^2");
     	//stateHolder.addFkt("-x^2");

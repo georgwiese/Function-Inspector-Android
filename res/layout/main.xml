@@ -73,6 +73,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
+            android:layout_weight="1"
             android:orientation="horizontal" >
 
             <de.georgwiese.functionInspector.uiClasses.MenuView
@@ -242,7 +243,7 @@
                     android:textSize="12dip" />
             </de.georgwiese.functionInspector.uiClasses.MenuView>
         </LinearLayout>
-    </de.georgwiese.functionInspector.uiClasses.FktCanvas>
+        
 
     <com.google.ads.AdView
         android:id="@+id/adView"
@@ -253,5 +254,6 @@
         ads:loadAdOnCreate="true"
         android:gravity="center"
         android:visibility="visible" />
+    </de.georgwiese.functionInspector.uiClasses.FktCanvas>
 
 </LinearLayout>

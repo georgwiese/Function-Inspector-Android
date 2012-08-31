@@ -2,7 +2,9 @@ package de.georgwiese.functionInspector.controller;
 
 import java.util.ArrayList;
 
+import android.content.Context;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.animation.AnimationUtils;
 
 import de.georgwiese.calculationFunktions.*;
@@ -22,13 +24,13 @@ public class StateHolder {
 	public static final int MODE_SLOPE = 2;
 	
 	// Constants dealing with speed
-	static final double FRICTION_FACTOR = 0.9;
-	static final double MAX_SPEED       = 2.0;	// in px / ms
-	static final double MIN_SPEED		= 0.03;
+	static final double FRICTION_FACTOR = 0.97;
+	static final double MAX_SPEED       = 1;	// in dp / ms
+	static final double MIN_SPEED		= 0.001;
 	
 	// Constants dealing with zoom
 	static final double ZOOM_IN_FACTOR  = 2.0;
-	static final double ZOOM_IN_UPDATE  = 1.05;
+	static final double ZOOM_IN_UPDATE  = 1.03;
 	
 	public boolean redraw;			// whether or not FktCanvas needs to redraw the functions
 	public boolean doDyn;			// whether or not the UpdateThread should move according to current speed
@@ -43,8 +45,9 @@ public class StateHolder {
 	long prevTimeSpeed;				// Time used to measure speed
 	long prevTimeDynamics;			// Time used to calculate the offset
 	int mode;						// current moving mode (see constants)
+	float maxSpeedDp;
 	
-	public StateHolder(){
+	public StateHolder(Context c){
 		redraw = true;
 		doDyn  = false;
 		doZoom = false;
@@ -71,6 +74,7 @@ public class StateHolder {
 		prevTimeSpeed = 0;
 		prevTimeDynamics = 0;
 		mode = MODE_PAN;
+		maxSpeedDp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (float)MAX_SPEED, c.getResources().getDisplayMetrics());
 	}
 
 	public void addFkt(String f){
@@ -135,6 +139,7 @@ public class StateHolder {
 			speed[0] = 0.5 * speed[0] + 0.5 * dx / (currentTime - prevTimeSpeed);
 			speed[1] = 0.5 * speed[1] + 0.5 * dy / (currentTime - prevTimeSpeed);
 		}
+		Log.d("Developer", "Speed: " + Math.sqrt(speed[0] * speed[0] + speed[1] * speed[1]));
 		prevTimeSpeed = currentTime;
 	}
 	
@@ -143,23 +148,31 @@ public class StateHolder {
 	}
 	
 	/**
-	 * Called from UpdateThread every 50 ms to slower the speed
+	 * Called from UpdateThread every frame to slower the speed.
+	 * 
+	 * @param exponent:
+	 * 		Number of frames that have been skipped, assuming
+	 * 		60 frames / s
 	 */
-	public void updateSpeed(){
+	public void updatePos(long timeElapsed){
+		//Log.d("Developer", "Exponent: " + (double)timeElapsed / (1000 / 60));
+		double factor = Math.pow(FRICTION_FACTOR, (double)timeElapsed / (1000 / 60));
 		for (int i = 0; i <  speed.length; i++){
-			speed[i] *= FRICTION_FACTOR;
-			speed[i]  = Math.signum(speed[i]) * Math.min(Math.abs(speed[i]), Helper.getDeltaUnit((float)MAX_SPEED, zoom[i]));
+			speed[i] *= factor;
+			speed[i]  = Math.signum(speed[i]) * Math.min(Math.abs(speed[i]), Helper.getDeltaUnit(maxSpeedDp, zoom[i]));
 			if (Math.abs(speed[i]) < Helper.getDeltaUnit((float) MIN_SPEED, zoom[i]))
 				speed[i] = 0;
 		}
+		move(speed[0] * timeElapsed, speed[1] * timeElapsed);
 	}
 	
-	public void updateZoom(){
+	public void updateZoom(long timeElapsed){
+		double factor = Math.pow(ZOOM_IN_UPDATE, (double)timeElapsed / (1000 / 60));
 		for (int i = 0; i < zoom.length; i++){
 			if (zoom[i] < desiredZoom[i])
-				zoom[i] *= ZOOM_IN_UPDATE;
+				zoom[i] *= factor;
 			else
-				zoom[i] /= ZOOM_IN_UPDATE;
+				zoom[i] /= factor;
 		}
 		// Check if done
 		if (Math.abs(zoom[0]/desiredZoom[0]-1) < (ZOOM_IN_UPDATE - 1) * 2 &&

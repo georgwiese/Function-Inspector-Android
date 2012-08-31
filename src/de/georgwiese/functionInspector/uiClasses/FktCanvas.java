@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import de.georgwiese.calculationFunktions.Point;
 import de.georgwiese.functionInspector.controller.PathCollector;
 import de.georgwiese.functionInspector.controller.StateHolder;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -15,6 +16,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.LinearLayout;
@@ -39,7 +41,8 @@ public class FktCanvas extends LinearLayout {
 	double[] steps;
 	protected DecimalFormat df1, df2;
 	OnSizeChangedListener oscl;
-	
+
+	@TargetApi(11)
 	public FktCanvas(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		invalidate();
@@ -49,6 +52,9 @@ public class FktCanvas extends LinearLayout {
 		steps[1] = 1;
 		df1 = new DecimalFormat("0.0##");
 		df2 = new DecimalFormat("0.00");
+		
+		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB)
+			setLayerType(LAYER_TYPE_SOFTWARE, null);
 	}
 	
 	public void setOnSizeChangedListener(OnSizeChangedListener oscl){

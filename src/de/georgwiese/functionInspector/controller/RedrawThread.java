@@ -24,6 +24,9 @@ public class RedrawThread extends Thread{
 		this.sh = stateHolder;
 		this.canvas = canvas;
 		this.pathCollector = pathCollector;
+		
+		//set this priority to be minimal
+		setPriority(MIN_PRIORITY);
 	}
 	/*
 	public void setHandler(Handler h){
@@ -103,9 +106,6 @@ public class RedrawThread extends Thread{
 							//if (!(quality==QUALITY_PREVIEW & x>getWidth())){
 							if ((x>=-PathCollector.TOLERANCE_SIDE && x <= _width+PathCollector.TOLERANCE_SIDE) | x % 5==0){
 								float yPx = (float) Helper.unitToPx(0, y, _zoomFactor, _middle, _width, _height).y;
-								// TODO: Find out why there is need to cut of y-values which have a high
-								// absolute value.
-								yPx = Math.max(Math.min(yPx, _height + PathCollector.TOLERANCE_UPB), -PathCollector.TOLERANCE_UPB);
 								
 								if (first)
 									p.moveTo(x, yPx);

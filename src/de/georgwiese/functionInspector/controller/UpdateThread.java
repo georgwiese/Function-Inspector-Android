@@ -77,15 +77,15 @@ public class UpdateThread extends Thread {
 					sh.doZoom){
 				
 				if (sh.doZoom)
-					sh.updateZoom();
+					sh.updateZoom(currentTime - prevTime);
 				else{
-					sh.updateSpeed();
-					sh.move(sh.getSpeed(0) * (currentTime - prevTime), sh.getSpeed(1) * (currentTime - prevTime));
+					sh.updatePos(currentTime - prevTime);
 				}
 
 				canvas.postInvalidate();
 				prevTime = currentTime;
-				try{sleep(25);}catch(Exception e){}
+				
+				try{sleep(15);}catch(Exception e){}
 			}
 			else{
 				prevTime = currentTime;
