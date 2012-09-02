@@ -45,7 +45,7 @@
 
         <ImageButton
             android:id="@+id/menuButtonMode"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="40dp"
             android:layout_marginLeft="1dp"
             android:layout_weight="0"
@@ -162,6 +162,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/points_roots"
+            		android:onClick="onButtonClick"
                     android:textColor="#000000" >
                 </CheckBox>
 
@@ -170,6 +171,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/points_extrema"
+            		android:onClick="onButtonClick"
                     android:textColor="#000000" >
                 </CheckBox>
 
@@ -178,6 +180,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/points_inflection"
+            		android:onClick="onButtonClick"
                     android:textColor="#000000" >
                 </CheckBox>
 
@@ -186,6 +189,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/points_discontinuities"
+            		android:onClick="onButtonClick"
                     android:textColor="#000000" >
                 </CheckBox>
 
@@ -194,6 +198,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/points_intersections"
+            		android:onClick="onButtonClick"
                     android:textColor="#000000" >
                 </CheckBox>
 
@@ -201,13 +206,14 @@
                     android:id="@+id/mv_points_btPro"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+            		android:onClick="onButtonClick"
                     android:text="@string/points_pro" >
                 </Button>
             </de.georgwiese.functionInspector.uiClasses.MenuView>
 
             <de.georgwiese.functionInspector.uiClasses.MenuView
                 android:id="@+id/menuMode"
-                android:layout_width="wrap_content"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="1dp"
                 android:layout_weight="0"
@@ -217,7 +223,7 @@
 
                 <Button
                     android:id="@+id/mv_mode_pan"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:drawableTop="@drawable/bt_mode_pan"
                     android:gravity="center"
@@ -226,7 +232,7 @@
 
                 <Button
                     android:id="@+id/mv_mode_trace"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:drawableTop="@drawable/bt_mode_trace"
                     android:gravity="center"
@@ -235,7 +241,7 @@
 
                 <Button
                     android:id="@+id/mv_mode_slope"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:drawableTop="@drawable/bt_mode_slope"
                     android:gravity="center"

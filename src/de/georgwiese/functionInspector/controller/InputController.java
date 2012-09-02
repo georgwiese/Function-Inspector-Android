@@ -1,26 +1,31 @@
 package de.georgwiese.functionInspector.controller;
 
+import de.georgwiese.functionInspector.uiClasses.FktCanvas;
 import de.georgwiese.functionInspectorLite.R;
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
+import android.widget.CheckBox;
 
 public class InputController {
 	StateHolder sh;
 	Context      c;
 	UIController uic;
+	FktCanvas canvas;
 	
-	public InputController(Context c, StateHolder sh, UIController uic){
-		this.sh = sh;
-		this.c  =  c;
-		this.uic = uic;
+	public InputController(Context c, StateHolder sh, UIController uic, FktCanvas canvas){
+		this.sh     = sh;
+		this.c      =  c;
+		this.uic    = uic;
+		this.canvas = canvas;
 	}
 	
 	/**
 	 * This function handles all click events from the UI
-	 * @param id: ID of the View the user clicked on.
+	 * @param v: View the user clicked on.
 	 */
-	public void onButtonClick(int id){
-		switch(id){
+	public void onButtonClick(View v){
+		switch(v.getId()){
 		case R.id.menuButtonFkt:
 			uic.toggleMenu(UIController.MENU_FKT);
 			break;
@@ -33,6 +38,23 @@ public class InputController {
 		case R.id.menuButtonMode:
 			uic.toggleMenu(UIController.MENU_MODE);
 			break;
+		case R.id.mv_points_roots:
+			Log.d("Developer", "DisRoots clicked");
+			sh.disRoots = ((CheckBox) v).isChecked();
+			break;
+		case R.id.mv_points_extrema:
+			sh.disExtrema = ((CheckBox) v).isChecked();
+			break;
+		case R.id.mv_points_inflections:
+			sh.disInflections = ((CheckBox) v).isChecked();
+			break;
+		case R.id.mv_points_discontinuities:
+			sh.disDiscon = ((CheckBox) v).isChecked();
+			break;
+		case R.id.mv_points_intersections:
+			sh.disIntersections = ((CheckBox) v).isChecked();
+			break;
 		}
+		canvas.invalidate();
 	}
 }

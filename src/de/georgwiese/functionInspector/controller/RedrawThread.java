@@ -5,6 +5,7 @@ import android.graphics.Path;
 import android.os.Handler;
 import android.util.Log;
 import de.georgwiese.calculationFunktions.Function;
+import de.georgwiese.calculationFunktions.Point;
 import de.georgwiese.calculationFunktions.PointMaker;
 import de.georgwiese.functionInspector.uiClasses.FktCanvas;
 import de.georgwiese.functionInspector.uiClasses.Helper;
@@ -52,28 +53,23 @@ public class RedrawThread extends Thread{
 				
 				ArrayList<Path> helperPaths = new ArrayList<Path>();
 				
-				ArrayList<ArrayList<Double>> hDiscon = new ArrayList<ArrayList<Double>>();
-				/*
-				ArrayList<ArrayList<Point>> hRoots=new ArrayList<ArrayList<Point>>();
-				ArrayList<ArrayList<Point>> hExtrema=new ArrayList<ArrayList<Point>>();
-				ArrayList<ArrayList<Point>> hInflections=new ArrayList<ArrayList<Point>>();
-				boolean disRoots2=disRoots;
-				boolean disInflections2=disInflections;
-				boolean disExtrema2=disExtrema;
-				*/
+				ArrayList<ArrayList<Double>> hDiscon     = new ArrayList<ArrayList<Double>>();
+				ArrayList<ArrayList<Point>> hRoots       = new ArrayList<ArrayList<Point>>();
+				ArrayList<ArrayList<Point>> hExtrema     = new ArrayList<ArrayList<Point>>();
+				ArrayList<ArrayList<Point>> hInflections = new ArrayList<ArrayList<Point>>();
 				
 				for (int j=0; j<_fkts.size(); j++){
 					Function f = _fkts.get(j);
 					Path p = new Path();
 					boolean first = true;
-					/*
+					
 					if (f==null){
 						hRoots.add(new ArrayList<Point>());
 						hExtrema.add(new ArrayList<Point>());
 						hInflections.add(new ArrayList<Point>());
 						hDiscon.add(new ArrayList<Double>());
 					}
-					else{*/
+					
 					double [] params = sh.getParams();
 					//TODO: implement Function.setParams(double[] params)
 					f.setA(params[0]);
@@ -81,14 +77,9 @@ public class RedrawThread extends Thread{
 					f.setC(params[2]);
 					
 					hDiscon.add(PointMaker.getDiscontinuities(f, Helper.pxToUnit(-_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.pxToUnit(2*_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.getDeltaUnit(15,_zoomFactor[0])));
-					/*
-					if (disExtrema2 | disRoots2)
-						hExtrema.add(PointMaker.getExtrema(f, hDiscon.get(j), quality==QUALITY_PREVIEW?pxToUnitX(0,_zoomFactorX,_middleX):pxToUnitX(-getWidth(),_zoomFactorX,_middleX), quality==QUALITY_PREVIEW?pxToUnitX(getWidth(),_zoomFactorX,_middleX):pxToUnitX(2*getWidth(),_zoomFactorX,_middleX), getDeltaUnit(15,_zoomFactorX)));
-					if (disRoots2)
-						hRoots.add(PointMaker.getRoots(f, hExtrema.get(j), hDiscon.get(j), quality==QUALITY_PREVIEW?pxToUnitX(0,_zoomFactorX,_middleX):pxToUnitX(-getWidth(),_zoomFactorX,_middleX), quality==QUALITY_PREVIEW?pxToUnitX(getWidth(),_zoomFactorX,_middleX):pxToUnitX(2*getWidth(),_zoomFactorX,_middleX), getDeltaUnit(15,_zoomFactorX)));
-					if (disInflections2)
-						hInflections.add(PointMaker.getInflectionPoints(f, hDiscon.get(j), quality==QUALITY_PREVIEW?pxToUnitX(0,_zoomFactorX,_middleX):pxToUnitX(-getWidth(),_zoomFactorX,_middleX), quality==QUALITY_PREVIEW?pxToUnitX(getWidth(),_zoomFactorX,_middleX):pxToUnitX(2*getWidth(),_zoomFactorX,_middleX), getDeltaUnit(15,_zoomFactorX)));
-					*/
+					hExtrema.add(PointMaker.getExtrema(f, hDiscon.get(j), Helper.pxToUnit(-_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.pxToUnit(2*_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.getDeltaUnit(15,_zoomFactor[0])));
+					hRoots.add(PointMaker.getRoots(f, hExtrema.get(j), hDiscon.get(j), Helper.pxToUnit(-_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.pxToUnit(2*_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.getDeltaUnit(15,_zoomFactor[0])));
+					hInflections.add(PointMaker.getInflectionPoints(f, hDiscon.get(j), Helper.pxToUnit(-_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.pxToUnit(2*_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.getDeltaUnit(15,_zoomFactor[0])));
 					
 					int inIndex=0;
 					ArrayList<Double> discons = hDiscon.get(_fkts.indexOf(f));
@@ -120,32 +111,16 @@ public class RedrawThread extends Thread{
 					}
 					helperPaths.add(p);
 				}
-				/*
+				
 				ArrayList<Point> hIntersections = new ArrayList<Point>();
-				if (disIntersections)
-					for (int i = 0; i<_fkts.size()-1; i++)
-						for (int j=i+1; j<_fkts.size(); j++)
-							if (_fkts.get(i)!=null && _fkts.get(j)!=null && !_fkts.get(i).equals(_fkts.get(j)))
-								hIntersections.addAll(PointMaker.getIntersections(_fkts.get(i), _fkts.get(j), quality==QUALITY_PREVIEW?pxToUnitX(0,_zoomFactorX,_middleX):pxToUnitX(-getWidth(),_zoomFactorX,_middleX), quality==QUALITY_PREVIEW?pxToUnitX(getWidth(),_zoomFactorX,_middleX):pxToUnitX(2*getWidth(),_zoomFactorX,_middleX), getDeltaUnit(15,_zoomFactorX)));
-				*/
+				for (int i = 0; i<_fkts.size()-1; i++)
+					for (int j=i+1; j<_fkts.size(); j++)
+						if (_fkts.get(i)!=null && _fkts.get(j)!=null && !_fkts.get(i).equals(_fkts.get(j)))
+							hIntersections.addAll(PointMaker.getIntersections(_fkts.get(i), _fkts.get(j),  Helper.pxToUnit(-_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.pxToUnit(2*_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.getDeltaUnit(15,_zoomFactor[0])));
+
 				synchronized (pathCollector){
-					/*offsetX=0;
-					offsetY=0;
-					totalOffsetX=0;
-					totalOffsetY=0;
-					lastOriginX=_lastOriginX;
-					lastOriginY=_lastOriginY;
-					lastZoomX=1.0;
-					lastZoomY=1.0;
-					totalZoomX=_totalZoomX;
-					totalZoomY=_totalZoomY;
-					*/
-					pathCollector.setPaths(helperPaths, _middle, _zoomFactor);
-					//roots = new ArrayList<ArrayList<Point>>(hRoots);
-					//extrema = new ArrayList<ArrayList<Point>>(hExtrema);
-					//inflections = new ArrayList<ArrayList<Point>>(hInflections);
-					//intersections = new ArrayList<Point>(hIntersections);
-					//discontinuities = new ArrayList<ArrayList<Double>>(hDiscon);
+					pathCollector.setPathsAndPoints(helperPaths, hRoots, hExtrema, hInflections,
+							hIntersections, hDiscon, _middle, _zoomFactor);
 				}
 				canvas.postInvalidate();
 				//Looper.prepare();

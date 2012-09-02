@@ -2,6 +2,7 @@ package de.georgwiese.functionInspector.controller;
 
 import java.util.ArrayList;
 
+import de.georgwiese.calculationFunktions.Point;
 import de.georgwiese.functionInspector.uiClasses.FktCanvas;
 import de.georgwiese.functionInspector.uiClasses.Helper;
 import de.georgwiese.functionInspector.uiClasses.Point2D;
@@ -18,6 +19,9 @@ public class PathCollector {
 	StateHolder sh;
 	FktCanvas canvas;
 	ArrayList<Path> paths;
+	ArrayList<ArrayList<Point>> roots, extrema, inflections;
+	ArrayList<Point> intersections;
+	ArrayList<ArrayList<Double>> discontinuities;
 	Matrix transMatrix;
 	double[] originalPos, currentPos;
 	double[] originalZoom, currentZoom;
@@ -25,7 +29,14 @@ public class PathCollector {
 	public PathCollector(StateHolder sh, FktCanvas canvas) {
 		this.sh = sh;
 		this.canvas = canvas;
+		
 		paths = new ArrayList<Path>();
+		roots = new ArrayList<ArrayList<Point>>();
+		extrema = new ArrayList<ArrayList<Point>>();
+		inflections = new ArrayList<ArrayList<Point>>();
+		intersections = new ArrayList<Point>();
+		discontinuities = new ArrayList<ArrayList<Double>>();
+		
 		transMatrix = new Matrix();
 		originalPos  = new double[2];
 		currentPos   = new double[2];
@@ -41,16 +52,44 @@ public class PathCollector {
 		currentZoom[1] = 1;
 	}
 	
-	public void setPaths(ArrayList<Path> paths, double[] pos, double[] zoom) {
+	public void setPathsAndPoints(ArrayList<Path> paths, ArrayList<ArrayList<Point>> roots,
+			ArrayList<ArrayList<Point>> extrema, ArrayList<ArrayList<Point>> inflections,
+			ArrayList<Point> intersections, ArrayList<ArrayList<Double>> discontinuities,
+			double[] pos, double[] zoom) {
 		this.paths   = paths;
 		originalPos  = pos.clone();
 		currentPos   = pos.clone();
 		originalZoom = zoom.clone();
 		currentZoom  = zoom.clone();
+		this.roots = roots;
+		this.extrema = extrema;
+		this.inflections = inflections;
+		this.intersections = intersections;
+		this.discontinuities = discontinuities;
 	}
 	
 	public ArrayList<Path> getPaths() {
 		return paths;
+	}
+	
+	public ArrayList<ArrayList<Point>> getRoots() {
+		return roots;
+	}
+	
+	public ArrayList<ArrayList<Point>> getExtrema() {
+		return extrema;
+	}
+	
+	public ArrayList<ArrayList<Point>> getInflections() {
+		return inflections;
+	}
+	
+	public ArrayList<ArrayList<Double>> getDiscontinuities() {
+		return discontinuities;
+	}
+	
+	public ArrayList<Point> getIntersections() {
+		return intersections;
 	}
 	
 	public void clearPaths(){
@@ -58,9 +97,6 @@ public class PathCollector {
 	}
 	
 	public void update(){
-		
-		// Update stateHolder
-		//sh.update();
 		
 		// get Old and new positions in Units as Point2D
 		Point2D newCurrentPos = new Point2D(sh.getMiddle(0), sh.getMiddle(1));
@@ -70,11 +106,11 @@ public class PathCollector {
 		double[] oldCurrentZoom = currentZoom.clone();
 		
 		transMatrix.reset();
-		//transMatrix.setTranslate(Helper.getDeltaPx(oldCurrentPos.x - newCurrentPos.x, sh.getZoom(0)),
-		//						Helper.getDeltaPx(newCurrentPos.y - oldCurrentPos.y, sh.getZoom(1)));
 		transMatrix.setScale((float)(newCurrentZoom[0] / oldCurrentZoom[0]),
 				(float)(newCurrentZoom[1] / oldCurrentZoom[1]),
 				canvas.getWidth()/2, canvas.getHeight()/2);
+		//transMatrix.setTranslate(Helper.getDeltaPx(oldCurrentPos.x - newCurrentPos.x, sh.getZoom(0)),
+		//		Helper.getDeltaPx(newCurrentPos.y - oldCurrentPos.y, sh.getZoom(1)));
 
 		for(Path p:paths){
 			p.offset(Helper.getDeltaPx(oldCurrentPos.x - newCurrentPos.x, sh.getZoom(0)),

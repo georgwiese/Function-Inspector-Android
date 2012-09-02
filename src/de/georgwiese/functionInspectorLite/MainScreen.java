@@ -165,14 +165,14 @@ public class MainScreen extends Activity {
     	//stateHolder.addFkt("x^2");
     	//stateHolder.addFkt("-x^2");
     	stateHolder.addFkt("sin(x)");
-    	stateHolder.addFkt("tan(x)");
+    	stateHolder.addFkt("tan(x)+1");
     	//stateHolder.addFkt("e^x");
     	//stateHolder.addFkt("-e^x");
     	//TODO: Find a whether or not it is a tablet
     	uiController = new UIController(mContext, stateHolder, true, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
-    	inputController = new InputController(mContext, stateHolder, uiController);
-    	
     	canvas = (FktCanvas) findViewById(R.id.fktCanvas);
+    	inputController = new InputController(mContext, stateHolder, uiController, canvas);
+    	
     	canvas.setOnSizeChangedListener(new FktCanvas.OnSizeChangedListener() {
 			@Override
 			public void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -722,7 +722,7 @@ public class MainScreen extends Activity {
     }
     
     public void onButtonClick(View v){
-    	inputController.onButtonClick(v.getId());
+    	inputController.onButtonClick(v);
     }
     
     @Override

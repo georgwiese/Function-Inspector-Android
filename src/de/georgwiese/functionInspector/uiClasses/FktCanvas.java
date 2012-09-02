@@ -199,56 +199,61 @@ public class FktCanvas extends LinearLayout {
 			pathCollector.update();
 			
 			ArrayList<Path> paths = pathCollector.getPaths();
+			ArrayList<ArrayList<Point>> roots = pathCollector.getRoots();
+			ArrayList<ArrayList<Point>> extrema = pathCollector.getExtrema();
+			ArrayList<ArrayList<Point>> inflections = pathCollector.getInflections();
+			ArrayList<ArrayList<Double>> discontinuities = pathCollector.getDiscontinuities();
+			ArrayList<Point> intersections = pathCollector.getIntersections();
 			
 			for (int i=0; i<paths.size();i++){
 				paint.setColor(COLORS_GRAPHS[i%COLORS_GRAPHS.length]);
 				
-				/*
-				if (disRoots | disExtrema | disInflections |disDiscon){
-					paint.setStyle(Style.FILL_AND_STROKE);
-					if (disRoots)
-						if (i<roots.size())
-							for (Point p:roots.get(i))
-								canvas.drawCircle(unitToPxX(p.getX()), unitToPxY(p.getY()), 5, paint);
-					if (disExtrema)
-						if (i<extrema.size())
-							for (Point p:extrema.get(i))
-								canvas.drawCircle(unitToPxX(p.getX()), unitToPxY(p.getY()), 5, paint);
-					if (disInflections)
-						if (i<inflections.size())
-							for (Point p:inflections.get(i))
-								canvas.drawCircle(unitToPxX(p.getX()), unitToPxY(p.getY()), 5, paint);
-					paint.setStyle(Style.STROKE);
-					if (disDiscon){
-						if (i<discontinuities.size()){
-							for (Double d:discontinuities.get(i)){
-								if (unitToPxX(d)>-5 && unitToPxX(d)<getWidth()+5){
-									Path p = new Path();
-									p.moveTo(unitToPxX(d), -30 + unitToPxY(0)%30);
-									p.lineTo(unitToPxX(d), getHeight());
-									float[] intervals = {20,10};
-									paint.setStrokeWidth(4);
-									paint.setPathEffect(new DashPathEffect(intervals, 0));
-									canvas.drawPath(p, paint);
-									paint.setStrokeWidth(2);
-									paint.setPathEffect(null);	
-								}
-							}}}
+				paint.setStyle(Style.FILL_AND_STROKE);
+				if (sh.disRoots)
+					if (i<roots.size())
+						for (Point p:roots.get(i))
+							canvas.drawCircle((float)Helper.unitToPx(p.getX(), 0, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).x,
+									(float)Helper.unitToPx(0, p.getY(), sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).y, 5, paint);
+				if (sh.disExtrema)
+					if (i<extrema.size())
+						for (Point p:extrema.get(i))
+							canvas.drawCircle((float)Helper.unitToPx(p.getX(), 0, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).x,
+									(float)Helper.unitToPx(0, p.getY(), sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).y, 5, paint);
+				if (sh.disInflections)
+					if (i<inflections.size())
+						for (Point p:inflections.get(i))
+							canvas.drawCircle((float)Helper.unitToPx(p.getX(), 0, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).x,
+									(float)Helper.unitToPx(0, p.getY(), sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).y, 5, paint);
+				paint.setStyle(Style.STROKE);
+				if (sh.disDiscon){
+					if (i<discontinuities.size()){
+						for (Double d:discontinuities.get(i)){
+							float x = (float)Helper.unitToPx(d, 0, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).x;
+							float y = (float)Helper.unitToPx(0, 0, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).y;
+							Path p = new Path();
+							p.moveTo(x, (y % 30) - 30);
+							p.lineTo(x, getHeight());
+							float[] intervals = {20,10};
+							paint.setStrokeWidth(4);
+							paint.setPathEffect(new DashPathEffect(intervals, 0));
+							canvas.drawPath(p, paint);
+							paint.setStrokeWidth(2);
+							paint.setPathEffect(null);	
+						}
+					}
 					paint.setStyle(Style.STROKE);
 				}
-				*/
 				canvas.drawPath(paths.get(i), paint);
 			}
+			if (sh.disIntersections){
+				paint.setColor(COLOR_INTERSECTION);
+				paint.setStyle(Style.FILL_AND_STROKE);
+				for (Point p:intersections)
+					canvas.drawCircle((float)Helper.unitToPx(p.getX(), 0, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).x,
+							(float)Helper.unitToPx(0, p.getY(), sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).y, 5, paint);
+				paint.setStyle(Style.STROKE);
+			}
 		}
-		/*
-		if (disIntersections){
-			paint.setColor(COLOR_INTERSECTION);
-			paint.setStyle(Style.FILL_AND_STROKE);
-			for (Point p:intersections)
-				canvas.drawCircle(unitToPxX(p.getX()), unitToPxY(p.getY()), 5, paint);
-			paint.setStyle(Style.STROKE);
-		}
-		}*/
 		//paint.setColor(COLOR_AXES);
 		//paint.setStrokeWidth(2);
 	}

@@ -45,7 +45,10 @@ public class StateHolder {
 	long prevTimeSpeed;				// Time used to measure speed
 	long prevTimeDynamics;			// Time used to calculate the offset
 	int mode;						// current moving mode (see constants)
-	float maxSpeedDp;
+	float maxSpeedPx;				// MAX_SPEED converted in px / ms (done in constructor)
+	public boolean disRoots,
+	disExtrema, disInflections,		// public booleans for whether or not those points should be displayed
+	disIntersections, disDiscon;
 	
 	public StateHolder(Context c){
 		redraw = true;
@@ -74,7 +77,10 @@ public class StateHolder {
 		prevTimeSpeed = 0;
 		prevTimeDynamics = 0;
 		mode = MODE_PAN;
-		maxSpeedDp = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (float)MAX_SPEED, c.getResources().getDisplayMetrics());
+		maxSpeedPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (float)MAX_SPEED, c.getResources().getDisplayMetrics());
+		
+		disRoots = false; disExtrema = false; disInflections = false;
+		disDiscon = false; disIntersections = false;
 	}
 
 	public void addFkt(String f){
@@ -139,7 +145,7 @@ public class StateHolder {
 			speed[0] = 0.5 * speed[0] + 0.5 * dx / (currentTime - prevTimeSpeed);
 			speed[1] = 0.5 * speed[1] + 0.5 * dy / (currentTime - prevTimeSpeed);
 		}
-		Log.d("Developer", "Speed: " + Math.sqrt(speed[0] * speed[0] + speed[1] * speed[1]));
+		//Log.d("Developer", "Speed: " + Math.sqrt(speed[0] * speed[0] + speed[1] * speed[1]));
 		prevTimeSpeed = currentTime;
 	}
 	
@@ -159,7 +165,7 @@ public class StateHolder {
 		double factor = Math.pow(FRICTION_FACTOR, (double)timeElapsed / (1000 / 60));
 		for (int i = 0; i <  speed.length; i++){
 			speed[i] *= factor;
-			speed[i]  = Math.signum(speed[i]) * Math.min(Math.abs(speed[i]), Helper.getDeltaUnit(maxSpeedDp, zoom[i]));
+			speed[i]  = Math.signum(speed[i]) * Math.min(Math.abs(speed[i]), Helper.getDeltaUnit(maxSpeedPx, zoom[i]));
 			if (Math.abs(speed[i]) < Helper.getDeltaUnit((float) MIN_SPEED, zoom[i]))
 				speed[i] = 0;
 		}
