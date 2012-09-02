@@ -44,7 +44,7 @@ public class UIController {
 	 * @param isTablet: whether or not we have a tablet
 	 * @param isLandscape: whether or not the device is in landscape orientation
 	 */
-	public UIController(Context c, StateHolder stateHolder, boolean isTablet, boolean isLandscape){
+	public UIController(Context c, StateHolder stateHolder, PathCollector pathCollector, boolean isTablet, boolean isLandscape){
 		this.c = c;
 		this.isTablet = isTablet;
 		menus = new MenuView[4];	// Assuming that no ID is higher than 3
@@ -58,7 +58,7 @@ public class UIController {
 		menuButtons[MENU_POINTS] = (ImageButton) ((MainScreen) c).findViewById(R.id.menuButtonPoints);
 		menuButtons[MENU_MODE] = (ImageButton) ((MainScreen) c).findViewById(R.id.menuButtonMode);
 		fktCanvas = (FktCanvas) ((MainScreen) c).findViewById(R.id.fktCanvas);
-		fktCanvas.setOnTouchListener(new FktCanvasTouchListener(stateHolder, fktCanvas));
+		fktCanvas.setOnTouchListener(new FktCanvasTouchListener(this, stateHolder, pathCollector, fktCanvas));
 		for (MenuView menu:menus)
 			menu.setVisibility(View.GONE);
 		onConfigChange();
@@ -86,6 +86,12 @@ public class UIController {
 					menus[i].setVisibility(View.GONE);
 					menuButtons[i].setBackgroundColor(NORMAL_COLOR);
 				}}}
+	}
+	
+	public void hideAllMenus(){
+		for (int i = 0; i < menus.length; i++)
+			if (menus[i].getVisibility() == View.VISIBLE)
+				toggleMenu(i);
 	}
 	
 	public void setLandscape(boolean value){

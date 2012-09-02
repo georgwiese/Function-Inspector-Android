@@ -29,12 +29,12 @@ public class FktCanvasTouchListener implements OnTouchListener {
 	GestureDetector gestureDetector;
 	SpanStorage ss;
 	
-	public FktCanvasTouchListener(StateHolder sh, FktCanvas canvas){
+	public FktCanvasTouchListener(UIController uic, StateHolder sh, PathCollector pathCollector, FktCanvas canvas){
 		this.sh = sh;
 		this.canvas = canvas;
 		
 		ss = new SpanStorage();
-		gListener = new FktCanvasGestureListener(canvas, sh, ss);
+		gListener = new FktCanvasGestureListener(canvas, sh, pathCollector, uic, ss);
 		scaleGestDet = new ScaleGestureDetector(canvas.getContext(), gListener);
 		gestureDetector = new GestureDetector(gListener);
 	}

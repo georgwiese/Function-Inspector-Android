@@ -169,8 +169,9 @@ public class MainScreen extends Activity {
     	//stateHolder.addFkt("e^x");
     	//stateHolder.addFkt("-e^x");
     	//TODO: Find a whether or not it is a tablet
-    	uiController = new UIController(mContext, stateHolder, true, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
     	canvas = (FktCanvas) findViewById(R.id.fktCanvas);
+    	pathCollector = new PathCollector(stateHolder, canvas);
+    	uiController = new UIController(mContext, stateHolder, pathCollector, true, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
     	inputController = new InputController(mContext, stateHolder, uiController, canvas);
     	
     	canvas.setOnSizeChangedListener(new FktCanvas.OnSizeChangedListener() {
@@ -180,7 +181,6 @@ public class MainScreen extends Activity {
 				uiController.onConfigChange();
 			}
 		});
-    	pathCollector = new PathCollector(stateHolder, canvas);
     	redrawThread = new RedrawThread(null, stateHolder, canvas, pathCollector);
     	canvas.setProps(stateHolder, pathCollector);
     	updateThread = new UpdateThread(canvas, stateHolder);

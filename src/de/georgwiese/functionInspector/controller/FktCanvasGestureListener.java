@@ -1,14 +1,18 @@
 package de.georgwiese.functionInspector.controller;
 
+import java.util.ArrayList;
+
 import de.georgwiese.calculationFunktions.Point;
 import de.georgwiese.functionInspector.SwitchButtonSet;
 import de.georgwiese.functionInspector.uiClasses.FktCanvas;
+import de.georgwiese.functionInspector.uiClasses.Helper;
 import de.georgwiese.functionInspectorLite.R;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Path;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -29,12 +33,16 @@ public class FktCanvasGestureListener extends SimpleOnGestureListener implements
 	FktCanvas canvas;
 	StateHolder sh;
 	long timeLastZoomStop;
+	PathCollector pathCollector;
+	UIController uic;
 	SpanStorage ss;
 	
-	public FktCanvasGestureListener(FktCanvas canvas, StateHolder sh, SpanStorage ss) {
+	public FktCanvasGestureListener(FktCanvas canvas, StateHolder sh, PathCollector pathCollector, UIController uic, SpanStorage ss) {
 		this.canvas = canvas;
 		this.sh     = sh;
 		timeLastZoomStop = 0;
+		this.pathCollector = pathCollector;
+		this.uic = uic;
 		this.ss = ss;
 	}
 	
@@ -50,26 +58,10 @@ public class FktCanvasGestureListener extends SimpleOnGestureListener implements
 		ss.currentSpanY = 0;
 		ss.prevSpanX = 0;
 		ss.prevSpanY = 0;
-		//bZoom=false;
-		//xPrevSpan=0;
-		//yPrevSpan=0;
 	}
 	
 	@Override
 	public boolean onScaleBegin(ScaleGestureDetector detector) {
-		//lastZoomX=zoomFactorX;
-		//totalZoomX=zoomFactorX;
-		//lastZoomY=zoomFactorY;
-		//totalZoomY=zoomFactorY;
-		//oldZoomX=zoomFactorX;
-		//oldZoomY=zoomFactorY;
-		//lastMiddleX=middleX;
-		//lastMiddleY=middleY;
-		//zoomToX=pxToUnitX(detector.getFocusX());
-		//zoomToY=pxToUnitY(detector.getFocusY());
-		//zoomToX=middleX;
-		//zoomToY=middleY;
-		//bZoom=true;
 		ss.prevSpanX = ss.currentSpanX;
 		ss.prevSpanY = ss.currentSpanY;
 		return true;
@@ -171,46 +163,65 @@ public class FktCanvasGestureListener extends SimpleOnGestureListener implements
 	@Override
 	public boolean onDoubleTap(MotionEvent e) {
 		sh.zoomIn();
-		Log.d("Developer", "onDoubleTap()");
 		return true;
 	}
 	
-	/*
 	@Override
 	public boolean onSingleTapConfirmed(MotionEvent e) {
-		activePoint=null;
-		if (disDiscon)
-			for (int i=0; i<discontinuities.size(); i++)
-				for (Double d:discontinuities.get(i))
-					if (Math.abs(e.getX()-unitToPxX(d))<25)
-						activePoint=new Point(d, 0, Point.TYPE_DISCONTINUITY);
-		if (disRoots)
-			for (int i=0; i<roots.size(); i++)
-				for (Point p:roots.get(i))
+		
+		synchronized (pathCollector) {
+			ArrayList<Path> paths = pathCollector.getPaths();
+			ArrayList<ArrayList<Point>> roots = pathCollector.getRoots();
+			ArrayList<ArrayList<Point>> extrema = pathCollector.getExtrema();
+			ArrayList<ArrayList<Point>> inflections = pathCollector.getInflections();
+			ArrayList<ArrayList<Double>> discontinuities = pathCollector.getDiscontinuities();
+			ArrayList<Point> intersections = pathCollector.getIntersections();
+			
+			boolean hasActive = pathCollector.getActivePoint() == null;
+			pathCollector.setActivePoint(null);
+			
+			if (sh.disExtrema){
+				for (int i=0; i<extrema.size(); i++)
+					for (Point p:extrema.get(i))
+						if (distance(p,e.getX(),e.getY())<25)
+							pathCollector.setActivePoint(p);}
+			if (sh.disInflections){
+				for (int i=0; i<inflections.size(); i++)
+					for (Point p:inflections.get(i))
+						if (distance(p,e.getX(),e.getY())<25)
+							pathCollector.setActivePoint(p);}
+			if (sh.disIntersections){
+				for (Point p:intersections)
 					if (distance(p,e.getX(),e.getY())<25)
-						activePoint=p;
-		if (disExtrema)
-			for (int i=0; i<extrema.size(); i++)
-				for (Point p:extrema.get(i))
-					if (distance(p,e.getX(),e.getY())<25)
-						activePoint=p;
-		if (disInflections)
-			for (int i=0; i<inflections.size(); i++)
-				for (Point p:inflections.get(i))
-					if (distance(p,e.getX(),e.getY())<25)
-						activePoint=p;
-		if (disIntersections)
-			for (Point p:intersections)
-				if (distance(p,e.getX(),e.getY())<25)
-					activePoint=p;
-		if (activePoint!=null)
+						pathCollector.setActivePoint(p);}
+			if (sh.disDiscon){
+				for (int i=0; i<discontinuities.size(); i++)
+					for (Double d:discontinuities.get(i))
+						if (Math.abs(e.getX() - (float)Helper.unitToPx(d.doubleValue(), 0, sh.getZoom(), sh.getMiddle(), canvas.getWidth(), canvas.getHeight()).x)<25)
+							pathCollector.setActivePoint(new Point(d, 0, Point.TYPE_DISCONTINUITY));}
+			if (sh.disRoots){
+				for (int i=0; i<roots.size(); i++)
+					for (Point p:roots.get(i))
+						if (distance(p,e.getX(),e.getY())<25)
+							pathCollector.setActivePoint(p);}
+			
+			if (hasActive && pathCollector.getActivePoint() == null)
+				uic.hideAllMenus();
+		}
+		
+		/*if (activePoint != null)
 			pointDisplay.setVisibility(VISIBLE);
 		else if (mode==MODE_PAN)
-			pointDisplay.setVisibility(GONE);
-		invalidate();
+			pointDisplay.setVisibility(GONE);*/
+		canvas.invalidate();
 		return super.onSingleTapConfirmed(e);
 	}
-	*/
+	
+	private double distance(Point p, float x, float y){
+		float dx = (float)Helper.unitToPx(p.getX(), 0, sh.getZoom(), sh.getMiddle(), canvas.getWidth(), canvas.getHeight()).x - x;
+		float dy = (float)Helper.unitToPx(0, p.getY(), sh.getZoom(), sh.getMiddle(), canvas.getWidth(), canvas.getHeight()).y - y;
+		return Math.sqrt(dx * dx + dy * dy);
+	}
 	
 	/**
 	 * Needed in order to implement independant Zooming (each axis on its own).

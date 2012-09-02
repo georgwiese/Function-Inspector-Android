@@ -253,6 +253,43 @@ public class FktCanvas extends LinearLayout {
 							(float)Helper.unitToPx(0, p.getY(), sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).y, 5, paint);
 				paint.setStyle(Style.STROKE);
 			}
+			
+			Point activePoint = pathCollector.getActivePoint();
+			if (activePoint != null){
+				paint.setColor(Color.YELLOW);
+				paint.setStyle(Style.FILL_AND_STROKE);
+				if(activePoint.getType() == Point.TYPE_DISCONTINUITY){
+					float x = (float)Helper.unitToPx(activePoint.getX(), 0, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).x;
+					Path p = new Path();
+					p.moveTo(x, 0);
+					p.lineTo(x, getHeight());
+					paint.setStrokeWidth(6);
+					canvas.drawPath(p, paint);
+
+					// Draw value box
+					paint.setColor(Color.argb(200, 0, 0, 0));
+					// TODO: Don't use hard coded values
+					canvas.drawRect(x - 50, getHeight() / 2 - 20, x + 50, getHeight() / 2 + 20, paint);
+					paint.setColor(Color.YELLOW);
+					paint.setTextAlign(Align.CENTER);
+					paint.setStrokeWidth(1);
+					canvas.drawText("x = " + df2.format(activePoint.getX()), x, getHeight() / 2, paint);
+				}
+				else{
+					float x = (float)Helper.unitToPx(activePoint.getX(), 0, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).x;
+					float y = (float)Helper.unitToPx(0, activePoint.getY(), sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).y;
+					canvas.drawCircle(x, y, 7, paint);
+					
+					// Draw value box
+					paint.setColor(Color.argb(200, 0, 0, 0));
+					// TODO: Don't use hard coded values
+					canvas.drawRect(x - 50, y - 10, x + 50, y - 50, paint);
+					paint.setColor(Color.YELLOW);
+					paint.setTextAlign(Align.CENTER);
+					paint.setStrokeWidth(1);
+					canvas.drawText("( " + df2.format(activePoint.getX()) + " | " + df2.format(activePoint.getY()) + " )", x, y - 30, paint);
+				}
+			}
 		}
 		//paint.setColor(COLOR_AXES);
 		//paint.setStrokeWidth(2);
