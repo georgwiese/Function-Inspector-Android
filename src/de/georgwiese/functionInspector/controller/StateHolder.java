@@ -88,6 +88,13 @@ public class StateHolder {
 			fkts.add(new Function(CalcFkts.formatFktString(f)));
 			redraw=true;
 		}
+		else
+			fkts.add(null);
+		redraw = true;
+	}
+	
+	public void clearFkts(){
+		fkts.clear();
 	}
 	
 	public double getZoom(int dimension){

@@ -78,4 +78,12 @@ public class MenuView extends LinearLayout {
 		else
 			super.addView(child, params);
 	}
+	
+	@Override
+	public void removeAllViews() {
+		if (body != null)
+			body.removeAllViews();
+		else
+			super.removeAllViews();
+	}
 }

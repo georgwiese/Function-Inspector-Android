@@ -303,12 +303,14 @@ public class FktCanvas extends LinearLayout {
 				canvas.drawLine(x, 0, x, getHeight(), paint);
 				
 				for(int i = 0; i < sh.getFkts().size(); i++){
-					double yU = sh.getFkts().get(i).calculate(sh.currentX);
-					float y = (float)Helper.unitToPx(0, yU, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).y;
-					
-					paint.setColor(COLORS_GRAPHS[i % COLORS_GRAPHS.length]);
-					paint.setStyle(Style.FILL_AND_STROKE);
-					canvas.drawCircle(x, y, 5, paint);
+					if (sh.getFkts().get(i) != null){
+						double yU = sh.getFkts().get(i).calculate(sh.currentX);
+						float y = (float)Helper.unitToPx(0, yU, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).y;
+						
+						paint.setColor(COLORS_GRAPHS[i % COLORS_GRAPHS.length]);
+						paint.setStyle(Style.FILL_AND_STROKE);
+						canvas.drawCircle(x, y, 5, paint);
+					}
 				}
 			}
 		}

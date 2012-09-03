@@ -164,8 +164,8 @@ public class MainScreen extends Activity {
     	// For testing:
     	//stateHolder.addFkt("x^2");
     	//stateHolder.addFkt("-x^2");
-    	stateHolder.addFkt("sin(x)");
-    	stateHolder.addFkt("tan(x)+1");
+    	//stateHolder.addFkt("sin(x)");
+    	//stateHolder.addFkt("tan(x)+1");
     	//stateHolder.addFkt("e^x");
     	//stateHolder.addFkt("-e^x");
     	//TODO: Find a whether or not it is a tablet

@@ -1,6 +1,9 @@
 package de.georgwiese.functionInspector.controller;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+
+import com.google.ads.AdView;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -9,12 +12,18 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import de.georgwiese.calculationFunktions.CalcFkts;
+import de.georgwiese.calculationFunktions.Function;
+import de.georgwiese.functionInspector.uiClasses.EnterFunctionView;
 import de.georgwiese.functionInspector.uiClasses.FktCanvas;
 import de.georgwiese.functionInspector.uiClasses.MenuView;
+import de.georgwiese.functionInspector.uiClasses.MyKeyboardView;
 import de.georgwiese.functionInspectorLite.MainScreen;
 import de.georgwiese.functionInspectorLite.R;
 
@@ -44,6 +53,9 @@ public class UIController {
 	FktCanvas fktCanvas;
 	LinearLayout llButtons, llTrace;
 	TextView traceTv;
+	MyKeyboardView kv;
+	AdView ad;
+	ArrayList<EnterFunctionView> efv;
 	
 	DecimalFormat df1, df2;
 	
@@ -75,6 +87,9 @@ public class UIController {
 		llButtons = (LinearLayout) ((MainScreen) c).findViewById(R.id.ll_menuButtons);
 		llTrace   = (LinearLayout) ((MainScreen) c).findViewById(R.id.ll_traceBar);
 		traceTv   = (TextView) ((MainScreen) c).findViewById(R.id.mode_trace_tv);
+		kv   = (MyKeyboardView) ((MainScreen) c).findViewById(R.id.keyboardView);
+		ad   = (AdView) ((MainScreen) c).findViewById(R.id.adView);
+		efv  = new ArrayList<EnterFunctionView>();
 		fktCanvas = (FktCanvas) ((MainScreen) c).findViewById(R.id.fktCanvas);
 		fktCanvas.setOnTouchListener(new FktCanvasTouchListener(this, stateHolder, pathCollector, fktCanvas));
 
@@ -85,6 +100,7 @@ public class UIController {
 			menu.setVisibility(View.GONE);
 		onConfigChange();
 		setLandscape(isLandscape);
+		updateEfvs();
 	}
 	
 	/**
@@ -99,12 +115,16 @@ public class UIController {
 			menus[id].setVisibility(View.VISIBLE);
 			menuButtons[id].setBackgroundColor(ACTIVE_COLOR);
 			dividers[id].setBackgroundColor(ACTIVE_COLOR);
+			if (id == MENU_FKT)
+				setKBVisible(true);
 		}
 		else{
 			// Hide Menu
 			menus[id].setVisibility((isTablet && isLandscape)?View.INVISIBLE:View.GONE);
 			menuButtons[id].setBackgroundColor(NORMAL_COLOR);
 			dividers[id].setBackgroundColor(HIGHLIGHT_COLOR);
+			if (id == MENU_FKT)
+				setKBVisible(false);
 		}
 		if (!(isTablet && isLandscape)){
 			for (int i = 0; i < menus.length; i++){
@@ -113,6 +133,9 @@ public class UIController {
 					menus[i].setVisibility(View.GONE);
 					menuButtons[i].setBackgroundColor(NORMAL_COLOR);
 					dividers[i].setBackgroundColor(HIGHLIGHT_COLOR);
+
+					if (i == MENU_FKT)
+						setKBVisible(false);
 				}}}
 	}
 	
@@ -120,6 +143,64 @@ public class UIController {
 		for (int i = 0; i < menus.length; i++)
 			if (menus[i].getVisibility() == View.VISIBLE)
 				toggleMenu(i);
+	}
+	
+	public void setKBVisible(boolean visible){
+		if(visible){
+			ad.setVisibility(View.GONE);
+			kv.setVisibility(View.VISIBLE);
+		}
+		else{
+			ad.setVisibility(View.VISIBLE);
+			kv.setVisibility(View.GONE);
+		}
+	}
+	
+	public void updateEfvs(){
+		// TODO: Implement features that are commented out
+		if (efv.size()==0)
+			efv.add(new EnterFunctionView(c, kv, this));
+		for (int i=0; i<efv.size(); i++){
+			if (efv.get(i).getEt().getText().toString().equals("")
+					&& !efv.get(i).getEt().hasFocus()
+					&& i!=efv.size()-1){
+				efv.remove(i);
+				i--;
+			}
+		}
+		int count=0;
+		for (EnterFunctionView e:efv)
+			if (e.getEt().getText().toString().equals(""))
+				count++;
+		if (count==0 && (efv.size()<3)) //version==VERSION_PRO | 
+			efv.add(new EnterFunctionView(c, kv, this));
+		for (int i=0; i<efv.size(); i++){
+			efv.get(i).setNr(i+1);
+			//efv.get(i).setColor(COLORS_GRAPHS[i%COLORS_GRAPHS.length]);
+		}
+		menus[MENU_FKT].removeAllViews();
+		for (EnterFunctionView e:efv)
+			menus[MENU_FKT].addView(e);
+		/*
+		if (efv.size()==3 && version==VERSION_LITE){
+			Button b = new Button(mContext);
+			b.setText(R.string.fkt_buyPro);
+			b.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					((MainScreen)mContext).showDialog(MainScreen.PRO_DIALOG);
+				}
+			});
+			menuGraph.addToBody(b);
+		}*/
+	}
+	
+	public void updateFkts(){
+		sh.clearFkts();
+		for (EnterFunctionView e:efv)
+			sh.addFkt(CalcFkts.formatFktString(e.getEt().getText().toString()));
+
+		fktCanvas.invalidate();
 	}
 	
 	public void toggleMode(){

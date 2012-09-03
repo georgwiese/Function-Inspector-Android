@@ -333,6 +333,14 @@
             </de.georgwiese.functionInspector.uiClasses.MenuView>
          -->
         </LinearLayout>
+        
+        
+    <de.georgwiese.functionInspector.uiClasses.MyKeyboardView
+        android:id = "@+id/keyboardView"
+        android:visibility="gone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        />
 
     <com.google.ads.AdView
         android:id="@+id/adView"

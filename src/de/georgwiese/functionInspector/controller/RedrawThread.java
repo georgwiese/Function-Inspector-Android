@@ -69,47 +69,49 @@ public class RedrawThread extends Thread{
 						hInflections.add(new ArrayList<Point>());
 						hDiscon.add(new ArrayList<Double>());
 					}
+					else{
 					
-					double [] params = sh.getParams();
-					//TODO: implement Function.setParams(double[] params)
-					f.setA(params[0]);
-					f.setB(params[1]);
-					f.setC(params[2]);
-					
-					hDiscon.add(PointMaker.getDiscontinuities(f, Helper.pxToUnit(-_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.pxToUnit(2*_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.getDeltaUnit(15,_zoomFactor[0])));
-					hExtrema.add(PointMaker.getExtrema(f, hDiscon.get(j), Helper.pxToUnit(-_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.pxToUnit(2*_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.getDeltaUnit(15,_zoomFactor[0])));
-					hRoots.add(PointMaker.getRoots(f, hExtrema.get(j), hDiscon.get(j), Helper.pxToUnit(-_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.pxToUnit(2*_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.getDeltaUnit(15,_zoomFactor[0])));
-					hInflections.add(PointMaker.getInflectionPoints(f, hDiscon.get(j), Helper.pxToUnit(-_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.pxToUnit(2*_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.getDeltaUnit(15,_zoomFactor[0])));
-					
-					int inIndex=0;
-					ArrayList<Double> discons = hDiscon.get(_fkts.indexOf(f));
-					//TODO: decide whether or not to use different qualities
-					for (float x=-_width; x<2*_width; x++){ //x+=quality){
-						//if (quality==QUALITY_PREVIEW && x<-2*QUALITY_PREVIEW)
-						//	x=-2*QUALITY_PREVIEW;
-						double xU = Helper.pxToUnit(x, 0, _zoomFactor, _middle, _width, _height).x;
-						double y = f.calculate(xU);
-						if (inIndex<discons.size() && xU >= discons.get(inIndex)){
-							first=true;
-							inIndex++;
-						}
-						if (!Double.isNaN(y)){
-							//if (!(quality==QUALITY_PREVIEW & x>getWidth())){
-							if ((x>=-PathCollector.TOLERANCE_SIDE && x <= _width+PathCollector.TOLERANCE_SIDE) | x % 5==0){
-								float yPx = (float) Helper.unitToPx(0, y, _zoomFactor, _middle, _width, _height).y;
-								
-								if (first)
-									p.moveTo(x, yPx);
-								first=false;
-								p.lineTo(x, yPx);
+						double [] params = sh.getParams();
+						//TODO: implement Function.setParams(double[] params)
+						f.setA(params[0]);
+						f.setB(params[1]);
+						f.setC(params[2]);
+						
+						hDiscon.add(PointMaker.getDiscontinuities(f, Helper.pxToUnit(-_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.pxToUnit(2*_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.getDeltaUnit(15,_zoomFactor[0])));
+						hExtrema.add(PointMaker.getExtrema(f, hDiscon.get(j), Helper.pxToUnit(-_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.pxToUnit(2*_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.getDeltaUnit(15,_zoomFactor[0])));
+						hRoots.add(PointMaker.getRoots(f, hExtrema.get(j), hDiscon.get(j), Helper.pxToUnit(-_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.pxToUnit(2*_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.getDeltaUnit(15,_zoomFactor[0])));
+						hInflections.add(PointMaker.getInflectionPoints(f, hDiscon.get(j), Helper.pxToUnit(-_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.pxToUnit(2*_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.getDeltaUnit(15,_zoomFactor[0])));
+						
+						int inIndex=0;
+						ArrayList<Double> discons = hDiscon.get(_fkts.indexOf(f));
+						//TODO: decide whether or not to use different qualities
+						for (float x=-_width; x<2*_width; x++){ //x+=quality){
+							//if (quality==QUALITY_PREVIEW && x<-2*QUALITY_PREVIEW)
+							//	x=-2*QUALITY_PREVIEW;
+							double xU = Helper.pxToUnit(x, 0, _zoomFactor, _middle, _width, _height).x;
+							double y = f.calculate(xU);
+							if (inIndex<discons.size() && xU >= discons.get(inIndex)){
+								first=true;
+								inIndex++;
 							}
+							if (!Double.isNaN(y)){
+								//if (!(quality==QUALITY_PREVIEW & x>getWidth())){
+								if ((x>=-PathCollector.TOLERANCE_SIDE && x <= _width+PathCollector.TOLERANCE_SIDE) | x % 5==0){
+									float yPx = (float) Helper.unitToPx(0, y, _zoomFactor, _middle, _width, _height).y;
+									
+									if (first)
+										p.moveTo(x, yPx);
+									first=false;
+									p.lineTo(x, yPx);
+								}
+								//}
+							}
+							else
+								first=true;
 							//}
 						}
-						else
-							first=true;
-						//}
+						helperPaths.add(p);
 					}
-					helperPaths.add(p);
 				}
 				
 				ArrayList<Point> hIntersections = new ArrayList<Point>();
