@@ -269,4 +269,9 @@ NEW NEW NEW NEW NEW NEW NEW NEW
 	<string name="ic_error_inputInvalid">ERROR: Input is invalid!</string>
 	<string name="ic_result">Result</string>
 	
+	<!-- NEW NEW NEW NEW NEW -->
+	
+	<string name="mode_trace_advice">Tap to exit</string>
+
+	
 </resources>

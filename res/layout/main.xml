@@ -8,10 +8,67 @@
     android:orientation="vertical" >
 
     <LinearLayout
+        android:id="@+id/ll_traceBar"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:background="#000000"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="horizontal" >
+            
+           <TextView 
+               android:text="@string/mode_trace_name"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:paddingLeft="20dp"
+               android:paddingRight="20dp"
+               android:textSize="30dp"/>
+           
+           <View 
+               android:layout_width="1dp"
+               android:layout_height="36dp"
+               android:background="#888888"
+               />
+           
+            <!-- 
+           <TextView 
+               android:text="   |   "
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textSize="30dp"/>
+                -->
+            <!--  
+           <TextView 
+               android:layout_width="0dp"
+               android:layout_weight="1"
+               android:maxWidth="100dp"
+               android:layout_height="fill_parent"/>
+            -->
+            <!-- 
+           <View 
+               android:layout_width="0dp"
+               android:layout_height="0dp"
+               android:layout_weight="1"
+               /> -->
+           <TextView 
+               android:id = "@+id/mode_trace_tv"
+               android:layout_width="wrap_content"
+               android:minWidth="120dp"
+               android:background="#1c3640"
+               android:paddingLeft="5dp"
+               android:layout_marginLeft="30dp"
+               android:layout_marginRight="10dp"
+               android:layout_height="wrap_content"
+               android:textSize="25dp"/>
+        
+    </LinearLayout>
+    
+    <LinearLayout
         android:id="@+id/ll_menuButtons"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:background="#000000"
+        android:visibility="visible"
         android:orientation="horizontal" >
 
         <ImageButton
@@ -42,7 +99,7 @@
             android:background="#000000"
             android:onClick="onButtonClick"
             android:src="@drawable/bt_bar_points" />
-
+<!-- 
         <ImageButton
             android:id="@+id/menuButtonMode"
             android:layout_width="70dp"
@@ -52,13 +109,37 @@
             android:background="#000000"
             android:onClick="onButtonClick"
             android:src="@drawable/bt_bar_mode_pan" />
+ -->
     </LinearLayout>
     
-    <View 
+    <LinearLayout 
         android:layout_width="fill_parent"
-        android:layout_height="1px"
-        android:background="#84AABD"
-        />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    
+	    <View 
+	        android:id = "@+id/divider_fkt"
+	        android:layout_width="0dp"
+	        android:layout_height="2dp"
+	        android:layout_weight="1"
+	        android:background="#3691b3"
+	        />
+	    <View 
+	        android:id = "@+id/divider_param"
+	        android:layout_width="0dp"
+	        android:layout_height="2dp"
+	        android:layout_weight="1"
+	        android:background="#3691b3"
+	        />
+	    <View 
+	        android:id = "@+id/divider_points"
+	        android:layout_width="0dp"
+	        android:layout_height="2dp"
+	        android:layout_weight="1"
+	        android:background="#3691b3"
+	        />
+    
+    </LinearLayout>
 
     <de.georgwiese.functionInspector.uiClasses.FktCanvas
         android:id="@+id/fktCanvas"
@@ -211,6 +292,8 @@
                 </Button>
             </de.georgwiese.functionInspector.uiClasses.MenuView>
 
+            <!-- 
+            
             <de.georgwiese.functionInspector.uiClasses.MenuView
                 android:id="@+id/menuMode"
                 android:layout_width="70dp"
@@ -248,8 +331,8 @@
                     android:text="@string/mode_slope_name"
                     android:textSize="12dip" />
             </de.georgwiese.functionInspector.uiClasses.MenuView>
+         -->
         </LinearLayout>
-        
 
     <com.google.ads.AdView
         android:id="@+id/adView"

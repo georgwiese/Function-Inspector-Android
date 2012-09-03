@@ -35,9 +35,9 @@ public class InputController {
 		case R.id.menuButtonPoints:
 			uic.toggleMenu(UIController.MENU_POINTS);
 			break;
-		case R.id.menuButtonMode:
-			uic.toggleMenu(UIController.MENU_MODE);
-			break;
+		//case R.id.menuButtonMode:
+		//	uic.toggleMenu(UIController.MENU_MODE);
+		//	break;
 		case R.id.mv_points_roots:
 			Log.d("Developer", "DisRoots clicked");
 			sh.disRoots = ((CheckBox) v).isChecked();

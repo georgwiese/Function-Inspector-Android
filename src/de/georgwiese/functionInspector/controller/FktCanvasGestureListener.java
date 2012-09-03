@@ -91,6 +91,15 @@ public class FktCanvasGestureListener extends SimpleOnGestureListener implements
 		return true;
 	}
 	
+	@Override
+	public void onLongPress(MotionEvent e) {
+		super.onLongPress(e);
+		
+		sh.toggleMode();
+		sh.currentX = Helper.pxToUnit(e.getX(), 0, sh.getZoom(), sh.getMiddle(), canvas.getWidth(), canvas.getHeight()).x;
+		uic.toggleMode();
+	}
+	
 	/*
 	@Override
 	public void onLongPress(MotionEvent e) {
@@ -169,8 +178,13 @@ public class FktCanvasGestureListener extends SimpleOnGestureListener implements
 	@Override
 	public boolean onSingleTapConfirmed(MotionEvent e) {
 		
+		if (sh.getMode() == StateHolder.MODE_TRACE){
+			sh.toggleMode();
+			uic.toggleMode();
+			return true;
+		}
+		
 		synchronized (pathCollector) {
-			ArrayList<Path> paths = pathCollector.getPaths();
 			ArrayList<ArrayList<Point>> roots = pathCollector.getRoots();
 			ArrayList<ArrayList<Point>> extrema = pathCollector.getExtrema();
 			ArrayList<ArrayList<Point>> inflections = pathCollector.getInflections();

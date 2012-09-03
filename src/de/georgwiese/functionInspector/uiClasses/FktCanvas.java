@@ -2,7 +2,9 @@ package de.georgwiese.functionInspector.uiClasses;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Currency;
 
+import de.georgwiese.calculationFunktions.Function;
 import de.georgwiese.calculationFunktions.Point;
 import de.georgwiese.functionInspector.controller.PathCollector;
 import de.georgwiese.functionInspector.controller.StateHolder;
@@ -34,6 +36,7 @@ public class FktCanvas extends LinearLayout {
 	static final int[] COLORS_GRAPHS    = {Color.RED, Color.GREEN, Color.CYAN};
 	static final int COLOR_ACTIVE_POINT = Color.YELLOW;
 	static final int COLOR_INTERSECTION = Color.GRAY;
+	static final int COLOR_TRACELINE    = Color.argb(200, 255, 255, 255);
 	
 	Paint paint;
 	StateHolder sh;
@@ -254,6 +257,7 @@ public class FktCanvas extends LinearLayout {
 				paint.setStyle(Style.STROKE);
 			}
 			
+			// Active Point
 			Point activePoint = pathCollector.getActivePoint();
 			if (activePoint != null){
 				paint.setColor(Color.YELLOW);
@@ -288,6 +292,23 @@ public class FktCanvas extends LinearLayout {
 					paint.setTextAlign(Align.CENTER);
 					paint.setStrokeWidth(1);
 					canvas.drawText("( " + df2.format(activePoint.getX()) + " | " + df2.format(activePoint.getY()) + " )", x, y - 30, paint);
+				}
+			}
+			
+			// Trace
+			if (sh.getMode() == StateHolder.MODE_TRACE){
+				float x = (float)Helper.unitToPx(sh.currentX, 0, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).x;
+				paint.setStrokeWidth(2);
+				paint.setColor(COLOR_TRACELINE);
+				canvas.drawLine(x, 0, x, getHeight(), paint);
+				
+				for(int i = 0; i < sh.getFkts().size(); i++){
+					double yU = sh.getFkts().get(i).calculate(sh.currentX);
+					float y = (float)Helper.unitToPx(0, yU, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).y;
+					
+					paint.setColor(COLORS_GRAPHS[i % COLORS_GRAPHS.length]);
+					paint.setStyle(Style.FILL_AND_STROKE);
+					canvas.drawCircle(x, y, 5, paint);
 				}
 			}
 		}

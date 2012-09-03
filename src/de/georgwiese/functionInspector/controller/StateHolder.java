@@ -21,7 +21,6 @@ public class StateHolder {
 	// Constants describing the current mode
 	public static final int MODE_PAN   = 0;
 	public static final int MODE_TRACE = 1;
-	public static final int MODE_SLOPE = 2;
 	
 	// Constants dealing with speed
 	static final double FRICTION_FACTOR = 0.97;
@@ -49,6 +48,7 @@ public class StateHolder {
 	public boolean disRoots,
 	disExtrema, disInflections,		// public booleans for whether or not those points should be displayed
 	disIntersections, disDiscon;
+	public double currentX;
 	
 	public StateHolder(Context c){
 		redraw = true;
@@ -127,6 +127,10 @@ public class StateHolder {
 	
 	public int getMode(){
 		return mode;
+	}
+	
+	public void toggleMode(){
+		mode = mode==MODE_PAN?MODE_TRACE:MODE_PAN;
 	}
 	
 	public ArrayList<Function> getFkts() {

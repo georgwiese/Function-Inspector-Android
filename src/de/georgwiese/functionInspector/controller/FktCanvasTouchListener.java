@@ -20,6 +20,7 @@ import android.view.animation.AnimationUtils;
  */
 public class FktCanvasTouchListener implements OnTouchListener {
 	
+	UIController uic;
 	StateHolder sh;
 	FktCanvas canvas;
 	float firstTouchX, firstTouchY, lastTouchX, lastTouchY;		// Store first and last touch position
@@ -30,6 +31,7 @@ public class FktCanvasTouchListener implements OnTouchListener {
 	SpanStorage ss;
 	
 	public FktCanvasTouchListener(UIController uic, StateHolder sh, PathCollector pathCollector, FktCanvas canvas){
+		this.uic = uic;
 		this.sh = sh;
 		this.canvas = canvas;
 		
@@ -42,6 +44,12 @@ public class FktCanvasTouchListener implements OnTouchListener {
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
 		gestureDetector.onTouchEvent(event);
+		
+		sh.currentX = Helper.pxToUnit(event.getX(), 0, sh.getZoom(), sh.getMiddle(), canvas.getWidth(), canvas.getHeight()).x;
+		
+		if(sh.getMode() == StateHolder.MODE_TRACE)
+			uic.updateTraceTv();
+		
 		/*
 		if (SHOW_TOUCH_POSITION){
 			xs = new ArrayList<Float>();
