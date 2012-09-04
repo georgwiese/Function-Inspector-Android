@@ -19,6 +19,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.provider.ContactsContract.RawContacts.Data;
 import android.provider.Settings.Secure;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.HapticFeedbackConstants;
@@ -61,6 +62,7 @@ import de.georgwiese.functionInspector.controller.UpdateThread;
 import de.georgwiese.functionInspector.uiClasses.FktCanvas;
 import de.georgwiese.functionInspector.uiClasses.FktCanvas.OnSizeChangedListener;
 import de.georgwiese.functionInspector.uiClasses.MenuView;
+import de.georgwiese.functionInspector.uiClasses.MyKeyboardView;
 
 /*
  * - package
@@ -169,10 +171,21 @@ public class MainScreen extends Activity {
     	//stateHolder.addFkt("e^x");
     	//stateHolder.addFkt("-e^x");
     	//TODO: Find a whether or not it is a tablet
+    	DisplayMetrics dm = getResources().getDisplayMetrics();
+    	// Determine the approximate width in inch.
+    	//China Tablet: 5, Nexus 7 6, LGOS: 3.4
+    	boolean isTablet = Math.max(dm.widthPixels / dm.xdpi, dm.heightPixels / dm.ydpi) > 4.5;
+    	Log.d("Developer", "heightPixels: " + dm.heightPixels);
+    	Log.d("Developer", "WidthPixels: " + dm.widthPixels);
+    	Log.d("Developer", "xdpi: " + dm.xdpi);
+    	Log.d("Developer", "ydpi: " + dm.ydpi);
+    	Log.d("Developer", "height (dip): " + dm.heightPixels / dm.ydpi);
+    	Log.d("Developer", "width (dip): " + dm.widthPixels / dm.xdpi);
     	canvas = (FktCanvas) findViewById(R.id.fktCanvas);
     	pathCollector = new PathCollector(stateHolder, canvas);
-    	uiController = new UIController(mContext, stateHolder, pathCollector, true, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
+    	uiController = new UIController(mContext, stateHolder, pathCollector, isTablet, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
     	inputController = new InputController(mContext, stateHolder, uiController, canvas);
+    	((MyKeyboardView) findViewById(R.id.keyboardView)).setUIController(uiController);
     	
     	canvas.setOnSizeChangedListener(new FktCanvas.OnSizeChangedListener() {
 			@Override

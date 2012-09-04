@@ -68,6 +68,7 @@ public class RedrawThread extends Thread{
 						hExtrema.add(new ArrayList<Point>());
 						hInflections.add(new ArrayList<Point>());
 						hDiscon.add(new ArrayList<Double>());
+						helperPaths.add(null);
 					}
 					else{
 					

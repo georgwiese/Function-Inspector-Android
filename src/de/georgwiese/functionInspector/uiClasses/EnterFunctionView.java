@@ -109,6 +109,7 @@ public class EnterFunctionView extends LinearLayout {
 		et.setClickable(true);
 
 	    //disable keypad
+		// TODO: Keyboard still pops up when App is brought back to foreground and EditText is focussed.
 	    et.setOnTouchListener(new OnTouchListener(){
 	        @Override
 	        public boolean onTouch(View v, MotionEvent event) {
@@ -128,9 +129,9 @@ public class EnterFunctionView extends LinearLayout {
 	             */
 	            Paint p = new Paint();
 	            p.setTextSize(et.getTextSize());
-	            et.setSelection(Math.min(et.getEditableText().length(),
+	            et.setSelection(Math.max(0, Math.min(et.getEditableText().length(),
 	            		Math.round(et.getEditableText().length() *
-	            		(event.getX() - et.getPaddingLeft()) / p.measureText(et.getEditableText().toString()))));
+	            		(event.getX() - et.getPaddingLeft()) / p.measureText(et.getEditableText().toString())))));
 	            et.requestFocus();
 	            return  true; // consume touch even
 	        }

@@ -122,9 +122,11 @@ public class PathCollector {
 		//		Helper.getDeltaPx(newCurrentPos.y - oldCurrentPos.y, sh.getZoom(1)));
 
 		for(Path p:paths){
-			p.offset(Helper.getDeltaPx(oldCurrentPos.x - newCurrentPos.x, sh.getZoom(0)),
-					 Helper.getDeltaPx(newCurrentPos.y - oldCurrentPos.y, sh.getZoom(1)));
-			p.transform(transMatrix);
+			if (p != null){
+				p.offset(Helper.getDeltaPx(oldCurrentPos.x - newCurrentPos.x, sh.getZoom(0)),
+						Helper.getDeltaPx(newCurrentPos.y - oldCurrentPos.y, sh.getZoom(1)));
+				p.transform(transMatrix);
+			}
 		}
 		
 		currentZoom = sh.getZoom().clone();

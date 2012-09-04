@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import de.georgwiese.functionInspector.controller.UIController;
 import de.georgwiese.functionInspectorLite.*;
 import de.georgwiese.functionInspectorPro.*;
 
@@ -30,6 +31,8 @@ import de.georgwiese.functionInspectorPro.*;
  *
  */
 public class MyKeyboardView extends LinearLayout {
+	
+	UIController uic;
 
 	final int KEYBOARD_LEFT=-1;
 	final int KEYBOARD_RIGHT=-2;
@@ -130,12 +133,12 @@ public class MyKeyboardView extends LinearLayout {
 		down.setBackgroundResource(R.drawable.key_light);
 		down.setLayoutParams(new LayoutParams(0, LayoutParams.WRAP_CONTENT,1));
 		
-		// TODO: Implement
-		/*down.setOnClickListener(new OnClickListener() {
+		down.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				fv2.focusNextEfv();
-		}});*/
+				if (uic != null)
+					uic.focusNextEfv();
+		}});
 		info = new ImageButton(mContext);
 		info.setImageResource(R.drawable.key_icon_info);
 		info.setBackgroundResource(R.drawable.key_light);
@@ -249,6 +252,14 @@ public class MyKeyboardView extends LinearLayout {
 		addView(pages[1]);
 		pages[0].setVisibility(VISIBLE);
 		pages[1].setVisibility(GONE);
+	}
+	
+	/**
+	 * Needs to be called right after initialization
+	 * @param uic
+	 */
+	public void setUIController(UIController uic) {
+		this.uic = uic;
 	}
 	
 	private void setNextLayout(int id){

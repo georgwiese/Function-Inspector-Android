@@ -14,6 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -58,6 +61,7 @@ public class UIController {
 	ArrayList<EnterFunctionView> efv;
 	
 	DecimalFormat df1, df2;
+	Animation menuIn, menuOut, efvIn, efvOut;
 	
 	/**
 	 * UIController changes and animates all UI Elements
@@ -95,6 +99,11 @@ public class UIController {
 
 		df1 = new DecimalFormat("0.0##");
 		df2 = new DecimalFormat("0.00");
+
+		menuIn  = AnimationUtils.loadAnimation(c, R.anim.menu_in);
+		menuOut = AnimationUtils.loadAnimation(c, R.anim.menu_out);
+		efvIn  = AnimationUtils.loadAnimation(c, R.anim.efv_in);
+		efvOut = AnimationUtils.loadAnimation(c, R.anim.efv_out);
 		
 		for (MenuView menu:menus)
 			menu.setVisibility(View.GONE);
@@ -115,14 +124,18 @@ public class UIController {
 			menus[id].setVisibility(View.VISIBLE);
 			menuButtons[id].setBackgroundColor(ACTIVE_COLOR);
 			dividers[id].setBackgroundColor(ACTIVE_COLOR);
-			if (id == MENU_FKT)
+			menus[id].startAnimation(menuIn);
+			if (id == MENU_FKT){
 				setKBVisible(true);
+				efv.get(0).requestFocus();
+			}
 		}
 		else{
 			// Hide Menu
 			menus[id].setVisibility((isTablet && isLandscape)?View.INVISIBLE:View.GONE);
 			menuButtons[id].setBackgroundColor(NORMAL_COLOR);
 			dividers[id].setBackgroundColor(HIGHLIGHT_COLOR);
+			menus[id].startAnimation(menuOut);
 			if (id == MENU_FKT)
 				setKBVisible(false);
 		}
@@ -130,6 +143,8 @@ public class UIController {
 			for (int i = 0; i < menus.length; i++){
 				if (i != id){
 					// Hide Menu
+					if (menus[i].getVisibility() == View.VISIBLE)
+						menus[i].startAnimation(menuOut);
 					menus[i].setVisibility(View.GONE);
 					menuButtons[i].setBackgroundColor(NORMAL_COLOR);
 					dividers[i].setBackgroundColor(HIGHLIGHT_COLOR);
@@ -143,6 +158,15 @@ public class UIController {
 		for (int i = 0; i < menus.length; i++)
 			if (menus[i].getVisibility() == View.VISIBLE)
 				toggleMenu(i);
+	}
+	
+	public void focusNextEfv(){
+		for(int i = 0; i < efv.size(); i++){
+			if (efv.get(i).hasFocus() && i < efv.size() - 1){
+				efv.get(i + 1).requestFocus();
+				break;
+			}
+		}
 	}
 	
 	public void setKBVisible(boolean visible){
@@ -164,6 +188,8 @@ public class UIController {
 			if (efv.get(i).getEt().getText().toString().equals("")
 					&& !efv.get(i).getEt().hasFocus()
 					&& i!=efv.size()-1){
+				// Remove Efv
+				//efv.get(i).startAnimation(efvOut);
 				efv.remove(i);
 				i--;
 			}
@@ -172,11 +198,15 @@ public class UIController {
 		for (EnterFunctionView e:efv)
 			if (e.getEt().getText().toString().equals(""))
 				count++;
-		if (count==0 && (efv.size()<3)) //version==VERSION_PRO | 
-			efv.add(new EnterFunctionView(c, kv, this));
+		if (count==0){//) && (efv.size()<3)){ version==VERSION_PRO | 
+			// Insert Efv
+			EnterFunctionView v = new EnterFunctionView(c, kv, this);
+			efv.add(v);
+			v.startAnimation(efvIn);
+		}
 		for (int i=0; i<efv.size(); i++){
 			efv.get(i).setNr(i+1);
-			//efv.get(i).setColor(COLORS_GRAPHS[i%COLORS_GRAPHS.length]);
+			efv.get(i).setColor(FktCanvas.COLORS_GRAPHS[i % FktCanvas.COLORS_GRAPHS.length]);
 		}
 		menus[MENU_FKT].removeAllViews();
 		for (EnterFunctionView e:efv)
@@ -204,9 +234,18 @@ public class UIController {
 	}
 	
 	public void toggleMode(){
-		int v = llButtons.getVisibility();
-		llButtons.setVisibility(llTrace.getVisibility());
-		llTrace.setVisibility(v);
+		if (llButtons.getVisibility() == View.VISIBLE){
+			llTrace.setVisibility(View.VISIBLE);
+			llButtons.setVisibility(View.GONE);
+			llTrace.startAnimation(menuIn);
+			llButtons.startAnimation(menuOut);
+		}
+		else{
+			llTrace.setVisibility(View.GONE);
+			llButtons.setVisibility(View.VISIBLE);
+			llTrace.startAnimation(menuOut);
+			llButtons.startAnimation(menuIn);
+		}
 		hideAllMenus();
 		updateTraceTv();
 	}
@@ -230,15 +269,6 @@ public class UIController {
 				menuButtons[i].setBackgroundColor(NORMAL_COLOR);
 			}
 		}
-		
-		// TODO: When called at initialization, this is still 0 
-		/*
-		int menuModeWidth = Math.max(menus[MENU_MODE].getWidth(), menuButtons[MENU_MODE].getWidth());
-		Log.d("Developer", "onConfigChange() --> " + menus[MENU_MODE].getWidth() + ", " + menuButtons[MENU_MODE].getWidth() + ", " + menuModeWidth);
-		menus[MENU_MODE].setMinimumWidth(menuModeWidth);
-		menuButtons[MENU_MODE].setMinimumWidth(menuModeWidth);
-		menus[MENU_MODE].invalidate();
-		*/
 	}
 	
 	
