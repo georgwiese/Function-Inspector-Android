@@ -21,6 +21,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import de.georgwiese.calculationFunktions.CalcFkts;
 import de.georgwiese.calculationFunktions.Function;
@@ -28,6 +30,8 @@ import de.georgwiese.functionInspector.uiClasses.EnterFunctionView;
 import de.georgwiese.functionInspector.uiClasses.FktCanvas;
 import de.georgwiese.functionInspector.uiClasses.MenuView;
 import de.georgwiese.functionInspector.uiClasses.MyKeyboardView;
+import de.georgwiese.functionInspector.uiClasses.SwitchButtonSet;
+import de.georgwiese.functionInspector.uiClasses.SwitchButtonSet.OnStateChangedListener;
 import de.georgwiese.functionInspectorLite.MainScreen;
 import de.georgwiese.functionInspectorLite.R;
 
@@ -37,7 +41,7 @@ import de.georgwiese.functionInspectorLite.R;
  * @author Georg Wiese
  *
  */
-public class UIController {
+public class UIController implements OnSeekBarChangeListener, OnStateChangedListener {
 	
 	public static final int MENU_FKT=0;
 	public static final int MENU_PARAM=1;
@@ -60,9 +64,14 @@ public class UIController {
 	MyKeyboardView kv;
 	AdView ad;
 	ArrayList<EnterFunctionView> efv;
+	SwitchButtonSet menuParamSbs;
+	Button menuParamMin, menuParamValue, menuParamMax;
+	SeekBar menuParamSb;
 	
 	DecimalFormat df1, df2;
 	Animation menuIn, menuOut, efvIn, efvOut;
+	String[] paramNames = {"a", "b", "c"};
+	boolean sbChangedByClick;
 	
 	/**
 	 * UIController changes and animates all UI Elements
@@ -78,29 +87,40 @@ public class UIController {
 		menus = new MenuView[3];	// Assuming that no ID is higher than 2
 		menuButtons = new ImageButton[3];
 		dividers = new View[3];
-		menus[MENU_FKT] = (MenuView) ((MainScreen) c).findViewById(R.id.menuFunction);
-		menus[MENU_PARAM] = (MenuView) ((MainScreen) c).findViewById(R.id.menuParam);
-		menus[MENU_POINTS] = (MenuView) ((MainScreen) c).findViewById(R.id.menuPoints);
-		//menus[MENU_MODE] = (MenuView) ((MainScreen) c).findViewById(R.id.menuMode);
-		menuButtons[MENU_FKT] = (ImageButton) ((MainScreen) c).findViewById(R.id.menuButtonFkt);
-		menuButtons[MENU_PARAM] = (ImageButton) ((MainScreen) c).findViewById(R.id.menuButtonParam);
-		menuButtons[MENU_POINTS] = (ImageButton) ((MainScreen) c).findViewById(R.id.menuButtonPoints);
-		//menuButtons[MENU_MODE] = (ImageButton) ((MainScreen) c).findViewById(R.id.menuButtonMode);
-		dividers[MENU_FKT] = (View) ((MainScreen) c).findViewById(R.id.divider_fkt);
-		dividers[MENU_PARAM] = (View) ((MainScreen) c).findViewById(R.id.divider_param);
-		dividers[MENU_POINTS] = (View) ((MainScreen) c).findViewById(R.id.divider_points);
-		llButtons = (LinearLayout) ((MainScreen) c).findViewById(R.id.ll_menuButtons);
-		llTrace   = (LinearLayout) ((MainScreen) c).findViewById(R.id.ll_traceBar);
-		menuContainer = (LinearLayout) ((MainScreen) c).findViewById(R.id.ll_menus);
-		traceTv   = (TextView) ((MainScreen) c).findViewById(R.id.mode_trace_tv);
-		kv   = (MyKeyboardView) ((MainScreen) c).findViewById(R.id.keyboardView);
-		ad   = (AdView) ((MainScreen) c).findViewById(R.id.adView);
+		MainScreen ms = (MainScreen) c;
+		menus[MENU_FKT] = (MenuView) ms.findViewById(R.id.menuFunction);
+		menus[MENU_PARAM] = (MenuView) ms.findViewById(R.id.menuParam);
+		menus[MENU_POINTS] = (MenuView) ms.findViewById(R.id.menuPoints);
+		menuButtons[MENU_FKT] = (ImageButton) ms.findViewById(R.id.menuButtonFkt);
+		menuButtons[MENU_PARAM] = (ImageButton) ms.findViewById(R.id.menuButtonParam);
+		menuButtons[MENU_POINTS] = (ImageButton) ms.findViewById(R.id.menuButtonPoints);
+		dividers[MENU_FKT] = (View) ms.findViewById(R.id.divider_fkt);
+		dividers[MENU_PARAM] = (View) ms.findViewById(R.id.divider_param);
+		dividers[MENU_POINTS] = (View) ms.findViewById(R.id.divider_points);
+		llButtons = (LinearLayout) ms.findViewById(R.id.ll_menuButtons);
+		llTrace   = (LinearLayout) ms.findViewById(R.id.ll_traceBar);
+		menuContainer = (LinearLayout) ms.findViewById(R.id.ll_menus);
+		traceTv   = (TextView) ms.findViewById(R.id.mode_trace_tv);
+		kv   = (MyKeyboardView) ms.findViewById(R.id.keyboardView);
+		ad   = (AdView) ms.findViewById(R.id.adView);
 		efv  = new ArrayList<EnterFunctionView>();
-		fktCanvas = (FktCanvas) ((MainScreen) c).findViewById(R.id.fktCanvas);
-		fktCanvas.setOnTouchListener(new FktCanvasTouchListener(this, stateHolder, pathCollector, fktCanvas));
-
+		
 		df1 = new DecimalFormat("0.0##");
 		df2 = new DecimalFormat("0.00");
+
+		menuParamSbs    = (SwitchButtonSet) ms.findViewById(R.id.mv_param_sbs);
+		menuParamSb     = (SeekBar) ms.findViewById(R.id.mv_param_sb);
+		menuParamMin    = (Button) ms.findViewById(R.id.mv_param_btMin);
+		menuParamValue  = (Button) ms.findViewById(R.id.mv_param_btParam);
+		menuParamMax    = (Button) ms.findViewById(R.id.mv_param_btMax);
+		updateMenuParam(true);
+		menuParamSb.setOnSeekBarChangeListener(this);
+		menuParamSbs.setOnStateChangedListener(this);
+		sbChangedByClick = false;
+		
+		fktCanvas = (FktCanvas) ms.findViewById(R.id.fktCanvas);
+		fktCanvas.setOnTouchListener(new FktCanvasTouchListener(this, stateHolder, pathCollector, fktCanvas));
+
 
 		menuIn  = AnimationUtils.loadAnimation(c, R.anim.menu_in);
 		menuOut = AnimationUtils.loadAnimation(c, R.anim.menu_out);
@@ -112,6 +132,31 @@ public class UIController {
 		onConfigChange();
 		setLandscape(isLandscape);
 		updateEfvs();
+	}
+	
+	/**
+	 * This method should be called to Update the Parameter Menu
+	 * @param complete: whether or not Seekbar and min/max Buttons should also be updated
+	 * @param newState: New State of SwitchButtonSet
+	 */
+	public void updateMenuParam(boolean complete, int newState){
+		int id = newState;
+		menuParamValue.setText(paramNames[id] + ":\n" + df2.format(sh.getParams()[id]));
+		if(complete){
+			menuParamMin.setText("min. " + paramNames[id] + ":\n" + df2.format(sh.getMinParams()[id]));
+			menuParamMax.setText("max. " + paramNames[id] + ":\n" + df2.format(sh.getMaxParams()[id]));
+			sbChangedByClick = true;
+			menuParamSb.setProgress((int)Math.round(((sh.getParams()[id] - sh.getMinParams()[id]) /
+					(sh.getMaxParams()[id] - sh.getMinParams()[id])) * menuParamSb.getMax()));
+		}
+	}
+	
+	/**
+	 * This method should be called to Update the Parameter Menu
+	 * @param complete: whether or not Seekbar and min/max Buttons should also be updated
+	 */
+	public void updateMenuParam(boolean complete){
+		updateMenuParam(complete, menuParamSbs.getState());
 	}
 	
 	/**
@@ -303,6 +348,39 @@ public class UIController {
 		
 		// TODO: This is dirty! Find a better way to get new width.
 		updateMenuWidth(id, fktCanvas.getHeight());
+	}
+
+	// Interface for Seekbar in Parameter Menu
+	@Override
+	public void onProgressChanged(SeekBar seekBar, int progress,
+			boolean fromUser) {
+		if (!sbChangedByClick){
+			int id = menuParamSbs.getState();
+			double value = (double)progress / (double)seekBar.getMax() *
+					(sh.getMaxParams()[id] - sh.getMinParams()[id]) +
+					sh.getMinParams()[id];
+			sh.setParam(menuParamSbs.getState(), value);
+			updateMenuParam(false);
+			sh.redraw = true;
+			fktCanvas.invalidate();
+		}
+		sbChangedByClick = false;
+	}
+
+	@Override
+	public void onStartTrackingTouch(SeekBar seekBar) {
+		sh.preview = true;
+	}
+
+	@Override
+	public void onStopTrackingTouch(SeekBar seekBar) {
+		sh.preview = false;
+		sh.redraw  = true;
+	}
+
+	@Override
+	public void onStateChanged(int newState) {
+		updateMenuParam(true, newState);
 	}
 	
 	

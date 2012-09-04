@@ -1,4 +1,4 @@
-package de.georgwiese.functionInspector;
+package de.georgwiese.functionInspector.uiClasses;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -10,6 +10,11 @@ import android.widget.LinearLayout;
 import de.georgwiese.functionInspectorLite.*;
 import de.georgwiese.functionInspectorPro.*;
 
+/**
+ * This class still needs review.
+ * @author Georg Wiese
+ *
+ */
 public class SwitchButtonSet extends LinearLayout {
 
 	int buttonCount = 3;
@@ -23,6 +28,7 @@ public class SwitchButtonSet extends LinearLayout {
 	
 	public SwitchButtonSet(Context context, AttributeSet attrs, int count) {
 		super(context, attrs);
+		String[] captions = {"a", "b", "c"};
 		buttonCount=count;
 		state = 0;
 		setOrientation(HORIZONTAL);
@@ -36,6 +42,7 @@ public class SwitchButtonSet extends LinearLayout {
 			bts[i].setMinWidth(50);
 			bts[i].setGravity(Gravity.CENTER);
 			bts[i].setPadding(0, 0, 0, 0);
+			bts[i].setText(captions[i]);
 			bts[i].setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -66,6 +73,7 @@ public class SwitchButtonSet extends LinearLayout {
 			bts[newState].setTextSize(22);
 			if (state!=newState & listener!=null)
 				listener.onStateChanged(newState);
+				
 			state = newState;
 		}
 	}

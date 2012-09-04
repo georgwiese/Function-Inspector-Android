@@ -34,8 +34,11 @@ public class StateHolder {
 	public boolean redraw;			// whether or not FktCanvas needs to redraw the functions
 	public boolean doDyn;			// whether or not the UpdateThread should move according to current speed
 	public boolean doZoom;			// whether or not the UpdateThread should zoom according to desiredZoom
+	public boolean preview;
 	ArrayList<Function> fkts;		// All the functions
 	double[] params;				// Parameters (a, b and c)
+	double[] minParams;
+	double[] maxParams;
 	double[] zoom;					// current zoom factor, zoom[0] on x, zoom [1] in y axis
 	double[] desiredZoom;			// To what Zoom level it should be animated
 	double[] factor;				// what number should be factored out when drawing the coordinate system
@@ -51,14 +54,23 @@ public class StateHolder {
 	public double currentX;
 	
 	public StateHolder(Context c){
-		redraw = true;
-		doDyn  = false;
-		doZoom = false;
+		redraw  = true;
+		doDyn   = false;
+		doZoom  = false;
+		preview = false;
 		fkts = new ArrayList<Function>();
 		params = new double[3];
 		params[0] = 1.0;
 		params[1] = 1.0;
 		params[2] = 1.0;
+		minParams = new double[3];
+		minParams[0] = 0.0;
+		minParams[1] = 0.0;
+		minParams[2] = 0.0;
+		maxParams = new double[3];
+		maxParams[0] = 5.0;
+		maxParams[1] = 5.0;
+		maxParams[2] = 5.0;
 		zoom = new double[2];
 		zoom[0] = 1.0;
 		zoom[1] = 1.0;
@@ -146,6 +158,18 @@ public class StateHolder {
 	
 	public double[] getParams() {
 		return params;
+	}
+	
+	public double[] getMinParams() {
+		return minParams;
+	}
+	
+	public double[] getMaxParams() {
+		return maxParams;
+	}
+	
+	public void setParam(int id, double value){
+		params[id] = value;
 	}
 	
 	public void move(double dx, double dy){

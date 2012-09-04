@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import android.graphics.Path;
 import android.os.Handler;
 import android.util.Log;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import de.georgwiese.calculationFunktions.Function;
 import de.georgwiese.calculationFunktions.Point;
 import de.georgwiese.calculationFunktions.PointMaker;
@@ -18,6 +20,7 @@ public class RedrawThread extends Thread{
 	StateHolder sh;
 	FktCanvas canvas;
 	PathCollector pathCollector;
+	long startTime;
 	
 	public RedrawThread(Handler handler, StateHolder stateHolder, FktCanvas canvas, PathCollector pathCollector){
 		super();
@@ -37,6 +40,7 @@ public class RedrawThread extends Thread{
 	@Override
 	public void run() {
 		while (true){
+			startTime = AnimationUtils.currentAnimationTimeMillis();
 			if(sh.redraw){ // && !(bZoom | bZoomDyn)){//|bZoom|bZoomDyn){
 				sh.redraw = false;
 				Point2D _lastOrigin = Helper.unitToPx(0, 0, sh.getZoom(), sh.getMiddle(), canvas.getWidth(), canvas.getHeight());
@@ -85,10 +89,9 @@ public class RedrawThread extends Thread{
 						
 						int inIndex=0;
 						ArrayList<Double> discons = hDiscon.get(_fkts.indexOf(f));
-						//TODO: decide whether or not to use different qualities
-						for (float x=-_width; x<2*_width; x++){ //x+=quality){
-							//if (quality==QUALITY_PREVIEW && x<-2*QUALITY_PREVIEW)
-							//	x=-2*QUALITY_PREVIEW;
+						float quality = sh.preview? 5 : 1;
+						float extra   = sh.preview? 10 : _width;
+						for (float x=-extra; x<_width + extra; x+=quality){
 							double xU = Helper.pxToUnit(x, 0, _zoomFactor, _middle, _width, _height).x;
 							double y = f.calculate(xU);
 							if (inIndex<discons.size() && xU >= discons.get(inIndex)){
@@ -96,7 +99,6 @@ public class RedrawThread extends Thread{
 								inIndex++;
 							}
 							if (!Double.isNaN(y)){
-								//if (!(quality==QUALITY_PREVIEW & x>getWidth())){
 								if ((x>=-PathCollector.TOLERANCE_SIDE && x <= _width+PathCollector.TOLERANCE_SIDE) | x % 5==0){
 									float yPx = (float) Helper.unitToPx(0, y, _zoomFactor, _middle, _width, _height).y;
 									
@@ -105,7 +107,6 @@ public class RedrawThread extends Thread{
 									first=false;
 									p.lineTo(x, yPx);
 								}
-								//}
 							}
 							else
 								first=true;
@@ -131,7 +132,9 @@ public class RedrawThread extends Thread{
 					handler.sendEmptyMessage(0);
 				//Looper.loop();
 			}
-			try{sleep(500);}catch(Exception e){}
+			//Log.d("Developer", "Redraw time: " + (AnimationUtils.currentAnimationTimeMillis() - startTime));
+			if (!sh.preview)
+				try{sleep(200);}catch(Exception e){}
 		}
 	}
 }

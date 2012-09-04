@@ -178,31 +178,24 @@
                 android:visibility="visible"
                 fi:menuTitle="@string/param_setParam" >
 
-                <de.georgwiese.functionInspector.SwitchButtonSet
+                <de.georgwiese.functionInspector.uiClasses.SwitchButtonSet
                     android:id="@+id/mv_param_sbs"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="10dip" >
-                </View>
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"/>
 
                 <SeekBar
                     android:id="@+id/mv_param_sb"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:padding="5dp" >
                 </SeekBar>
-
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="15dip" >
-                </View>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal"
+                    android:padding="5dp" >
 
                     <Button
                         android:id="@+id/mv_param_btMin"
