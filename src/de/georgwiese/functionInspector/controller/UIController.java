@@ -8,6 +8,7 @@ import com.google.ads.AdView;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
@@ -54,7 +55,7 @@ public class UIController {
 	StateHolder sh;
 	boolean isTablet, isLandscape;
 	FktCanvas fktCanvas;
-	LinearLayout llButtons, llTrace;
+	LinearLayout llButtons, llTrace, menuContainer;
 	TextView traceTv;
 	MyKeyboardView kv;
 	AdView ad;
@@ -90,6 +91,7 @@ public class UIController {
 		dividers[MENU_POINTS] = (View) ((MainScreen) c).findViewById(R.id.divider_points);
 		llButtons = (LinearLayout) ((MainScreen) c).findViewById(R.id.ll_menuButtons);
 		llTrace   = (LinearLayout) ((MainScreen) c).findViewById(R.id.ll_traceBar);
+		menuContainer = (LinearLayout) ((MainScreen) c).findViewById(R.id.ll_menus);
 		traceTv   = (TextView) ((MainScreen) c).findViewById(R.id.mode_trace_tv);
 		kv   = (MyKeyboardView) ((MainScreen) c).findViewById(R.id.keyboardView);
 		ad   = (AdView) ((MainScreen) c).findViewById(R.id.adView);
@@ -152,7 +154,34 @@ public class UIController {
 					if (i == MENU_FKT)
 						setKBVisible(false);
 				}}}
+		
+		if (menus[id].getVisibility() == View.VISIBLE)
+			updateMenuWidth(id);
 	}
+	
+	public void updateMenuWidth(int id){
+		updateMenuWidth(id, fktCanvas.getWidth());
+	}
+	
+	public void updateMenuWidth(int id, int newWidthPx){
+		int maxWidth = (int)(350 * c.getResources().getDisplayMetrics().density);
+		if (!(isTablet && isLandscape) && id >= 0 && id < menus.length &&
+				newWidthPx >= maxWidth){
+			menus[id].setLayoutParams(new LinearLayout.LayoutParams(maxWidth, LayoutParams.WRAP_CONTENT));
+			switch(id){
+			case MENU_FKT:
+				menuContainer.setGravity(Gravity.LEFT); break;
+			case MENU_PARAM:
+				menuContainer.setGravity(Gravity.CENTER_HORIZONTAL); break;
+			case MENU_POINTS:
+				menuContainer.setGravity(Gravity.RIGHT); break;
+			}
+		}
+		else
+			for(MenuView menu:menus)
+				menu.setLayoutParams(new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1));
+	}
+	
 	
 	public void hideAllMenus(){
 		for (int i = 0; i < menus.length; i++)
@@ -261,14 +290,19 @@ public class UIController {
 	
 	public void onConfigChange(){
 		boolean first = true;
+		int id = -1;
 		for(int i=0; i<menus.length; i++){
-			if (first && menus[i].getVisibility()==View.VISIBLE)
+			if (first && menus[i].getVisibility()==View.VISIBLE){
 				first = false;
-			else{
+				id = i;
+			}else{
 				menus[i].setVisibility((isTablet && isLandscape)?View.INVISIBLE:View.GONE);
 				menuButtons[i].setBackgroundColor(NORMAL_COLOR);
 			}
 		}
+		
+		// TODO: This is dirty! Find a better way to get new width.
+		updateMenuWidth(id, fktCanvas.getHeight());
 	}
 	
 	
