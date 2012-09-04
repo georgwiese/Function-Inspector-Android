@@ -64,7 +64,6 @@ public class EnterFunctionView extends LinearLayout {
 		refresh=true;
 	}
 	
-	@TargetApi(11)
 	public EnterFunctionView(Context context, MyKeyboardView keyboardView, UIController uic) {
 		super(context, null);
 		kv=keyboardView;
@@ -108,7 +107,6 @@ public class EnterFunctionView extends LinearLayout {
 		et.setCursorVisible(true);
 		et.invalidate();
 		et.setClickable(true);
-		et.setLayerType(LAYER_TYPE_SOFTWARE, null);
 
 	    //disable keypad
 	    et.setOnTouchListener(new OnTouchListener(){
@@ -119,9 +117,21 @@ public class EnterFunctionView extends LinearLayout {
 	            et.setInputType(InputType.TYPE_NULL); // disable soft input
 	            et.onTouchEvent(event); // call native handler
 	            et.setInputType(inType); // restore input type
+	            
+	            /**
+	             * ATTENTION: The following code will set the cursor position
+	             * and request focus. This is actually supposed to be done in
+	             * the onTouch() method, but not if input type is TYPE_NULL.
+	             * The formula for calculating the cursor position is assuming
+	             * that every character has the same width which makes it kind
+	             * of inaccurate.
+	             */
+	            Paint p = new Paint();
+	            p.setTextSize(et.getTextSize());
+	            et.setSelection(Math.min(et.getEditableText().length(),
+	            		Math.round(et.getEditableText().length() *
+	            		(event.getX() - et.getPaddingLeft()) / p.measureText(et.getEditableText().toString()))));
 	            et.requestFocus();
-	            // TODO: Fix cursor position
-	            //et.setSelection(2);
 	            return  true; // consume touch even
 	        }
 	        });
