@@ -1,5 +1,10 @@
 package de.georgwiese.functionInspector.controller;
 
+import com.actionbarsherlock.internal.view.View_HasStateListenerSupport;
+import com.actionbarsherlock.internal.view.View_OnAttachStateChangeListener;
+import com.actionbarsherlock.internal.view.menu.MenuBuilder;
+import com.actionbarsherlock.internal.view.menu.MenuPopupHelper;
+
 import de.georgwiese.functionInspector.uiClasses.FktCanvas;
 import de.georgwiese.functionInspectorLite.R;
 import android.content.Context;

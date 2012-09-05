@@ -53,9 +53,10 @@ public class EnterFunctionView extends LinearLayout {
 	Button close;
 	TextView tv;
 	EditText et;
-	ImageButton more;
+	//ImageButton more;
+	OverflowButton overflow;
 	boolean refresh;
-	QuickAction qa;
+	//QuickAction qa;
 	
 	public EnterFunctionView(Context context, MyKeyboardView keyboardView, UIController uic, String f) {
 		this(context, keyboardView, uic);
@@ -88,6 +89,8 @@ public class EnterFunctionView extends LinearLayout {
 				et.setText("");
 			}
 		});
+		close.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+		close.setPadding(10, close.getPaddingTop(), 10, close.getPaddingBottom());
 		addView(close);
 		
 		tv = new TextView(mContext){
@@ -177,9 +180,20 @@ public class EnterFunctionView extends LinearLayout {
 		});
 		addView(et);
 		
-		more=new ImageButton(mContext);
-		more.setImageResource(R.drawable.more);
-		addView(more);
+		
+		
+		//more=new ImageButton(mContext);
+		//more.setImageResource(R.drawable.more);
+		//addView(more);
+		
+		overflow = new OverflowButton(mContext, OverflowButton.THEME_LIGHT);
+		String[] options = new String[4];
+		options[0] =  mContext.getResources().getString(R.string.fkt_menu_integral);
+		options[1] =  mContext.getResources().getString(R.string.fkt_menu_save);
+		options[2] =  mContext.getResources().getString(R.string.fkt_menu_open);
+		options[3] =  mContext.getResources().getString(R.string.fkt_menu_manage);
+		overflow.buildMenu(options, uic);
+		addView(overflow);
 		
 		//MORE
 		final boolean isPro=true;
@@ -286,7 +300,7 @@ public class EnterFunctionView extends LinearLayout {
 						}
 					});
 					b.create().show();}}});*/
-		more.setOnClickListener(new OnClickListener() {
+		/*more.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				qa=new QuickAction(v);
@@ -294,7 +308,7 @@ public class EnterFunctionView extends LinearLayout {
 				qa.addActionItem(save);
 				qa.addActionItem(open);
 				qa.addActionItem(manage);
-				qa.show();}});
+				qa.show();}});*/
 	}
 	
 	public void setColor(int c){

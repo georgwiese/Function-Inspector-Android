@@ -7,7 +7,6 @@ import de.georgwiese.functionInspector.SwitchButtonSet;
 import de.georgwiese.functionInspector.uiClasses.FktCanvas;
 import de.georgwiese.functionInspector.uiClasses.Helper;
 import de.georgwiese.functionInspectorLite.R;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;

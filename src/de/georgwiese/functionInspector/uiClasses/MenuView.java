@@ -2,6 +2,7 @@ package de.georgwiese.functionInspector.uiClasses;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -19,6 +20,8 @@ import de.georgwiese.functionInspectorLite.R;
  */
 public class MenuView extends LinearLayout {
 	
+	public static final int BODY_BACKGROUND_COLOR = Color.argb(220, 217, 249, 255); 
+	
 	LinearLayout body;
 
 	public MenuView(Context context, AttributeSet attrs) {
@@ -30,9 +33,11 @@ public class MenuView extends LinearLayout {
 		body = (LinearLayout) getRootView().findViewById(R.id.menu_body);
 		// Set title and gravity
 		String title = context.getResources().getString(attrs.getAttributeResourceValue("http://schemas.android.com/apk/lib/de.georgwiese.functionInspector", "menuTitle", 0));
+		TextView tvTitle = ((TextView) getRootView().findViewById(R.id.menu_heading));
 		if (title != null)
-			((TextView) getRootView().findViewById(R.id.menu_heading)).setText(title);
+			tvTitle.setText(title);
 		body.setGravity(attrs.getAttributeIntValue("http://schemas.android.com/apk/res/android", "gravity", Gravity.LEFT));
+		body.setBackgroundColor(BODY_BACKGROUND_COLOR);
 	}
 
 	@Override

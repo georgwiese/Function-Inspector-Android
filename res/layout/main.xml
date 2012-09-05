@@ -5,6 +5,7 @@
     android:id="@+id/all"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="#000000"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -21,6 +22,7 @@
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:paddingLeft="20dp"
+               android:textColor="#ffffff"
                android:paddingRight="20dp"
                android:textSize="30dp"/>
            
@@ -56,6 +58,7 @@
                android:minWidth="120dp"
                android:background="#1c3640"
                android:paddingLeft="5dp"
+               android:textColor="#ffffff"
                android:layout_marginLeft="30dp"
                android:layout_marginRight="10dp"
                android:layout_height="wrap_content"
@@ -334,16 +337,56 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         />
-
+        
+    </de.georgwiese.functionInspector.uiClasses.FktCanvas>
+    
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#888888"
+            />
+    
+        <LinearLayout
+            android:id="@+id/optionsBar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right|center_vertical"
+            android:background="#000000"
+            android:orientation="horizontal" >
+    
     <com.google.ads.AdView
         android:id="@+id/adView"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         ads:adSize="BANNER"
         ads:adUnitId="a14cf957c728954"
         ads:loadAdOnCreate="true"
         android:gravity="center"
-        android:visibility="visible" />
-    </de.georgwiese.functionInspector.uiClasses.FktCanvas>
+        android:visibility="gone" />
+      
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
+           
+           <View 
+               android:layout_width="1dp"
+               android:layout_height="32dp"
+               android:background="#888888"
+               />
+        
+        <de.georgwiese.functionInspector.uiClasses.OverflowButton
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/menuButton"
+            />
+        </LinearLayout>
+    
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#555555"
+            />
 
 </LinearLayout>

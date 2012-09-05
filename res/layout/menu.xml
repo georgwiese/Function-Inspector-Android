@@ -25,13 +25,13 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:textColor="#ffffff"
         android:background="#1c3640"/>
 
     <ScrollView
         android:id="@+id/menu_scrollview"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#84AABD" >
+        android:layout_height="wrap_content" >
 
         <LinearLayout
             android:id="@+id/menu_body"
@@ -39,7 +39,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="2dp"
-            android:gravity="left" >
+            android:gravity="left" 
+        	android:background="#84AABD">
         </LinearLayout>
     </ScrollView>
 <!--  

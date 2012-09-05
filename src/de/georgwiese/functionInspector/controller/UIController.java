@@ -24,12 +24,15 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 import de.georgwiese.calculationFunktions.CalcFkts;
 import de.georgwiese.calculationFunktions.Function;
 import de.georgwiese.functionInspector.uiClasses.EnterFunctionView;
 import de.georgwiese.functionInspector.uiClasses.FktCanvas;
+import de.georgwiese.functionInspector.uiClasses.MenuPopup.OnMenuItemClickListener;
 import de.georgwiese.functionInspector.uiClasses.MenuView;
 import de.georgwiese.functionInspector.uiClasses.MyKeyboardView;
+import de.georgwiese.functionInspector.uiClasses.OverflowButton;
 import de.georgwiese.functionInspector.uiClasses.SwitchButtonSet;
 import de.georgwiese.functionInspector.uiClasses.SwitchButtonSet.OnStateChangedListener;
 import de.georgwiese.functionInspectorLite.MainScreen;
@@ -41,7 +44,7 @@ import de.georgwiese.functionInspectorLite.R;
  * @author Georg Wiese
  *
  */
-public class UIController implements OnSeekBarChangeListener, OnStateChangedListener {
+public class UIController implements OnSeekBarChangeListener, OnStateChangedListener, OnMenuItemClickListener {
 	
 	public static final int MENU_FKT=0;
 	public static final int MENU_PARAM=1;
@@ -59,7 +62,7 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 	StateHolder sh;
 	boolean isTablet, isLandscape;
 	FktCanvas fktCanvas;
-	LinearLayout llButtons, llTrace, menuContainer;
+	LinearLayout llButtons, llTrace, menuContainer, optionsBar;
 	TextView traceTv;
 	MyKeyboardView kv;
 	AdView ad;
@@ -67,9 +70,10 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 	SwitchButtonSet menuParamSbs;
 	Button menuParamMin, menuParamValue, menuParamMax;
 	SeekBar menuParamSb;
+	OverflowButton menuButton;
 	
 	DecimalFormat df1, df2;
-	Animation menuIn, menuOut, efvIn, efvOut;
+	Animation menuIn, menuOut, efvIn, efvOut, optionsIn, optionsOut;
 	String[] paramNames = {"a", "b", "c"};
 	boolean sbChangedByClick;
 	
@@ -100,10 +104,14 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 		llButtons = (LinearLayout) ms.findViewById(R.id.ll_menuButtons);
 		llTrace   = (LinearLayout) ms.findViewById(R.id.ll_traceBar);
 		menuContainer = (LinearLayout) ms.findViewById(R.id.ll_menus);
+		optionsBar = (LinearLayout) ms.findViewById(R.id.optionsBar);
 		traceTv   = (TextView) ms.findViewById(R.id.mode_trace_tv);
 		kv   = (MyKeyboardView) ms.findViewById(R.id.keyboardView);
 		ad   = (AdView) ms.findViewById(R.id.adView);
 		efv  = new ArrayList<EnterFunctionView>();
+		menuButton = (OverflowButton) ms.findViewById(R.id.menuButton);
+		String[] options = {"Test1", "Test2", "Test3"};
+		menuButton.buildMenu(options, this);
 		
 		df1 = new DecimalFormat("0.0##");
 		df2 = new DecimalFormat("0.00");
@@ -126,6 +134,8 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 		menuOut = AnimationUtils.loadAnimation(c, R.anim.menu_out);
 		efvIn  = AnimationUtils.loadAnimation(c, R.anim.efv_in);
 		efvOut = AnimationUtils.loadAnimation(c, R.anim.efv_out);
+		optionsIn  = AnimationUtils.loadAnimation(c, R.anim.optionsbar_in);
+		optionsOut = AnimationUtils.loadAnimation(c, R.anim.optionsbar_out);
 		
 		for (MenuView menu:menus)
 			menu.setVisibility(View.GONE);
@@ -245,12 +255,18 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 	
 	public void setKBVisible(boolean visible){
 		if(visible){
-			ad.setVisibility(View.GONE);
 			kv.setVisibility(View.VISIBLE);
+			if (optionsBar.getVisibility() == View.VISIBLE){
+				optionsBar.setVisibility(View.GONE);
+				optionsBar.startAnimation(optionsOut);
+			}
 		}
 		else{
-			ad.setVisibility(View.VISIBLE);
 			kv.setVisibility(View.GONE);
+			if (optionsBar.getVisibility() != View.VISIBLE){
+				optionsBar.setVisibility(View.VISIBLE);
+				optionsBar.startAnimation(optionsIn);
+			}
 		}
 	}
 	
@@ -381,6 +397,11 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 	@Override
 	public void onStateChanged(int newState) {
 		updateMenuParam(true, newState);
+	}
+
+	@Override
+	public void onMenuItemClick(int menuID, int itemID) {
+		Toast.makeText(c, "Item clicked: " + itemID, Toast.LENGTH_SHORT).show();
 	}
 	
 	

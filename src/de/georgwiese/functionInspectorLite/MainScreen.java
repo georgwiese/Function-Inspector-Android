@@ -42,6 +42,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.SherlockActivity;
 import com.android.vending.licensing.AESObfuscator;
 import com.android.vending.licensing.LicenseChecker;
 import com.android.vending.licensing.LicenseCheckerCallback;
@@ -453,7 +454,7 @@ public class MainScreen extends Activity {
 			});
     	}
     }
-    
+    /*
     public boolean onCreateOptionsMenu(Menu m){
     	MenuInflater mi = getMenuInflater();
     	mi.inflate(R.menu.options_menu, m);
@@ -473,11 +474,11 @@ public class MainScreen extends Activity {
     	case R.id.menu_upgrade:
     		showDialog(PRO_DIALOG);
     		return true;
-    	/*case R.id.menu_version:
+    	case R.id.menu_version:
     		version=version==VERSION_LITE?VERSION_PRO:VERSION_LITE;
     		onCreate(null);
     		onStart();
-    		return true;*/
+    		return true;
     	case R.id.menu_screenshot:
     		showDialog(PIC_DIALOG);
     		return true;
@@ -485,7 +486,7 @@ public class MainScreen extends Activity {
     		return super.onOptionsItemSelected(item);
     	}
     }
-    
+    */
     protected Dialog onCreateDialog(int id) {
     	switch (id){
     	case ABOUT_DIALOG:
