@@ -2,8 +2,8 @@ package de.georgwiese.functionInspectorLite;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Random;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -12,27 +12,20 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.provider.ContactsContract.RawContacts.Data;
-import android.provider.Settings.Secure;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
-import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,20 +33,11 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.actionbarsherlock.app.SherlockActivity;
-import com.android.vending.licensing.AESObfuscator;
-import com.android.vending.licensing.LicenseChecker;
-import com.android.vending.licensing.LicenseCheckerCallback;
-import com.android.vending.licensing.Obfuscator;
-import com.android.vending.licensing.ServerManagedPolicy;
-
-import de.georgwiese.calculationFunktions.CalcFkts;
 import de.georgwiese.calculationFunktions.Function;
 import de.georgwiese.functionInspector.FrameView;
 import de.georgwiese.functionInspector.MarketArrayAdapter;
 import de.georgwiese.functionInspector.MarketInfo;
+import de.georgwiese.functionInspector.controller.DialogController;
 import de.georgwiese.functionInspector.controller.InputController;
 import de.georgwiese.functionInspector.controller.PathCollector;
 import de.georgwiese.functionInspector.controller.RedrawThread;
@@ -61,8 +45,6 @@ import de.georgwiese.functionInspector.controller.StateHolder;
 import de.georgwiese.functionInspector.controller.UIController;
 import de.georgwiese.functionInspector.controller.UpdateThread;
 import de.georgwiese.functionInspector.uiClasses.FktCanvas;
-import de.georgwiese.functionInspector.uiClasses.FktCanvas.OnSizeChangedListener;
-import de.georgwiese.functionInspector.uiClasses.MenuView;
 import de.georgwiese.functionInspector.uiClasses.MyKeyboardView;
 
 /*
@@ -72,7 +54,8 @@ import de.georgwiese.functionInspector.uiClasses.MyKeyboardView;
  * - string
  * - Menu
  */
-public class MainScreen extends Activity {
+
+public class MainScreen extends FragmentActivity {
 	// Version IDs
 	private static final int VERSION_LITE=FrameView.VERSION_LITE;
 	private static final int VERSION_PRO=FrameView.VERSION_PRO;
@@ -132,13 +115,16 @@ public class MainScreen extends Activity {
 	PathCollector pathCollector;
 	RedrawThread redrawThread;
 	UpdateThread updateThread;
+	DialogController dialogController;
 	
 	// UI Elements
 	FktCanvas canvas;
     
-    @Override
+	
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
         //showSplashScreen();
         
         // Licensing (not done corrently)
@@ -176,15 +162,10 @@ public class MainScreen extends Activity {
     	// Determine the approximate width in inch.
     	//China Tablet: 5, Nexus 7 6, LGOS: 3.4
     	boolean isTablet = Math.max(dm.widthPixels / dm.xdpi, dm.heightPixels / dm.ydpi) > 4.5;
-    	Log.d("Developer", "heightPixels: " + dm.heightPixels);
-    	Log.d("Developer", "WidthPixels: " + dm.widthPixels);
-    	Log.d("Developer", "xdpi: " + dm.xdpi);
-    	Log.d("Developer", "ydpi: " + dm.ydpi);
-    	Log.d("Developer", "height (dip): " + dm.heightPixels / dm.ydpi);
-    	Log.d("Developer", "width (dip): " + dm.widthPixels / dm.xdpi);
     	canvas = (FktCanvas) findViewById(R.id.fktCanvas);
+    	dialogController = new DialogController(mContext, getSupportFragmentManager());
     	pathCollector = new PathCollector(stateHolder, canvas);
-    	uiController = new UIController(mContext, stateHolder, pathCollector, isTablet, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
+    	uiController = new UIController(mContext, stateHolder, pathCollector, dialogController, isTablet, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
     	inputController = new InputController(mContext, stateHolder, uiController, canvas);
     	((MyKeyboardView) findViewById(R.id.keyboardView)).setUIController(uiController);
     	
@@ -200,7 +181,6 @@ public class MainScreen extends Activity {
     	updateThread = new UpdateThread(canvas, stateHolder);
     	redrawThread.start();
     	updateThread.start();
-    	
     	
     	/*
     	graphView=(LinearLayout)findViewById(R.id.ll_graphView);

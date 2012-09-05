@@ -60,6 +60,7 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 	View dividers[];
 	Context c;
 	StateHolder sh;
+	DialogController dc;
 	boolean isTablet, isLandscape;
 	FktCanvas fktCanvas;
 	LinearLayout llButtons, llTrace, menuContainer, optionsBar;
@@ -84,9 +85,10 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 	 * @param isTablet: whether or not we have a tablet
 	 * @param isLandscape: whether or not the device is in landscape orientation
 	 */
-	public UIController(Context c, StateHolder stateHolder, PathCollector pathCollector, boolean isTablet, boolean isLandscape){
+	public UIController(Context c, StateHolder stateHolder, PathCollector pathCollector, DialogController dialogController, boolean isTablet, boolean isLandscape){
 		this.c = c;
 		sh = stateHolder;
+		dc = dialogController;
 		this.isTablet = isTablet;
 		menus = new MenuView[3];	// Assuming that no ID is higher than 2
 		menuButtons = new ImageButton[3];
@@ -110,7 +112,7 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 		ad   = (AdView) ms.findViewById(R.id.adView);
 		efv  = new ArrayList<EnterFunctionView>();
 		menuButton = (OverflowButton) ms.findViewById(R.id.menuButton);
-		String[] options = {"Test1", "Test2", "Test3"};
+		String[] options = {"About", "Pro", "Welcome", "Try", "Facebook"};
 		menuButton.buildMenu(options, this);
 		
 		df1 = new DecimalFormat("0.0##");
@@ -401,7 +403,19 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 
 	@Override
 	public void onMenuItemClick(int menuID, int itemID) {
-		Toast.makeText(c, "Item clicked: " + itemID, Toast.LENGTH_SHORT).show();
+		String[] options = {"About", "Pro", "Welcome", "Try", "Facebook"};
+		switch(itemID){
+		case 0:
+			dc.showDialog(DialogController.ABOUT_DIALOG); break;
+		case 1:
+			dc.showDialog(DialogController.PRO_DIALOG); break;
+		case 2:
+			dc.showDialog(DialogController.WELCOME_DIALOG); break;
+		case 3:
+			dc.showDialog(DialogController.TRY_DIALOG); break;
+		case 4:
+			dc.showDialog(DialogController.FACEBOOK_DIALOG); break;
+		}
 	}
 	
 	
