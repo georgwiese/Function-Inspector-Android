@@ -102,7 +102,7 @@ public class EnterFunctionView extends LinearLayout {
 		
 		et = new EditText(mContext);
 		et.setLayoutParams(new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1));
-		//et.setInputType(InputType.TYPE_NULL);
+		et.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
 		et.setFocusableInTouchMode(true);
 		et.setCursorVisible(true);
 		et.invalidate();
