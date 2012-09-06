@@ -22,7 +22,6 @@ public class PathCollector {
 	ArrayList<ArrayList<Point>> roots, extrema, inflections;
 	ArrayList<Point> intersections;
 	ArrayList<ArrayList<Double>> discontinuities;
-	Point activePoint;
 	Matrix transMatrix;
 	double[] originalPos, currentPos;
 	double[] originalZoom, currentZoom;
@@ -91,14 +90,6 @@ public class PathCollector {
 	
 	public ArrayList<Point> getIntersections() {
 		return intersections;
-	}
-	
-	public void setActivePoint(Point activePoint) {
-		this.activePoint = activePoint;
-	}
-	
-	public Point getActivePoint() {
-		return activePoint;
 	}
 	
 	public void clearPaths(){

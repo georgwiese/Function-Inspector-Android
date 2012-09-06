@@ -85,7 +85,7 @@ public class EnterFunctionView extends LinearLayout {
 		close.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//et.requestFocus();
+				et.requestFocus();
 				et.setText("");
 			}
 		});

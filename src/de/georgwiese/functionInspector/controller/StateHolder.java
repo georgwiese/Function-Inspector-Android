@@ -36,6 +36,7 @@ public class StateHolder {
 	public boolean doZoom;			// whether or not the UpdateThread should zoom according to desiredZoom
 	public boolean preview;
 	ArrayList<Function> fkts;		// All the functions
+	Point activePoint;
 	double[] params;				// Parameters (a, b and c)
 	double[] minParams;
 	double[] maxParams;
@@ -109,6 +110,14 @@ public class StateHolder {
 		fkts.clear();
 	}
 	
+	public Point getActivePoint() {
+		return activePoint;
+	}
+	
+	public void setActivePoint(Point activePoint) {
+		this.activePoint = activePoint;
+	}
+	
 	public double getZoom(int dimension){
 		return zoom[dimension];
 	}
@@ -169,7 +178,17 @@ public class StateHolder {
 	}
 	
 	public void setParam(int id, double value){
+		redraw = true;
+		activePoint = null;
 		params[id] = value;
+	}
+	
+	public void setMinParam(int id, double value){
+		minParams[id] = value;
+	}
+	
+	public void setMaxParam(int id, double value){
+		maxParams[id] = value;
 	}
 	
 	public void move(double dx, double dy){

@@ -219,6 +219,7 @@
                         android:id="@+id/mv_param_btMin"
                         android:layout_width="0pt"
                         android:layout_height="wrap_content"
+                        android:onClick="onButtonClick"
                         android:layout_weight="1" >
                     </Button>
 
@@ -226,6 +227,7 @@
                         android:id="@+id/mv_param_btParam"
                         android:layout_width="0pt"
                         android:layout_height="wrap_content"
+                        android:onClick="onButtonClick"
                         android:layout_weight="1" >
                     </Button>
 
@@ -233,6 +235,7 @@
                         android:id="@+id/mv_param_btMax"
                         android:layout_width="0pt"
                         android:layout_height="wrap_content"
+                        android:onClick="onButtonClick"
                         android:layout_weight="1" >
                     </Button>
                 </LinearLayout>

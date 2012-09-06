@@ -166,7 +166,8 @@ public class MainScreen extends FragmentActivity {
     	dialogController = new DialogController(mContext, getSupportFragmentManager());
     	pathCollector = new PathCollector(stateHolder, canvas);
     	uiController = new UIController(mContext, stateHolder, pathCollector, dialogController, isTablet, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
-    	inputController = new InputController(mContext, stateHolder, uiController, canvas);
+    	dialogController.setUIContoller(uiController);
+    	inputController = new InputController(mContext, stateHolder, uiController, dialogController, canvas);
     	((MyKeyboardView) findViewById(R.id.keyboardView)).setUIController(uiController);
     	
     	canvas.setOnSizeChangedListener(new FktCanvas.OnSizeChangedListener() {

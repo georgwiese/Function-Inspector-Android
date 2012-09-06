@@ -112,7 +112,7 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 		ad   = (AdView) ms.findViewById(R.id.adView);
 		efv  = new ArrayList<EnterFunctionView>();
 		menuButton = (OverflowButton) ms.findViewById(R.id.menuButton);
-		String[] options = {"About", "Pro", "Welcome", "Try", "Facebook"};
+		String[] options = {"About", "Pro", "Welcome", "Try", "Facebook", "Pic", "Buy", "set Param.", "set min Param.", "set max Param."};
 		menuButton.buildMenu(options, this);
 		
 		df1 = new DecimalFormat("0.0##");
@@ -144,6 +144,25 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 		onConfigChange();
 		setLandscape(isLandscape);
 		updateEfvs();
+	}
+	
+	public void setMinParam(double value){
+		sh.setMinParam(menuParamSbs.getState(), value);
+		updateMenuParam(true);
+	}
+	
+	public void setParam(double value){
+		sh.setParam(menuParamSbs.getState(), value);
+		if (value < sh.getMinParams()[menuParamSbs.getState()])
+			sh.setMinParam(menuParamSbs.getState(), value);
+		if (value > sh.getMaxParams()[menuParamSbs.getState()])
+			sh.setMaxParam(menuParamSbs.getState(), value);
+		updateMenuParam(true);
+	}
+	
+	public void setMaxParam(double value){
+		sh.setMaxParam(menuParamSbs.getState(), value);
+		updateMenuParam(true);
 	}
 	
 	/**
@@ -403,7 +422,7 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 
 	@Override
 	public void onMenuItemClick(int menuID, int itemID) {
-		String[] options = {"About", "Pro", "Welcome", "Try", "Facebook"};
+		String[] options = {"About", "Pro", "Welcome", "Try", "Facebook", "Pic", "Buy", "set Param.", "set min Param.", "set max Param."};
 		switch(itemID){
 		case 0:
 			dc.showDialog(DialogController.ABOUT_DIALOG); break;
@@ -415,6 +434,16 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 			dc.showDialog(DialogController.TRY_DIALOG); break;
 		case 4:
 			dc.showDialog(DialogController.FACEBOOK_DIALOG); break;
+		case 5:
+			dc.showDialog(DialogController.PIC_DIALOG); break;
+		case 6:
+			dc.showDialog(DialogController.BUY_DIALOG); break;
+		case 7:
+			dc.showDialog(DialogController.SET_PARAM_DIALOG); break;
+		case 8:
+			dc.showDialog(DialogController.SET_MIN_DIALOG); break;
+		case 9:
+			dc.showDialog(DialogController.SET_MAX_DIALOG); break;
 		}
 	}
 	

@@ -192,35 +192,35 @@ public class FktCanvasGestureListener extends SimpleOnGestureListener implements
 			ArrayList<ArrayList<Double>> discontinuities = pathCollector.getDiscontinuities();
 			ArrayList<Point> intersections = pathCollector.getIntersections();
 			
-			boolean hasActive = pathCollector.getActivePoint() == null;
-			pathCollector.setActivePoint(null);
+			boolean hasActive = sh.getActivePoint() == null;
+			sh.setActivePoint(null);
 			
 			if (sh.disExtrema){
 				for (int i=0; i<extrema.size(); i++)
 					for (Point p:extrema.get(i))
 						if (distance(p,e.getX(),e.getY())<25)
-							pathCollector.setActivePoint(p);}
+							sh.setActivePoint(p);}
 			if (sh.disInflections){
 				for (int i=0; i<inflections.size(); i++)
 					for (Point p:inflections.get(i))
 						if (distance(p,e.getX(),e.getY())<25)
-							pathCollector.setActivePoint(p);}
+							sh.setActivePoint(p);}
 			if (sh.disIntersections){
 				for (Point p:intersections)
 					if (distance(p,e.getX(),e.getY())<25)
-						pathCollector.setActivePoint(p);}
+						sh.setActivePoint(p);}
 			if (sh.disDiscon){
 				for (int i=0; i<discontinuities.size(); i++)
 					for (Double d:discontinuities.get(i))
 						if (Math.abs(e.getX() - (float)Helper.unitToPx(d.doubleValue(), 0, sh.getZoom(), sh.getMiddle(), canvas.getWidth(), canvas.getHeight()).x)<25)
-							pathCollector.setActivePoint(new Point(d, 0, Point.TYPE_DISCONTINUITY));}
+							sh.setActivePoint(new Point(d, 0, Point.TYPE_DISCONTINUITY));}
 			if (sh.disRoots){
 				for (int i=0; i<roots.size(); i++)
 					for (Point p:roots.get(i))
 						if (distance(p,e.getX(),e.getY())<25)
-							pathCollector.setActivePoint(p);}
+							sh.setActivePoint(p);}
 			
-			if (hasActive && pathCollector.getActivePoint() == null)
+			if (hasActive && sh.getActivePoint() == null)
 				uic.hideAllMenus();
 		}
 		
