@@ -16,12 +16,14 @@ public class InputController {
 	StateHolder sh;
 	Context      c;
 	UIController uic;
+	DialogController dc;
 	FktCanvas canvas;
 	
-	public InputController(Context c, StateHolder sh, UIController uic, FktCanvas canvas){
+	public InputController(Context c, StateHolder sh, UIController uic, DialogController dialogController, FktCanvas canvas){
 		this.sh     = sh;
 		this.c      =  c;
 		this.uic    = uic;
+		dc          = dialogController;
 		this.canvas = canvas;
 	}
 	
@@ -40,9 +42,6 @@ public class InputController {
 		case R.id.menuButtonPoints:
 			uic.toggleMenu(UIController.MENU_POINTS);
 			break;
-		//case R.id.menuButtonMode:
-		//	uic.toggleMenu(UIController.MENU_MODE);
-		//	break;
 		case R.id.mv_points_roots:
 			Log.d("Developer", "DisRoots clicked");
 			sh.disRoots = ((CheckBox) v).isChecked();
@@ -58,6 +57,15 @@ public class InputController {
 			break;
 		case R.id.mv_points_intersections:
 			sh.disIntersections = ((CheckBox) v).isChecked();
+			break;
+		case R.id.mv_param_btParam:
+			dc.showDialog(DialogController.SET_PARAM_DIALOG);
+			break;
+		case R.id.mv_param_btMin:
+			dc.showDialog(DialogController.SET_MIN_DIALOG);
+			break;
+		case R.id.mv_param_btMax:
+			dc.showDialog(DialogController.SET_MAX_DIALOG);
 			break;
 		}
 		canvas.invalidate();

@@ -31,7 +31,8 @@ public class PointMaker {
 						x2=m;
 					m = (x1+x2)/2;
 				}
-				result.add(new Point(m, f.calculate(m), Point.TYPE_EXTREMA));
+				if (!Double.isNaN(f.calculate(m)))
+					result.add(new Point(m, f.calculate(m), Point.TYPE_EXTREMA));
 			}
 			higher=y>lastY;
 			x+=precision;
@@ -67,7 +68,8 @@ public class PointMaker {
 						x2=m;
 					m = (x1+x2)/2;
 				}
-				result.add(new Point(m, f.calculate(m), Point.TYPE_INFLECTION));
+				if (!Double.isNaN(f.calculate(m)))
+					result.add(new Point(m, f.calculate(m), Point.TYPE_INFLECTION));
 			}
 			higher=y>lastY;
 			x+=precision;
@@ -115,7 +117,7 @@ public class PointMaker {
 					m = (x1+x2)/2;
 					ym = f.calculate(m);
 				}
-				if (!done)
+				if (!done && !Double.isNaN(ym))
 					result.add(new Point(m, ym, Point.TYPE_ROOT));
 			}
 			positive=y>0;

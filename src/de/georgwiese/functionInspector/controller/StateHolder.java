@@ -36,6 +36,7 @@ public class StateHolder {
 	public boolean doZoom;			// whether or not the UpdateThread should zoom according to desiredZoom
 	public boolean preview;
 	ArrayList<Function> fkts;		// All the functions
+	Point activePoint;
 	double[] params;				// Parameters (a, b and c)
 	double[] minParams;
 	double[] maxParams;
@@ -53,36 +54,51 @@ public class StateHolder {
 	disIntersections, disDiscon;
 	public double currentX;
 	
+	// Prefs
+	public static String KEY_FOLDER 	= "prefs_folder";
+	public static String KEY_FKTS   	= "fkt";
+	public static String VAL_FKTS_END	= "fkt_end";
+	public static String KEY_PARAMS 	= "param";
+	public static String KEY_MINP   	= "minParam";
+	public static String KEY_MAXP   	= "maxParam";
+	public static String KEY_ZOOM   	= "zoom";
+	public static String KEY_MIDDLE   	= "middle";
+	PrefsController pc;
+	String screenshotFolder;
+	
 	public StateHolder(Context c){
+		pc = new PrefsController(c);
 		redraw  = true;
 		doDyn   = false;
 		doZoom  = false;
 		preview = false;
 		fkts = new ArrayList<Function>();
+		for (int i = 0; true; i++ ){
+			String f = pc.getDataStr(KEY_FKTS + i, VAL_FKTS_END);
+			if (f.equals(VAL_FKTS_END))
+				break;
+			else
+				fkts.add(new Function(f));
+		}
 		params = new double[3];
-		params[0] = 1.0;
-		params[1] = 1.0;
-		params[2] = 1.0;
+		for (int i = 0; i < params.length; i++)
+			params[i] = pc.getDataFloat(KEY_PARAMS + i, 1);
 		minParams = new double[3];
-		minParams[0] = 0.0;
-		minParams[1] = 0.0;
-		minParams[2] = 0.0;
+		for (int i = 0; i < params.length; i++)
+			minParams[i] = pc.getDataFloat(KEY_MINP + i, -5);
 		maxParams = new double[3];
-		maxParams[0] = 5.0;
-		maxParams[1] = 5.0;
-		maxParams[2] = 5.0;
+		for (int i = 0; i < params.length; i++)
+			maxParams[i] = pc.getDataFloat(KEY_MAXP + i, 5);
 		zoom = new double[2];
-		zoom[0] = 1.0;
-		zoom[1] = 1.0;
-		desiredZoom = new double[2];
-		desiredZoom[0] = 1.0;
-		desiredZoom[1] = 1.0;
+		zoom[0] = pc.getDataFloat(KEY_ZOOM + 0, 1);
+		zoom[1] = pc.getDataFloat(KEY_ZOOM + 1, 1);
+		desiredZoom = zoom.clone();
 		factor = new double[2];
 		factor[0] = 1.0;
 		factor[1] = 1.0;
 		middle = new double[2];
-		middle[0] = 0.0;
-		middle[1] = 0.0;
+		middle[0] = pc.getDataFloat(KEY_MIDDLE + 0, 0);
+		middle[1] = pc.getDataFloat(KEY_MIDDLE + 1, 0);
 		speed = new double[2];
 		speed[0] = 0.0;
 		speed[1] = 0.0;
@@ -93,6 +109,20 @@ public class StateHolder {
 		
 		disRoots = false; disExtrema = false; disInflections = false;
 		disDiscon = false; disIntersections = false;
+		
+		// Prefs
+		screenshotFolder = pc.getPrefStr(KEY_FOLDER, "Function Inspector");
+		(new Thread(){
+			public void run() {
+				while(true){
+					try{sleep(5000);} catch(Exception e){}
+					pc.putDataFloat(KEY_MIDDLE + 0, (float)middle[0]);
+					pc.putDataFloat(KEY_MIDDLE + 1, (float)middle[1]);
+					pc.putDataFloat(KEY_ZOOM + 0, (float)zoom[0]);
+					pc.putDataFloat(KEY_ZOOM + 1, (float)zoom[1]);
+				}
+			};
+		}).start();
 	}
 
 	public void addFkt(String f){
@@ -107,6 +137,28 @@ public class StateHolder {
 	
 	public void clearFkts(){
 		fkts.clear();
+	}
+	
+	/**
+	 * Will store all functions in SharedPreference
+	 */
+	public void storeFkts(){
+		int i = 0;
+		for (Function f: fkts){
+			if (f != null){
+				pc.putDataStr(KEY_FKTS + i, f.getString());
+				i++;
+			}
+		}
+		pc.putDataStr(KEY_FKTS + i, VAL_FKTS_END);
+	}
+	
+	public Point getActivePoint() {
+		return activePoint;
+	}
+	
+	public void setActivePoint(Point activePoint) {
+		this.activePoint = activePoint;
 	}
 	
 	public double getZoom(int dimension){
@@ -169,7 +221,20 @@ public class StateHolder {
 	}
 	
 	public void setParam(int id, double value){
+		redraw = true;
+		activePoint = null;
+		pc.putDataFloat(KEY_PARAMS + id, (float)value);
 		params[id] = value;
+	}
+	
+	public void setMinParam(int id, double value){
+		minParams[id] = value;
+		pc.putDataFloat(KEY_MINP + id, (float)value);
+	}
+	
+	public void setMaxParam(int id, double value){
+		maxParams[id] = value;
+		pc.putDataFloat(KEY_MAXP + id, (float)value);
 	}
 	
 	public void move(double dx, double dy){
@@ -181,6 +246,7 @@ public class StateHolder {
 			speed[1] = 0.5 * speed[1] + 0.5 * dy / (currentTime - prevTimeSpeed);
 		}
 		//Log.d("Developer", "Speed: " + Math.sqrt(speed[0] * speed[0] + speed[1] * speed[1]));
+
 		prevTimeSpeed = currentTime;
 	}
 	
@@ -209,15 +275,29 @@ public class StateHolder {
 	
 	public void updateZoom(long timeElapsed){
 		double factor = Math.pow(ZOOM_IN_UPDATE, (double)timeElapsed / (1000 / 60));
-		for (int i = 0; i < zoom.length; i++){
+		/*for (int i = 0; i < zoom.length; i++){
 			if (zoom[i] < desiredZoom[i])
 				zoom[i] *= factor;
 			else
 				zoom[i] /= factor;
-		}
+		}*/
+		if (zoom[0] < desiredZoom[0])
+			zoom(factor);
+		else
+			zoom(1 / factor);
 		// Check if done
 		if (Math.abs(zoom[0]/desiredZoom[0]-1) < (ZOOM_IN_UPDATE - 1) * 2 &&
 				Math.abs(zoom[1]/desiredZoom[1]-1) < (ZOOM_IN_UPDATE - 1) * 2)
 			doZoom = false;
+	}
+	
+	// Prefs
+	public String getScreenshotFolder() {
+		return screenshotFolder;
+	}
+	
+	public void setScreenshotFolder(String screenshotFolder) {
+		this.screenshotFolder = screenshotFolder;
+		pc.putPrefStr(KEY_FOLDER, screenshotFolder);
 	}
 }

@@ -261,7 +261,7 @@ public class FktCanvas extends LinearLayout {
 			}
 			
 			// Active Point
-			Point activePoint = pathCollector.getActivePoint();
+			Point activePoint = sh.getActivePoint();
 			if (activePoint != null){
 				paint.setColor(Color.YELLOW);
 				paint.setStyle(Style.FILL_AND_STROKE);

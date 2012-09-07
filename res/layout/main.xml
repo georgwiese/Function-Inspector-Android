@@ -72,7 +72,8 @@
         android:layout_height="40dp"
         android:background="#000000"
         android:visibility="visible"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:gravity="bottom" >
 
         <ImageButton
             android:id="@+id/menuButtonFkt"
@@ -82,6 +83,13 @@
             android:background="#000000"
             android:onClick="onButtonClick"
             android:src="@drawable/bt_bar_fkt" />
+        
+        
+           <View 
+               android:layout_width="1dp"
+               android:layout_height="32dp"
+               android:background="#888888"
+               />
 
         <ImageButton
             android:id="@+id/menuButtonParam"
@@ -92,6 +100,13 @@
             android:background="#000000"
             android:onClick="onButtonClick"
             android:src="@drawable/bt_bar_param" />
+        
+           
+           <View 
+               android:layout_width="1dp"
+               android:layout_height="32dp"
+               android:background="#888888"
+               />
 
         <ImageButton
             android:id="@+id/menuButtonPoints"
@@ -204,6 +219,7 @@
                         android:id="@+id/mv_param_btMin"
                         android:layout_width="0pt"
                         android:layout_height="wrap_content"
+                        android:onClick="onButtonClick"
                         android:layout_weight="1" >
                     </Button>
 
@@ -211,6 +227,7 @@
                         android:id="@+id/mv_param_btParam"
                         android:layout_width="0pt"
                         android:layout_height="wrap_content"
+                        android:onClick="onButtonClick"
                         android:layout_weight="1" >
                     </Button>
 
@@ -218,6 +235,7 @@
                         android:id="@+id/mv_param_btMax"
                         android:layout_width="0pt"
                         android:layout_height="wrap_content"
+                        android:onClick="onButtonClick"
                         android:layout_weight="1" >
                     </Button>
                 </LinearLayout>
@@ -337,8 +355,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         />
-        
-    </de.georgwiese.functionInspector.uiClasses.FktCanvas>
     
         <View
             android:layout_width="fill_parent"
@@ -369,6 +385,31 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             />
+      <!--  
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/zoom"
+            android:paddingRight="10dp" />-->
+        
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/minus"
+            />
+           
+           <View 
+               android:layout_width="1dp"
+               android:layout_height="32dp"
+               android:background="#888888"
+               />
+        
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/plus"
+            android:paddingRight="20dp"
+            />
            
            <View 
                android:layout_width="1dp"
@@ -381,6 +422,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/menuButton"
             />
+        
         </LinearLayout>
     
         <View
@@ -388,5 +430,7 @@
             android:layout_height="1dp"
             android:background="#555555"
             />
+        
+    </de.georgwiese.functionInspector.uiClasses.FktCanvas>
 
 </LinearLayout>
