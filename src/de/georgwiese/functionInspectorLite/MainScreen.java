@@ -61,6 +61,8 @@ public class MainScreen extends FragmentActivity {
 	private static final int VERSION_PRO=FrameView.VERSION_PRO;
 	private int version=VERSION_LITE;
 	
+	public static final boolean IS_PRO = false;
+	
 	// For licensing (not done currently)
 	/*
 	private static final int ANDROID_MARKET=1;
@@ -149,15 +151,7 @@ public class MainScreen extends FragmentActivity {
     	mContext=this;
     	mActivity=this;
 
-    	stateHolder = new StateHolder(this);
-    	// For testing:
-    	//stateHolder.addFkt("x^2");
-    	//stateHolder.addFkt("-x^2");
-    	//stateHolder.addFkt("sin(x)");
-    	//stateHolder.addFkt("tan(x)+1");
-    	//stateHolder.addFkt("e^x");
-    	//stateHolder.addFkt("-e^x");
-    	//TODO: Find a whether or not it is a tablet
+    	stateHolder = new StateHolder(this, IS_PRO);
     	DisplayMetrics dm = getResources().getDisplayMetrics();
     	// Determine the approximate width in inch.
     	//China Tablet: 5, Nexus 7 6, LGOS: 3.4
@@ -673,39 +667,7 @@ public class MainScreen extends FragmentActivity {
     @Override
     protected void onPause() {
     	super.onPause();
-    	//save current state
-    	SharedPreferences.Editor e = getSharedPreferences("data", MODE_PRIVATE).edit();
-    	if (graph!=null){
-	    	ArrayList<Function> fkts = graph.getFkts();
-	    	for (int i=0; i<fkts.size(); i++){
-	    		Function f = fkts.get(i);
-	    		if (f!=null)
-	    			e.putString("fkt_"+Integer.toString(i), f.getString());
-	    		else
-	    			e.putString("fkt_"+Integer.toString(i), "null");		
-	    	}
-			e.putString("fkt_"+Integer.toString(fkts.size()), "end");		
-	    	
-	    	double[] minParams=graph.getMinParams();
-	    	double[] maxParams=graph.getMaxParams();
-	    	double[] params=graph.getParams();
-	    	for (int i =0; i<3; i++){
-	        	e.putFloat("minParam_"+Integer.toString(i), (float)minParams[i]);
-	        	e.putFloat("maxParam_"+Integer.toString(i), (float)maxParams[i]);
-	        	e.putFloat("param_"+Integer.toString(i), (float)params[i]);
-	    	}
-	    	boolean[] choices = graph.getPointsChoices();
-	    	for (int i=0;i<5;i++)
-	    		e.putBoolean("c_"+Integer.toString(i), choices[i]);
-	    	String[] savedFkts = graph.getSavedFktsArray();
-	    	for (int i=0; i<100; i++){
-	    		if (i<savedFkts.length)
-	    			e.putString("f_"+Integer.toString(i), savedFkts[i]);
-	    		else
-	    			e.putString("f_"+Integer.toString(i), "null");
-	    	}
-	    	e.commit();
-    	}
+    	stateHolder.saveCurrentState();
     }
     
     @Override

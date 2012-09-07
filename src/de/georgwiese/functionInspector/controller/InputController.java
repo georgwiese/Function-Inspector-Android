@@ -67,6 +67,9 @@ public class InputController {
 		case R.id.mv_param_btMax:
 			dc.showDialog(DialogController.SET_MAX_DIALOG);
 			break;
+		case R.id.menuFktBtPro:
+			dc.showDialog(DialogController.PRO_DIALOG);
+			break;
 		}
 		canvas.invalidate();
 	}

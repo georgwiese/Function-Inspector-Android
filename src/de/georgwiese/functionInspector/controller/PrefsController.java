@@ -32,6 +32,10 @@ public class PrefsController {
 		return c.getSharedPreferences(KEY_DATA, 0).getFloat(key, defaultV);
 	}
 	
+	public boolean getDataBoolean(String key, boolean defaultV){
+		return c.getSharedPreferences(KEY_DATA, 0).getBoolean(key, defaultV);
+	}
+	
 	// Put Data
 	public void putDataStr(String key, String value){
 		c.getSharedPreferences(KEY_DATA, 0).edit().putString(key, value).commit();
@@ -39,5 +43,9 @@ public class PrefsController {
 	
 	public void putDataFloat(String key, float value){
 		c.getSharedPreferences(KEY_DATA, 0).edit().putFloat(key, value).commit();
+	}
+	
+	public void putDataBoolean(String key, boolean value){
+		c.getSharedPreferences(KEY_DATA, 0).edit().putBoolean(key, value).commit();
 	}
 }

@@ -7,6 +7,7 @@ import com.google.ads.AdView;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -19,6 +20,7 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -49,7 +51,6 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 	public static final int MENU_FKT=0;
 	public static final int MENU_PARAM=1;
 	public static final int MENU_POINTS=2;
-	//public static final int MENU_MODE=3;
 
 	public static final int NORMAL_COLOR = Color.parseColor("#000000");
 	public static final int ACTIVE_COLOR = Color.parseColor("#1c3640");
@@ -61,15 +62,17 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 	Context c;
 	StateHolder sh;
 	DialogController dc;
+	PathCollector pc;
 	boolean isTablet, isLandscape;
 	FktCanvas fktCanvas;
-	LinearLayout llButtons, llTrace, menuContainer, optionsBar;
+	LinearLayout llButtons, llTrace, menuContainer, optionsBar, llEfvs;
 	TextView traceTv;
 	MyKeyboardView kv;
 	AdView ad;
 	ArrayList<EnterFunctionView> efv;
 	SwitchButtonSet menuParamSbs;
-	Button menuParamMin, menuParamValue, menuParamMax;
+	Button menuParamMin, menuParamValue, menuParamMax, menuFktPro, menuPointsPro;
+	CheckBox disRoots, disExtrema, disInfl, disInt, disDis;
 	SeekBar menuParamSb;
 	OverflowButton menuButton;
 	
@@ -89,6 +92,7 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 		this.c = c;
 		sh = stateHolder;
 		dc = dialogController;
+		pc = pathCollector;
 		this.isTablet = isTablet;
 		menus = new MenuView[3];	// Assuming that no ID is higher than 2
 		menuButtons = new ImageButton[3];
@@ -105,6 +109,7 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 		dividers[MENU_POINTS] = (View) ms.findViewById(R.id.divider_points);
 		llButtons = (LinearLayout) ms.findViewById(R.id.ll_menuButtons);
 		llTrace   = (LinearLayout) ms.findViewById(R.id.ll_traceBar);
+		llEfvs    = (LinearLayout) ms.findViewById(R.id.ll_efvs);
 		menuContainer = (LinearLayout) ms.findViewById(R.id.ll_menus);
 		optionsBar = (LinearLayout) ms.findViewById(R.id.optionsBar);
 		traceTv   = (TextView) ms.findViewById(R.id.mode_trace_tv);
@@ -117,7 +122,7 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 			efv.add(new EnterFunctionView(c, kv, this, f.getString()));
 		
 		menuButton = (OverflowButton) ms.findViewById(R.id.menuButton);
-		String[] options = {"About", "Pro", "Welcome", "Try", "Facebook", "Pic", "Buy", "set Param.", "set min Param.", "set max Param."};
+		String[] options = {"About", "Pro", "Welcome", "Try", "Facebook", "Pic", "Buy", "set Param.", "set min Param.", "set max Param.", "switch LITE / PRO"};
 		menuButton.buildMenu(options, this);
 		
 		df1 = new DecimalFormat("0.0##");
@@ -128,6 +133,24 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 		menuParamMin    = (Button) ms.findViewById(R.id.mv_param_btMin);
 		menuParamValue  = (Button) ms.findViewById(R.id.mv_param_btParam);
 		menuParamMax    = (Button) ms.findViewById(R.id.mv_param_btMax);
+		menuFktPro      = (Button) ms.findViewById(R.id.menuFktBtPro);
+		menuPointsPro   = (Button) ms.findViewById(R.id.mv_points_btPro);
+		disRoots        = (CheckBox) ms.findViewById(R.id.mv_points_roots);
+		disExtrema      = (CheckBox) ms.findViewById(R.id.mv_points_extrema);
+		disInfl         = (CheckBox) ms.findViewById(R.id.mv_points_inflections);
+		disInt          = (CheckBox) ms.findViewById(R.id.mv_points_intersections);
+		disDis          = (CheckBox) ms.findViewById(R.id.mv_points_discontinuities);
+		disExtrema.setEnabled(sh.isPro);
+		disInfl.setEnabled(sh.isPro);
+		disInt.setEnabled(sh.isPro);
+		disDis.setEnabled(sh.isPro);
+		disRoots.setChecked(sh.disRoots);
+		disExtrema.setChecked(sh.disExtrema);
+		disInfl.setChecked(sh.disInflections);
+		disInt.setChecked(sh.disIntersections);
+		disDis.setChecked(sh.disDiscon);
+		menuPointsPro.setVisibility(sh.isPro?View.GONE:View.VISIBLE);
+		
 		updateMenuParam(true);
 		menuParamSb.setOnSeekBarChangeListener(this);
 		menuParamSbs.setOnStateChangedListener(this);
@@ -184,6 +207,11 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 			sbChangedByClick = true;
 			menuParamSb.setProgress((int)Math.round(((sh.getParams()[id] - sh.getMinParams()[id]) /
 					(sh.getMaxParams()[id] - sh.getMinParams()[id])) * menuParamSb.getMax()));
+			boolean enabled = (newState == 0) || sh.isPro;
+			menuParamMax.setEnabled(enabled);
+			menuParamMin.setEnabled(enabled);
+			menuParamValue.setEnabled(enabled);
+			menuParamSb.setEnabled(enabled);
 		}
 	}
 	
@@ -314,7 +342,7 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 		for (EnterFunctionView e:efv)
 			if (e.getEt().getText().toString().equals(""))
 				count++;
-		if (count==0){//) && (efv.size()<3)){ version==VERSION_PRO | 
+		if (count==0 && (sh.isPro || efv.size()<3)){  
 			// Insert Efv
 			EnterFunctionView v = new EnterFunctionView(c, kv, this);
 			efv.add(v);
@@ -324,21 +352,13 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 			efv.get(i).setNr(i+1);
 			efv.get(i).setColor(FktCanvas.COLORS_GRAPHS[i % FktCanvas.COLORS_GRAPHS.length]);
 		}
-		menus[MENU_FKT].removeAllViews();
+		llEfvs.removeAllViews();
 		for (EnterFunctionView e:efv)
-			menus[MENU_FKT].addView(e);
-		/*
-		if (efv.size()==3 && version==VERSION_LITE){
-			Button b = new Button(mContext);
-			b.setText(R.string.fkt_buyPro);
-			b.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					((MainScreen)mContext).showDialog(MainScreen.PRO_DIALOG);
-				}
-			});
-			menuGraph.addToBody(b);
-		}*/
+			llEfvs.addView(e);
+		if (efv.size()==3 && !sh.isPro)
+			menuFktPro.setVisibility(View.VISIBLE);
+		else
+			menuFktPro.setVisibility(View.GONE);
 	}
 	
 	public void updateFkts(){
@@ -450,6 +470,11 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 			dc.showDialog(DialogController.SET_MIN_DIALOG); break;
 		case 9:
 			dc.showDialog(DialogController.SET_MAX_DIALOG); break;
+		case 10:
+			sh.saveCurrentState();
+			sh = new StateHolder(c, !sh.isPro);
+			new UIController(c, sh, pc, dc, isTablet, isLandscape);
+			break;
 		}
 	}
 	

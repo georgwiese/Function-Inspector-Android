@@ -14,66 +14,66 @@
         android:layout_height="40dp"
         android:background="#000000"
         android:gravity="center"
-        android:visibility="gone"
-        android:orientation="horizontal" >
-            
-           <TextView 
-               android:text="@string/mode_trace_name"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:paddingLeft="20dp"
-               android:textColor="#ffffff"
-               android:paddingRight="20dp"
-               android:textSize="30dp"/>
-           
-           <View 
-               android:layout_width="1dp"
-               android:layout_height="36dp"
-               android:background="#888888"
-               />
-           
-            <!-- 
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@string/mode_trace_name"
+            android:textColor="#ffffff"
+            android:textSize="30dp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="36dp"
+            android:background="#888888" />
+
+        <!--
            <TextView 
                android:text="   |   "
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:textSize="30dp"/>
-                -->
-            <!--  
+               android:textSize="30dp"/>
+        -->
+        <!--
            <TextView 
                android:layout_width="0dp"
                android:layout_weight="1"
                android:maxWidth="100dp"
-               android:layout_height="fill_parent"/>
-            -->
-            <!-- 
+               android:layout_height="fill_parent"/>
+        -->
+        <!--
            <View 
                android:layout_width="0dp"
                android:layout_height="0dp"
                android:layout_weight="1"
-               /> -->
-           <TextView 
-               android:id = "@+id/mode_trace_tv"
-               android:layout_width="wrap_content"
-               android:minWidth="120dp"
-               android:background="#1c3640"
-               android:paddingLeft="5dp"
-               android:textColor="#ffffff"
-               android:layout_marginLeft="30dp"
-               android:layout_marginRight="10dp"
-               android:layout_height="wrap_content"
-               android:textSize="25dp"/>
-        
+               />
+        -->
+
+        <TextView
+            android:id="@+id/mode_trace_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="10dp"
+            android:background="#1c3640"
+            android:minWidth="120dp"
+            android:paddingLeft="5dp"
+            android:textColor="#ffffff"
+            android:textSize="25dp" />
     </LinearLayout>
-    
+
     <LinearLayout
         android:id="@+id/ll_menuButtons"
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:background="#000000"
-        android:visibility="visible"
+        android:gravity="bottom"
         android:orientation="horizontal"
-        android:gravity="bottom" >
+        android:visibility="visible" >
 
         <ImageButton
             android:id="@+id/menuButtonFkt"
@@ -83,13 +83,11 @@
             android:background="#000000"
             android:onClick="onButtonClick"
             android:src="@drawable/bt_bar_fkt" />
-        
-        
-           <View 
-               android:layout_width="1dp"
-               android:layout_height="32dp"
-               android:background="#888888"
-               />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="32dp"
+            android:background="#888888" />
 
         <ImageButton
             android:id="@+id/menuButtonParam"
@@ -100,13 +98,11 @@
             android:background="#000000"
             android:onClick="onButtonClick"
             android:src="@drawable/bt_bar_param" />
-        
-           
-           <View 
-               android:layout_width="1dp"
-               android:layout_height="32dp"
-               android:background="#888888"
-               />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="32dp"
+            android:background="#888888" />
 
         <ImageButton
             android:id="@+id/menuButtonPoints"
@@ -117,7 +113,7 @@
             android:background="#000000"
             android:onClick="onButtonClick"
             android:src="@drawable/bt_bar_points" />
-<!-- 
+        <!--
         <ImageButton
             android:id="@+id/menuButtonMode"
             android:layout_width="70dp"
@@ -126,37 +122,35 @@
             android:layout_weight="0"
             android:background="#000000"
             android:onClick="onButtonClick"
-            android:src="@drawable/bt_bar_mode_pan" />
- -->
+            android:src="@drawable/bt_bar_mode_pan" />
+        -->
     </LinearLayout>
-    
-    <LinearLayout 
+
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-    
-	    <View 
-	        android:id = "@+id/divider_fkt"
-	        android:layout_width="0dp"
-	        android:layout_height="2dp"
-	        android:layout_weight="1"
-	        android:background="#3691b3"
-	        />
-	    <View 
-	        android:id = "@+id/divider_param"
-	        android:layout_width="0dp"
-	        android:layout_height="2dp"
-	        android:layout_weight="1"
-	        android:background="#3691b3"
-	        />
-	    <View 
-	        android:id = "@+id/divider_points"
-	        android:layout_width="0dp"
-	        android:layout_height="2dp"
-	        android:layout_weight="1"
-	        android:background="#3691b3"
-	        />
-    
+        android:orientation="horizontal" >
+
+        <View
+            android:id="@+id/divider_fkt"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_weight="1"
+            android:background="#3691b3" />
+
+        <View
+            android:id="@+id/divider_param"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_weight="1"
+            android:background="#3691b3" />
+
+        <View
+            android:id="@+id/divider_points"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_weight="1"
+            android:background="#3691b3" />
     </LinearLayout>
 
     <de.georgwiese.functionInspector.uiClasses.FktCanvas
@@ -171,8 +165,8 @@
             android:id="@+id/ll_menus"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
             android:layout_weight="1"
+            android:gravity="right"
             android:orientation="horizontal" >
 
             <de.georgwiese.functionInspector.uiClasses.MenuView
@@ -183,6 +177,22 @@
                 android:orientation="vertical"
                 android:visibility="visible"
                 fi:menuTitle="@string/fkt_enterFkt" >
+                
+                <LinearLayout 
+	                android:id="@+id/ll_efvs"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:orientation="vertical">
+                    
+                </LinearLayout>
+                
+                <Button 
+	                android:id="@+id/menuFktBtPro"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="@string/fkt_buyPro"
+	                android:onClick="onButtonClick" />
+                
             </de.georgwiese.functionInspector.uiClasses.MenuView>
 
             <de.georgwiese.functionInspector.uiClasses.MenuView
@@ -200,7 +210,7 @@
                     android:id="@+id/mv_param_sbs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"/>
+                    android:padding="5dp" />
 
                 <SeekBar
                     android:id="@+id/mv_param_sb"
@@ -219,24 +229,24 @@
                         android:id="@+id/mv_param_btMin"
                         android:layout_width="0pt"
                         android:layout_height="wrap_content"
-                        android:onClick="onButtonClick"
-                        android:layout_weight="1" >
+                        android:layout_weight="1"
+                        android:onClick="onButtonClick" >
                     </Button>
 
                     <Button
                         android:id="@+id/mv_param_btParam"
                         android:layout_width="0pt"
                         android:layout_height="wrap_content"
-                        android:onClick="onButtonClick"
-                        android:layout_weight="1" >
+                        android:layout_weight="1"
+                        android:onClick="onButtonClick" >
                     </Button>
 
                     <Button
                         android:id="@+id/mv_param_btMax"
                         android:layout_width="0pt"
                         android:layout_height="wrap_content"
-                        android:onClick="onButtonClick"
-                        android:layout_weight="1" >
+                        android:layout_weight="1"
+                        android:onClick="onButtonClick" >
                     </Button>
                 </LinearLayout>
             </de.georgwiese.functionInspector.uiClasses.MenuView>
@@ -256,8 +266,8 @@
                     android:id="@+id/mv_points_roots"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="onButtonClick"
                     android:text="@string/points_roots"
-            		android:onClick="onButtonClick"
                     android:textColor="#000000" >
                 </CheckBox>
 
@@ -265,8 +275,8 @@
                     android:id="@+id/mv_points_extrema"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="onButtonClick"
                     android:text="@string/points_extrema"
-            		android:onClick="onButtonClick"
                     android:textColor="#000000" >
                 </CheckBox>
 
@@ -274,8 +284,8 @@
                     android:id="@+id/mv_points_inflections"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="onButtonClick"
                     android:text="@string/points_inflection"
-            		android:onClick="onButtonClick"
                     android:textColor="#000000" >
                 </CheckBox>
 
@@ -283,8 +293,8 @@
                     android:id="@+id/mv_points_discontinuities"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="onButtonClick"
                     android:text="@string/points_discontinuities"
-            		android:onClick="onButtonClick"
                     android:textColor="#000000" >
                 </CheckBox>
 
@@ -292,8 +302,8 @@
                     android:id="@+id/mv_points_intersections"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="onButtonClick"
                     android:text="@string/points_intersections"
-            		android:onClick="onButtonClick"
                     android:textColor="#000000" >
                 </CheckBox>
 
@@ -301,13 +311,12 @@
                     android:id="@+id/mv_points_btPro"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-            		android:onClick="onButtonClick"
+                    android:onClick="onButtonClick"
                     android:text="@string/points_pro" >
                 </Button>
             </de.georgwiese.functionInspector.uiClasses.MenuView>
 
-            <!-- 
-            
+            <!--
             <de.georgwiese.functionInspector.uiClasses.MenuView
                 android:id="@+id/menuMode"
                 android:layout_width="70dp"
@@ -344,93 +353,82 @@
                     android:gravity="center"
                     android:text="@string/mode_slope_name"
                     android:textSize="12dip" />
-            </de.georgwiese.functionInspector.uiClasses.MenuView>
-         -->
+            </de.georgwiese.functionInspector.uiClasses.MenuView>
+            -->
         </LinearLayout>
-        
-        
-    <de.georgwiese.functionInspector.uiClasses.MyKeyboardView
-        android:id = "@+id/keyboardView"
-        android:visibility="gone"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        />
-    
+
+        <de.georgwiese.functionInspector.uiClasses.MyKeyboardView
+            android:id="@+id/keyboardView"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:background="#888888"
-            />
-    
+            android:background="#888888" />
+
         <LinearLayout
             android:id="@+id/optionsBar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="right|center_vertical"
             android:background="#000000"
+            android:gravity="right|center_vertical"
             android:orientation="horizontal" >
-    
-    <com.google.ads.AdView
-        android:id="@+id/adView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        ads:adSize="BANNER"
-        ads:adUnitId="a14cf957c728954"
-        ads:loadAdOnCreate="true"
-        android:gravity="center"
-        android:visibility="gone" />
-      
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            />
-      <!--  
+
+            <com.google.ads.AdView
+                android:id="@+id/adView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                ads:adSize="BANNER"
+                ads:adUnitId="a14cf957c728954"
+                ads:loadAdOnCreate="true"
+                android:gravity="center"
+                android:visibility="gone" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+            <!--
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/zoom"
-            android:paddingRight="10dp" />-->
-        
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/minus"
-            />
-           
-           <View 
-               android:layout_width="1dp"
-               android:layout_height="32dp"
-               android:background="#888888"
-               />
-        
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/plus"
-            android:paddingRight="20dp"
-            />
-           
-           <View 
-               android:layout_width="1dp"
-               android:layout_height="32dp"
-               android:background="#888888"
-               />
-        
-        <de.georgwiese.functionInspector.uiClasses.OverflowButton
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/menuButton"
-            />
-        
+            android:paddingRight="10dp" />
+            -->
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/minus" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="32dp"
+                android:background="#888888" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="20dp"
+                android:src="@drawable/plus" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="32dp"
+                android:background="#888888" />
+
+            <de.georgwiese.functionInspector.uiClasses.OverflowButton
+                android:id="@+id/menuButton"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
         </LinearLayout>
-    
+
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:background="#555555"
-            />
-        
+            android:background="#555555" />
     </de.georgwiese.functionInspector.uiClasses.FktCanvas>
 
 </LinearLayout>
