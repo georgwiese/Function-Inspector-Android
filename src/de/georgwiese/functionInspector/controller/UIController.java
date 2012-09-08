@@ -404,8 +404,10 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 				first = false;
 				id = i;
 			}else{
+				// Hide Menu
 				menus[i].setVisibility((isTablet && isLandscape)?View.INVISIBLE:View.GONE);
 				menuButtons[i].setBackgroundColor(NORMAL_COLOR);
+				dividers[i].setBackgroundColor(HIGHLIGHT_COLOR);
 			}
 		}
 		
@@ -471,9 +473,8 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 		case 9:
 			dc.showDialog(DialogController.SET_MAX_DIALOG); break;
 		case 10:
-			sh.saveCurrentState();
-			sh = new StateHolder(c, !sh.isPro);
-			new UIController(c, sh, pc, dc, isTablet, isLandscape);
+			sh.setIsPro(!sh.isPro);
+			((MainScreen) c).restart();
 			break;
 		}
 	}

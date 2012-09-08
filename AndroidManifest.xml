@@ -15,6 +15,7 @@
             android:name=".SplashScreen"
             android:label="@string/app_name_lite"
             android:theme="@style/SplashscreenTheme"
+            android:hardwareAccelerated="true"
             android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="adjustPan" >
             <intent-filter>

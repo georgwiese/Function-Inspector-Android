@@ -399,20 +399,25 @@
             -->
 
             <ImageView
+                android:id="@+id/zoom_minus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/minus" />
-
+                android:onClick="onButtonClick"
+                android:src="@drawable/bt_minus" />
+<!-- 
             <View
                 android:layout_width="1dp"
                 android:layout_height="32dp"
                 android:background="#888888" />
-
+ -->
             <ImageView
+                android:id="@+id/zoom_plus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="20dp"
-                android:src="@drawable/plus" />
+                android:paddingLeft="3dp"
+                android:onClick="onButtonClick"
+                android:src="@drawable/bt_plus" />
 
             <View
                 android:layout_width="1dp"

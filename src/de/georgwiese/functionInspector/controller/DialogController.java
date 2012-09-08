@@ -1,6 +1,7 @@
 package de.georgwiese.functionInspector.controller;
 
 import de.georgwiese.calculationFunktions.CalcFkts;
+import de.georgwiese.functionInspectorLite.MainScreen;
 import de.georgwiese.functionInspectorLite.R;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -134,9 +135,15 @@ public class DialogController {
     						.setMessage(R.string.try_dialog_message)
     						.setIcon(R.drawable.icon_pro)
     						// TODO: Implement Try Dialog Functionality
-	        				.setNegativeButton(R.string.try_dialog_button, new DialogInterface.OnClickListener() {
+	        				.setNegativeButton(sh.tryUsed?R.string.try_dialog_button_inactive:R.string.try_dialog_button,
+	        						new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
+									if (!sh.tryUsed){
+										sh.tryUsed = true;
+										sh.setIsPro(true);
+										((MainScreen) c).restart();
+									}
 									dialog.dismiss();
 								}
 							})

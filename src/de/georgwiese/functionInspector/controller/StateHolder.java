@@ -36,6 +36,7 @@ public class StateHolder {
 	public boolean doDyn;			// whether or not the UpdateThread should move according to current speed
 	public boolean doZoom;			// whether or not the UpdateThread should zoom according to desiredZoom
 	public boolean preview;
+	public boolean tryUsed;
 	ArrayList<Function> fkts;		// All the functions
 	Point activePoint;
 	double[] params;				// Parameters (a, b and c)
@@ -56,6 +57,7 @@ public class StateHolder {
 	public double currentX;
 	
 	// Prefs
+	public static String KEY_ISPRO	 	= "isPro";
 	public static String KEY_FOLDER 	= "prefs_folder";
 	public static String KEY_FKTS   	= "fkt";
 	public static String VAL_FKTS_END	= "fkt_end";
@@ -64,18 +66,21 @@ public class StateHolder {
 	public static String KEY_MAXP   	= "maxParam";
 	public static String KEY_ZOOM   	= "zoom";
 	public static String KEY_MIDDLE   	= "middle";
-	public static String KEY_Points   	= "points";
+	public static String KEY_POINTS   	= "points";
+	public static String KEY_TRY_USED  	= "tryUsed";
 	PrefsController pc;
 	String screenshotFolder;
 	
 	public StateHolder(Context c, boolean isPro){
 		pc = new PrefsController(c);
-		this.isPro = isPro;
+		this.isPro = isPro || pc.getDataBoolean(KEY_ISPRO, false);
+		pc.putDataBoolean(KEY_ISPRO, isPro);
 		
 		redraw  = true;
 		doDyn   = false;
 		doZoom  = false;
 		preview = false;
+		tryUsed = pc.getDataBoolean(KEY_TRY_USED, false);
 		fkts = new ArrayList<Function>();
 		for (int i = 0; true; i++ ){
 			if ((i >= 3) && !isPro)
@@ -113,14 +118,19 @@ public class StateHolder {
 		mode = MODE_PAN;
 		maxSpeedPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (float)MAX_SPEED, c.getResources().getDisplayMetrics());
 		
-		disRoots 			= pc.getDataBoolean(KEY_Points + "roots", false);
-		disExtrema 			= pc.getDataBoolean(KEY_Points + "extrema", false) && isPro;
-		disInflections 		= pc.getDataBoolean(KEY_Points + "inflections", false) && isPro;
-		disDiscon 			= pc.getDataBoolean(KEY_Points + "discontinuities", false) && isPro;
-		disIntersections 	= pc.getDataBoolean(KEY_Points + "intersections", false) && isPro;
+		disRoots 			= pc.getDataBoolean(KEY_POINTS + "roots", false);
+		disExtrema 			= pc.getDataBoolean(KEY_POINTS + "extrema", false) && isPro;
+		disInflections 		= pc.getDataBoolean(KEY_POINTS + "inflections", false) && isPro;
+		disDiscon 			= pc.getDataBoolean(KEY_POINTS + "discontinuities", false) && isPro;
+		disIntersections 	= pc.getDataBoolean(KEY_POINTS + "intersections", false) && isPro;
 		
 		// Prefs
 		screenshotFolder = pc.getPrefStr(KEY_FOLDER, "Function Inspector");
+	}
+	
+	public void setIsPro(boolean value){
+		isPro = value;
+		pc.putDataBoolean(KEY_ISPRO, isPro);
 	}
 
 	public void addFkt(String f){
@@ -168,8 +178,14 @@ public class StateHolder {
 	}
 	
 	public void zoomIn(){
-		desiredZoom[0] = ZOOM_IN_FACTOR * zoom[0];
-		desiredZoom[1] = ZOOM_IN_FACTOR * zoom[1];
+		desiredZoom[0] = zoom[0] * ZOOM_IN_FACTOR;
+		desiredZoom[1] = zoom[1] * ZOOM_IN_FACTOR;
+		doZoom = true;
+	}
+	
+	public void zoomOut(){
+		desiredZoom[0] = zoom[0] / ZOOM_IN_FACTOR;
+		desiredZoom[1] = zoom[1] / ZOOM_IN_FACTOR;
 		doZoom = true;
 	}
 	
@@ -270,12 +286,6 @@ public class StateHolder {
 	
 	public void updateZoom(long timeElapsed){
 		double factor = Math.pow(ZOOM_IN_UPDATE, (double)timeElapsed / (1000 / 60));
-		/*for (int i = 0; i < zoom.length; i++){
-			if (zoom[i] < desiredZoom[i])
-				zoom[i] *= factor;
-			else
-				zoom[i] /= factor;
-		}*/
 		if (zoom[0] < desiredZoom[0])
 			zoom(factor);
 		else
@@ -306,12 +316,13 @@ public class StateHolder {
 			pc.putDataFloat(KEY_MINP + i, (float)minParams[i]);
 			pc.putDataFloat(KEY_MAXP + i, (float)maxParams[i]);
 		}
-		pc.putDataBoolean(KEY_Points + "roots", disRoots);
-		pc.putDataBoolean(KEY_Points + "extrema", disExtrema);
-		pc.putDataBoolean(KEY_Points + "inflections", disInflections);
-		pc.putDataBoolean(KEY_Points + "intersections", disIntersections);
-		pc.putDataBoolean(KEY_Points + "discontinuities", disDiscon);
+		pc.putDataBoolean(KEY_POINTS + "roots", disRoots);
+		pc.putDataBoolean(KEY_POINTS + "extrema", disExtrema);
+		pc.putDataBoolean(KEY_POINTS + "inflections", disInflections);
+		pc.putDataBoolean(KEY_POINTS + "intersections", disIntersections);
+		pc.putDataBoolean(KEY_POINTS + "discontinuities", disDiscon);
 		
+		pc.putDataBoolean(KEY_TRY_USED, tryUsed);
 		pc.putPrefStr(KEY_FOLDER, screenshotFolder);
 	}
 }

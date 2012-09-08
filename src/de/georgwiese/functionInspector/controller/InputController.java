@@ -68,7 +68,14 @@ public class InputController {
 			dc.showDialog(DialogController.SET_MAX_DIALOG);
 			break;
 		case R.id.menuFktBtPro:
+		case R.id.mv_points_btPro:
 			dc.showDialog(DialogController.PRO_DIALOG);
+			break;
+		case R.id.zoom_minus:
+			sh.zoomOut();
+			break;
+		case R.id.zoom_plus:
+			sh.zoomIn();
 			break;
 		}
 		canvas.invalidate();

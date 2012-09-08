@@ -688,6 +688,13 @@ public class MainScreen extends FragmentActivity {
     	Log.d("Developer", "ConfigChange" + (newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE));
     	uiController.setLandscape(newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE);
     }
+    
+    public void restart(){
+    	stateHolder.saveCurrentState();
+    	Intent intent = getIntent();
+    	finish();
+    	startActivity(intent);
+    }
 /*
     private class MyLicenseCheckerCallback implements LicenseCheckerCallback{
 
