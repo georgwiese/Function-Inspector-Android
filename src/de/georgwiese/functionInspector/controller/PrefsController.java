@@ -18,6 +18,10 @@ public class PrefsController {
 		return c.getSharedPreferences(KEY_PREFS, 0).getString(key, defaultV);
 	}
 	
+	public boolean getPrefsBoolean(String key, boolean defaultV){
+		return c.getSharedPreferences(KEY_PREFS, 0).getBoolean(key, defaultV);
+	}
+	
 	// Put Pref
 	public void putPrefStr(String key, String value){
 		c.getSharedPreferences(KEY_PREFS, 0).edit().putString(key, value).commit();

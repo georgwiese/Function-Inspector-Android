@@ -28,7 +28,6 @@ public class SwitchButtonSet extends LinearLayout {
 	
 	public SwitchButtonSet(Context context, AttributeSet attrs, int count) {
 		super(context, attrs);
-		String[] captions = {"a", "b", "c"};
 		buttonCount=count;
 		state = 0;
 		setOrientation(HORIZONTAL);
@@ -42,7 +41,7 @@ public class SwitchButtonSet extends LinearLayout {
 			bts[i].setMinWidth(50);
 			bts[i].setGravity(Gravity.CENTER);
 			bts[i].setPadding(0, 0, 0, 0);
-			bts[i].setText(captions[i]);
+			bts[i].setTextColor(Color.BLACK);
 			bts[i].setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {

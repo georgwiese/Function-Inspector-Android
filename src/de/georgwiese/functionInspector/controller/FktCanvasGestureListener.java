@@ -78,12 +78,15 @@ public class FktCanvasGestureListener extends SimpleOnGestureListener implements
 			zoomFactorX*=detector.getScaleFactor();
 			zoomFactorY*=detector.getScaleFactor();
 		}*/
-		sh.zoom(detector.getScaleFactor());
-		/*if (ss.currentSpanX != 0 && ss.currentSpanY != 0 &&
-				ss.prevSpanX != 0 && ss.prevSpanY != 0)
-			sh.zoom(ss.currentSpanX/ss.prevSpanX, ss.currentSpanY/ss.prevSpanY);
-		ss.prevSpanX = ss.currentSpanX;
-		ss.prevSpanY = ss.currentSpanY;*/
+		if (sh.zoomXY){
+		if (ss.currentSpanX != 0 && ss.currentSpanY != 0 &&
+			ss.prevSpanX != 0 && ss.prevSpanY != 0)
+				sh.zoom(ss.currentSpanX/ss.prevSpanX, ss.currentSpanY/ss.prevSpanY);
+			ss.prevSpanX = ss.currentSpanX;
+			ss.prevSpanY = ss.currentSpanY;
+		}
+		else
+			sh.zoom(detector.getScaleFactor());
 		//sh.zoom(detector.getCurrentSpanX()/detector.getPreviousSpanX(),
 		//		detector.getCurrentSpanY()/detector.getPreviousSpanY());
 		canvas.invalidate();

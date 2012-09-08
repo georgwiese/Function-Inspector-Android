@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.google.ads.AdView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,7 +39,9 @@ import de.georgwiese.functionInspector.uiClasses.OverflowButton;
 import de.georgwiese.functionInspector.uiClasses.SwitchButtonSet;
 import de.georgwiese.functionInspector.uiClasses.SwitchButtonSet.OnStateChangedListener;
 import de.georgwiese.functionInspectorLite.MainScreen;
+import de.georgwiese.functionInspectorLite.Prefs;
 import de.georgwiese.functionInspectorLite.R;
+import de.georgwiese.functionInspectorLite.TableActivity;
 
 /**
  * Class to control verious UI Elements, for example
@@ -122,13 +125,23 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 			efv.add(new EnterFunctionView(c, kv, this, f.getString()));
 		
 		menuButton = (OverflowButton) ms.findViewById(R.id.menuButton);
-		String[] options = {"About", "Pro", "Welcome", "Try", "Facebook", "Pic", "Buy", "set Param.", "set min Param.", "set max Param.", "switch LITE / PRO"};
-		menuButton.buildMenu(options, this);
+		//String[] options = {"About", "Pro", "Welcome", "Try", "Facebook", "Pic", "Buy", "set Param.", "set min Param.", "set max Param.", "switch LITE / PRO"};
+		// Preferences, Table, Screenshot, About, (Pro, Switch)
+		String[] optionsLite = {c.getResources().getString(R.string.prefs_title),
+				c.getResources().getString(R.string.table_title),
+				c.getResources().getString(R.string.menu_screenshot_str),
+				c.getResources().getString(R.string.menu_about_str),
+				c.getResources().getString(R.string.pro_dialog_title),
+				"Switch to PRO"
+		};
+		String[] optionsPro = {optionsLite[0], optionsLite[1], optionsLite[2], optionsLite[3]};
+		menuButton.buildMenu(sh.isPro?optionsPro:optionsLite, this);
 		
 		df1 = new DecimalFormat("0.0##");
 		df2 = new DecimalFormat("0.00");
 
 		menuParamSbs    = (SwitchButtonSet) ms.findViewById(R.id.mv_param_sbs);
+		menuParamSbs.setCaptions(new String[]{"a", "b", "c"});
 		menuParamSb     = (SeekBar) ms.findViewById(R.id.mv_param_sb);
 		menuParamMin    = (Button) ms.findViewById(R.id.mv_param_btMin);
 		menuParamValue  = (Button) ms.findViewById(R.id.mv_param_btParam);
@@ -450,7 +463,43 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 
 	@Override
 	public void onMenuItemClick(int menuID, int itemID) {
-		String[] options = {"About", "Pro", "Welcome", "Try", "Facebook", "Pic", "Buy", "set Param.", "set min Param.", "set max Param."};
+		//String[] options = {"About", "Pro", "Welcome", "Try", "Facebook", "Pic", "Buy", "set Param.", "set min Param.", "set max Param."};
+		// Preferences, Table, Screenshot, About, Pro
+		switch(itemID){
+		case 0:
+    		Intent iPref = new Intent(c, Prefs.class);
+    		iPref.putExtra(StateHolder.KEY_ISPRO, sh.isPro);
+    		c.startActivity(iPref);
+			break;
+		case 1:
+			Intent iTable = new Intent(c, TableActivity.class);
+			// TODO: Table of Slopes?
+			iTable.putExtra("bool_slope", false);
+			ArrayList<Function> fkts = sh.getFkts();
+			for (int j = 0 ; j<=fkts.size(); j++){
+				if (j==fkts.size())
+					iTable.putExtra("fkt"+Integer.toString(j), "end");
+				else
+					iTable.putExtra("fkt"+Integer.toString(j), fkts.size()>0 && fkts.get(j)!=null?fkts.get(j).getString():"empty");
+			}
+			iTable.putExtra("paramA", sh.getParams()[0]);
+			iTable.putExtra("paramB", sh.getParams()[1]);
+			iTable.putExtra("paramC", sh.getParams()[2]);
+			c.startActivity(iTable);
+			break;
+		case 2:
+			dc.showDialog(DialogController.PIC_DIALOG); break;
+		case 3:
+			dc.showDialog(DialogController.ABOUT_DIALOG); break;
+		case 4:
+			dc.showDialog(DialogController.PRO_DIALOG); break;
+		case 5:
+			sh.setIsPro(!sh.isPro);
+			((MainScreen) c).restart();
+			break;
+		}
+		
+		/*
 		switch(itemID){
 		case 0:
 			dc.showDialog(DialogController.ABOUT_DIALOG); break;
@@ -476,7 +525,7 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 			sh.setIsPro(!sh.isPro);
 			((MainScreen) c).restart();
 			break;
-		}
+		}*/
 	}
 	
 	

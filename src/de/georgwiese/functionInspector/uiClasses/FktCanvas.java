@@ -47,6 +47,7 @@ public class FktCanvas extends LinearLayout {
 	double[] steps;
 	protected DecimalFormat df1, df2;
 	OnSizeChangedListener oscl;
+	float borderBottom;
 
 	@TargetApi(11)
 	public FktCanvas(Context context, AttributeSet attrs) {
@@ -58,6 +59,9 @@ public class FktCanvas extends LinearLayout {
 		steps[1] = 1;
 		df1 = new DecimalFormat("0.0##");
 		df2 = new DecimalFormat("0.00");
+		
+		// Anything 40 dips from the bottom edge is obscured by the bar
+		borderBottom = 40 * context.getResources().getDisplayMetrics().density;
 		
 		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB)
 			setLayerType(LAYER_TYPE_SOFTWARE, null);
@@ -130,10 +134,10 @@ public class FktCanvas extends LinearLayout {
 				else
 					text=df1.format(i*steps[0]);
 				//TODO: Implement borderTop and borderBottom
-				if (zero.y <= getHeight()-30 && zero.y>=0)
+				if (zero.y <= getHeight()-borderBottom-30 && zero.y>=0)
 					canvas.drawText(text, x, (float)zero.y+20, paint);
-				else if (zero.y > getHeight()-30)
-					canvas.drawText(text, x, getHeight()-10, paint);
+				else if (zero.y > getHeight()-borderBottom-30)
+					canvas.drawText(text, x, getHeight()-borderBottom-10, paint);
 				else if (zero.y < 0)
 					canvas.drawText(text, x, 20, paint);
 			}

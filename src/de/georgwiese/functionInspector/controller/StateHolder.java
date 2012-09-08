@@ -37,6 +37,7 @@ public class StateHolder {
 	public boolean doZoom;			// whether or not the UpdateThread should zoom according to desiredZoom
 	public boolean preview;
 	public boolean tryUsed;
+	public boolean zoomXY;			// whether or not X and Y axes should be zoomed independently
 	ArrayList<Function> fkts;		// All the functions
 	Point activePoint;
 	double[] params;				// Parameters (a, b and c)
@@ -68,6 +69,7 @@ public class StateHolder {
 	public static String KEY_MIDDLE   	= "middle";
 	public static String KEY_POINTS   	= "points";
 	public static String KEY_TRY_USED  	= "tryUsed";
+	public static String KEY_ZOOMXY  	= "zoomXY";
 	PrefsController pc;
 	String screenshotFolder;
 	
@@ -76,10 +78,15 @@ public class StateHolder {
 		this.isPro = isPro || pc.getDataBoolean(KEY_ISPRO, false);
 		pc.putDataBoolean(KEY_ISPRO, isPro);
 		
+		initialize(c);
+	}
+	
+	public void initialize(Context c){
 		redraw  = true;
 		doDyn   = false;
 		doZoom  = false;
 		preview = false;
+		zoomXY  = pc.getPrefsBoolean(KEY_ZOOMXY, false) && isPro;
 		tryUsed = pc.getDataBoolean(KEY_TRY_USED, false);
 		fkts = new ArrayList<Function>();
 		for (int i = 0; true; i++ ){
@@ -102,7 +109,7 @@ public class StateHolder {
 			maxParams[i] = pc.getDataFloat(KEY_MAXP + i, 5);
 		zoom = new double[2];
 		zoom[0] = pc.getDataFloat(KEY_ZOOM + 0, 1);
-		zoom[1] = isPro?pc.getDataFloat(KEY_ZOOM + 1, 1):zoom[0];
+		zoom[1] = (isPro && zoomXY)?pc.getDataFloat(KEY_ZOOM + 1, 1):zoom[0];
 		desiredZoom = zoom.clone();
 		factor = new double[2];
 		factor[0] = 1.0;

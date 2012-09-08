@@ -106,6 +106,8 @@ public class DialogController {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
 									dialog.dismiss();
+									Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=de.georgwiese.functionInspectorPro"));
+									startActivity(intent);
 								}
 							})
 	        				.setNeutralButton(R.string.pro_dialog_try, new DialogInterface.OnClickListener() {

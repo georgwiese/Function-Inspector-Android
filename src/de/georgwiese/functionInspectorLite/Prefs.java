@@ -18,20 +18,21 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import de.georgwiese.functionInspector.FrameView;
-import de.georgwiese.functionInspector.SwitchButtonSet;
+import de.georgwiese.functionInspector.uiClasses.SwitchButtonSet;
+import de.georgwiese.functionInspector.controller.PrefsController;
+import de.georgwiese.functionInspector.controller.StateHolder;
 
 public class Prefs extends PreferenceActivity {
-	int version;
+	boolean isPro;
 	Context mContext;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mContext=this;
-		version = getIntent().getExtras().getInt("version");
+		isPro = getIntent().getExtras().getBoolean(StateHolder.KEY_ISPRO);
 		addPreferencesFromResource(R.xml.prefs);
-		final SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+		final SharedPreferences prefs = getSharedPreferences(PrefsController.KEY_PREFS, MODE_PRIVATE);
 		Preference startFullscreen = findPreference("prefs_startFullscreen");
 		startFullscreen.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 			@Override
@@ -42,6 +43,7 @@ public class Prefs extends PreferenceActivity {
 				return true;
 			}
 		});
+		/*
 		Preference color = findPreference("prefs_color");
 		color.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 			
@@ -53,12 +55,13 @@ public class Prefs extends PreferenceActivity {
 				return true;
 			}
 		});
+		*/
 		Preference zoomXY = findPreference("prefs_zoomXY");
 		zoomXY.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				SharedPreferences.Editor editor = prefs.edit();
-				editor.putBoolean("prefs_zoomXY", (Boolean) newValue);
+				editor.putBoolean(StateHolder.KEY_ZOOMXY, !((Boolean) newValue));
 				editor.commit();
 				return true;
 			}
@@ -68,7 +71,7 @@ public class Prefs extends PreferenceActivity {
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				SharedPreferences.Editor editor = prefs.edit();
-				editor.putString("prefs_folder", (String) newValue);
+				editor.putString(StateHolder.KEY_FOLDER, (String) newValue);
 				editor.commit();
 				return true;
 			}
@@ -154,7 +157,7 @@ public class Prefs extends PreferenceActivity {
 				Intent i = new Intent(Intent.ACTION_SEND);
 				i.setType("plain/text");
 				i.putExtra(Intent.EXTRA_EMAIL, new String[]{"georgwiese@gmail.com"});
-				i.putExtra(Intent.EXTRA_SUBJECT, getString(version==FrameView.VERSION_LITE?R.string.prefs_email_subjectLite:R.string.prefs_email_subjectPro));
+				i.putExtra(Intent.EXTRA_SUBJECT, getString(isPro?R.string.prefs_email_subjectPro:R.string.prefs_email_subjectLite));
 				startActivity(Intent.createChooser(i, getString(R.string.prefs_email_send)));
 				return false;
 			}
@@ -180,7 +183,7 @@ public class Prefs extends PreferenceActivity {
 			}
 		});
 		Preference pro = findPreference("prefs_pro");
-		if (version == FrameView.VERSION_PRO){
+		if (isPro){
 			pro.setTitle(getString(R.string.prefs_proPro_title));
 			pro.setSummary(getString(R.string.prefs_proPro_summary));
 		}
@@ -190,16 +193,18 @@ public class Prefs extends PreferenceActivity {
 			pro.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 				@Override
 				public boolean onPreferenceClick(Preference preference) {
-					Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=de.georgwiese.functionInspectorPro"));
+					Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=de.georgwiese.functionInspectorPro"));
 					startActivity(intent);
 					return false;
 				}
 			});
 		}
-		if (version==FrameView.VERSION_LITE){
+		if (!isPro){
 			startFullscreen.setDefaultValue(false);
 			startFullscreen.setEnabled(false);
-			color.setEnabled(false);
+			zoomXY.setDefaultValue(false);
+			zoomXY.setEnabled(false);
+			//color.setEnabled(false);
 		}
 		
 	}

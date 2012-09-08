@@ -57,8 +57,8 @@ import de.georgwiese.functionInspector.uiClasses.MyKeyboardView;
 
 public class MainScreen extends FragmentActivity {
 	// Version IDs
-	private static final int VERSION_LITE=FrameView.VERSION_LITE;
-	private static final int VERSION_PRO=FrameView.VERSION_PRO;
+	public static final int VERSION_LITE=FrameView.VERSION_LITE;
+	public static final int VERSION_PRO=FrameView.VERSION_PRO;
 	private int version=VERSION_LITE;
 	
 	public static final boolean IS_PRO = false;
@@ -76,7 +76,6 @@ public class MainScreen extends FragmentActivity {
 	*/
 	
 	Context mContext;
-	Activity mActivity;
 	
 	FrameView graph;
 	public ImageButton bt_graph, bt_param,bt_points,bt_photo;
@@ -127,7 +126,7 @@ public class MainScreen extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        //showSplashScreen();
+        showSplashScreen();
         
         // Licensing (not done corrently)
         /*
@@ -147,35 +146,44 @@ public class MainScreen extends FragmentActivity {
         }
         */
         
-    	setContentView(R.layout.main);
     	mContext=this;
-    	mActivity=this;
-
-    	stateHolder = new StateHolder(this, IS_PRO);
-    	DisplayMetrics dm = getResources().getDisplayMetrics();
-    	// Determine the approximate width in inch.
-    	//China Tablet: 5, Nexus 7 6, LGOS: 3.4
-    	boolean isTablet = Math.max(dm.widthPixels / dm.xdpi, dm.heightPixels / dm.ydpi) > 4.5;
-    	canvas = (FktCanvas) findViewById(R.id.fktCanvas);
-    	dialogController = new DialogController(mContext, getSupportFragmentManager(), stateHolder);
-    	pathCollector = new PathCollector(stateHolder, canvas);
-    	uiController = new UIController(mContext, stateHolder, pathCollector, dialogController, isTablet, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
-    	dialogController.setUIContoller(uiController);
-    	inputController = new InputController(mContext, stateHolder, uiController, dialogController, canvas);
-    	((MyKeyboardView) findViewById(R.id.keyboardView)).setUIController(uiController);
     	
-    	canvas.setOnSizeChangedListener(new FktCanvas.OnSizeChangedListener() {
+    	Handler handler = new Handler();
+    	
+    	handler.postDelayed(new Runnable() {
+			
 			@Override
-			public void onSizeChanged(int w, int h, int oldw, int oldh) {
-				// Update uiController because at initialization time, size of canvas is still zero
-				uiController.onConfigChange();
+			public void run() {
+		    	setContentView(R.layout.main);
+		    	stateHolder = new StateHolder(mContext, IS_PRO);
+		    	DisplayMetrics dm = getResources().getDisplayMetrics();
+		    	// Determine the approximate width in inch.
+		    	//China Tablet: 5, Nexus 7 6, LGOS: 3.4
+		    	boolean isTablet = Math.max(dm.widthPixels / dm.xdpi, dm.heightPixels / dm.ydpi) > 4.5;
+		    	canvas = (FktCanvas) findViewById(R.id.fktCanvas);
+		    	dialogController = new DialogController(mContext, getSupportFragmentManager(), stateHolder);
+		    	pathCollector = new PathCollector(stateHolder, canvas);
+		    	uiController = new UIController(mContext, stateHolder, pathCollector, dialogController, isTablet, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
+		    	dialogController.setUIContoller(uiController);
+		    	inputController = new InputController(mContext, stateHolder, uiController, dialogController, canvas);
+		    	((MyKeyboardView) findViewById(R.id.keyboardView)).setUIController(uiController);
+		    	
+		    	canvas.setOnSizeChangedListener(new FktCanvas.OnSizeChangedListener() {
+					@Override
+					public void onSizeChanged(int w, int h, int oldw, int oldh) {
+						// Update uiController because at initialization time, size of canvas is still zero
+						uiController.onConfigChange();
+					}
+				});
+		    	redrawThread = new RedrawThread(null, stateHolder, canvas, pathCollector);
+		    	canvas.setProps(stateHolder, pathCollector);
+		    	updateThread = new UpdateThread(canvas, stateHolder);
+		    	redrawThread.start();
+		    	updateThread.start();
+		    	
+		    	removeSplashScreen();
 			}
-		});
-    	redrawThread = new RedrawThread(null, stateHolder, canvas, pathCollector);
-    	canvas.setProps(stateHolder, pathCollector);
-    	updateThread = new UpdateThread(canvas, stateHolder);
-    	redrawThread.start();
-    	updateThread.start();
+		}, 1000);
     	
     	/*
     	graphView=(LinearLayout)findViewById(R.id.ll_graphView);
@@ -319,7 +327,10 @@ public class MainScreen extends FragmentActivity {
     protected void onStart() {
     	
     	super.onStart();
+    	if (stateHolder != null)
+    		stateHolder.initialize(mContext);
     	
+    	/*
     	// Check, if graph is null, because onStart() is called twice, first by Activity life cycle, than manually.
     	if (graph!=null){
     		// Set Preferences
@@ -428,6 +439,7 @@ public class MainScreen extends FragmentActivity {
 				}
 			});
     	}
+    	*/
     }
     /*
     public boolean onCreateOptionsMenu(Menu m){
