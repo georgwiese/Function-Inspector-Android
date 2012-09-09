@@ -27,14 +27,16 @@ public class StateHolder {
 	static final double MAX_SPEED       = 1;	// in dp / ms
 	static final double MIN_SPEED		= 0.001;
 	
-	// Constants dealing with zoom
+	// Constants dealing with zoom and dynamic moving
+	static final int FRAMES = 30;
 	static final double ZOOM_IN_FACTOR  = 2.0;
-	static final double ZOOM_IN_UPDATE  = 1.03;
+	static final double ZOOM_IN_UPDATE  = Math.pow(ZOOM_IN_FACTOR, 1 / (double)FRAMES);
 	
 	public boolean isPro;
 	public boolean redraw;			// whether or not FktCanvas needs to redraw the functions
 	public boolean doDyn;			// whether or not the UpdateThread should move according to current speed
 	public boolean doZoom;			// whether or not the UpdateThread should zoom according to desiredZoom
+	public boolean doMove;
 	public boolean preview;
 	public boolean tryUsed;
 	public boolean disSlope;
@@ -46,6 +48,8 @@ public class StateHolder {
 	double[] maxParams;
 	double[] zoom;					// current zoom factor, zoom[0] on x, zoom [1] in y axis
 	double[] desiredZoom;			// To what Zoom level it should be animated
+	double[] desiredMiddle;
+	double[] moveUpdate;			// How much should be zoomed each frame
 	double[] factor;				// what number should be factored out when drawing the coordinate system
 	double[] middle;				// coordinate that is at the middle of the screen (current position)
 	double[] speed;					// current Speed in units / ms
@@ -86,6 +90,7 @@ public class StateHolder {
 	public void initialize(Context c){
 		redraw   = true;
 		doDyn    = false;
+		doMove   = false;
 		doZoom   = false;
 		preview  = false;
 		zoomXY   = pc.getPrefsBoolean(KEY_ZOOMXY, false) && isPro;
@@ -120,6 +125,8 @@ public class StateHolder {
 		middle = new double[2];
 		middle[0] = pc.getDataFloat(KEY_MIDDLE + 0, 0);
 		middle[1] = pc.getDataFloat(KEY_MIDDLE + 1, 0);
+		desiredMiddle = middle.clone();
+		moveUpdate = new double[]{0, 0};
 		speed = new double[]{0.0, 0.0};
 		prevTimeSpeed = 0;
 		prevTimeDynamics = 0;
@@ -195,13 +202,24 @@ public class StateHolder {
 	public void zoomIn(){
 		desiredZoom[0] = zoom[0] * ZOOM_IN_FACTOR;
 		desiredZoom[1] = zoom[1] * ZOOM_IN_FACTOR;
+		speed = new double[]{0, 0};
 		doZoom = true;
 	}
 	
 	public void zoomOut(){
 		desiredZoom[0] = zoom[0] / ZOOM_IN_FACTOR;
 		desiredZoom[1] = zoom[1] / ZOOM_IN_FACTOR;
+		speed = new double[]{0, 0};
 		doZoom = true;
+	}
+	
+	public void moveDyn(double toX, double toY){
+		desiredMiddle = new double[]{toX, toY};
+		speed = new double[]{0, 0};
+		double[] moveBy = new double[]{toX - middle[0], toY - middle[1]};
+		//double value = Math.sqrt(toX * toX + toY * toY);
+		moveUpdate = new double[]{ moveBy[0] / FRAMES, moveBy[1] / FRAMES};
+		doMove = true;
 	}
 	
 	public void zoom(double factor){
@@ -289,14 +307,24 @@ public class StateHolder {
 	 */
 	public void updatePos(long timeElapsed){
 		//Log.d("Developer", "Exponent: " + (double)timeElapsed / (1000 / 60));
-		double factor = Math.pow(FRICTION_FACTOR, (double)timeElapsed / (1000 / 60));
-		for (int i = 0; i <  speed.length; i++){
-			speed[i] *= factor;
-			speed[i]  = Math.signum(speed[i]) * Math.min(Math.abs(speed[i]), Helper.getDeltaUnit(maxSpeedPx, zoom[i]));
-			if (Math.abs(speed[i]) < Helper.getDeltaUnit((float) MIN_SPEED, zoom[i]))
-				speed[i] = 0;
+		if (doMove){
+			middle[0] += moveUpdate[0] * (double) timeElapsed / (1000 / 60);
+			middle[1] += moveUpdate[1] * (double) timeElapsed / (1000 / 60);
+			// Check if done
+			if (Math.abs(middle[0] - desiredMiddle[0]) < Math.abs(moveUpdate[0]) * 2 &&
+					Math.abs(middle[1] - desiredMiddle[1]) < Math.abs(moveUpdate[1]) * 2)
+				doMove = false;
 		}
-		move(speed[0] * timeElapsed, speed[1] * timeElapsed);
+		else{
+			double factor = Math.pow(FRICTION_FACTOR, (double)timeElapsed / (1000 / 60));
+			for (int i = 0; i <  speed.length; i++){
+				speed[i] *= factor;
+				speed[i]  = Math.signum(speed[i]) * Math.min(Math.abs(speed[i]), Helper.getDeltaUnit(maxSpeedPx, zoom[i]));
+				if (Math.abs(speed[i]) < Helper.getDeltaUnit((float) MIN_SPEED, zoom[i]))
+					speed[i] = 0;
+			}
+			move(speed[0] * timeElapsed, speed[1] * timeElapsed);
+		}
 	}
 	
 	public void updateZoom(long timeElapsed){

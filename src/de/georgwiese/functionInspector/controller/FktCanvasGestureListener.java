@@ -6,6 +6,7 @@ import de.georgwiese.calculationFunktions.Point;
 import de.georgwiese.functionInspector.SwitchButtonSet;
 import de.georgwiese.functionInspector.uiClasses.FktCanvas;
 import de.georgwiese.functionInspector.uiClasses.Helper;
+import de.georgwiese.functionInspector.uiClasses.Point2D;
 import de.georgwiese.functionInspectorLite.R;
 import android.app.Activity;
 import android.app.Dialog;
@@ -175,6 +176,8 @@ public class FktCanvasGestureListener extends SimpleOnGestureListener implements
 	@Override
 	public boolean onDoubleTap(MotionEvent e) {
 		sh.zoomIn();
+		Point2D pos = Helper.pxToUnit(e.getX(), e.getY(), sh.getZoom(), sh.getMiddle(), canvas.getWidth(), canvas.getHeight());
+		sh.moveDyn(pos.x, pos.y);
 		return true;
 	}
 	
@@ -195,7 +198,7 @@ public class FktCanvasGestureListener extends SimpleOnGestureListener implements
 			ArrayList<ArrayList<Double>> discontinuities = pathCollector.getDiscontinuities();
 			ArrayList<Point> intersections = pathCollector.getIntersections();
 			
-			boolean hasActive = sh.getActivePoint() == null;
+			boolean hasNoActive = sh.getActivePoint() == null;
 			sh.setActivePoint(null);
 			
 			if (sh.disExtrema){
@@ -223,8 +226,12 @@ public class FktCanvasGestureListener extends SimpleOnGestureListener implements
 						if (distance(p,e.getX(),e.getY())<25)
 							sh.setActivePoint(p);}
 			
-			if (hasActive && sh.getActivePoint() == null)
+			if (hasNoActive && sh.getActivePoint() == null)
 				uic.hideAllMenus();
+			
+			//Point2D pos = Helper.pxToUnit(e.getX(), e.getY(), sh.getZoom(), sh.getMiddle(), canvas.getWidth(), canvas.getHeight());
+			//sh.moveDyn(pos.x, pos.y);
+			
 		}
 		
 		/*if (activePoint != null)

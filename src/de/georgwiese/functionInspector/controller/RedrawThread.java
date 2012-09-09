@@ -51,7 +51,9 @@ public class RedrawThread extends Thread{
 				double[] _middle = sh.getMiddle().clone();
 				int _width = canvas.getWidth();
 				int _height = canvas.getHeight();
-				ArrayList<Function> _fkts = new ArrayList<Function>(sh.getFkts());
+				ArrayList<Function> _fkts = new ArrayList<Function>();
+				for (Function f:sh.getFkts())
+					_fkts.add(f.clone());
 				//minX = pxToUnitX(-50,_totalZoomX,_middleX);
 				//maxX = pxToUnitX(getWidth()+50,_zoomFactorX,_middleX);
 				
@@ -75,7 +77,6 @@ public class RedrawThread extends Thread{
 						helperPaths.add(null);
 					}
 					else{
-					
 						double [] params = sh.getParams();
 						//TODO: implement Function.setParams(double[] params)
 						f.setA(params[0]);

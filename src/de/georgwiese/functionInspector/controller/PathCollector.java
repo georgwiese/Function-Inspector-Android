@@ -114,9 +114,9 @@ public class PathCollector {
 
 		for(Path p:paths){
 			if (p != null){
+				p.transform(transMatrix);
 				p.offset(Helper.getDeltaPx(oldCurrentPos.x - newCurrentPos.x, sh.getZoom(0)),
 						Helper.getDeltaPx(newCurrentPos.y - oldCurrentPos.y, sh.getZoom(1)));
-				p.transform(transMatrix);
 			}
 		}
 		

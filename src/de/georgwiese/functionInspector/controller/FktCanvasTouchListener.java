@@ -136,7 +136,7 @@ public class FktCanvasTouchListener implements OnTouchListener {
 			*/
 			break;
 		case MotionEvent.ACTION_MOVE:
-			if ((sh.getMode()==StateHolder.MODE_PAN) != (event.getPointerCount()==2)){
+			if ((sh.getMode()==StateHolder.MODE_PAN) || (event.getPointerCount()==2)){
 				//if(AnimationUtils.currentAnimationTimeMillis()-timeLastZoomStop>500){
 					sh.move(Helper.getDeltaUnit(lastTouchX-event.getX(0), sh.getZoom(0)),
 							Helper.getDeltaUnit(event.getY(0)-lastTouchY, sh.getZoom(1)));

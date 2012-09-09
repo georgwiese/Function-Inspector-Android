@@ -45,6 +45,9 @@ public class Function {
 		this(function);
 		this.a=a; this.b=b; this.c=c;
 	}
+	public Function clone(){
+		return new Function(getString());
+	}
 	public String getString(){
 		return string;
 	}

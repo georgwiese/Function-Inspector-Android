@@ -294,11 +294,12 @@ public class FktCanvas extends LinearLayout {
 				ArrayList<Integer> colors = new ArrayList<Integer>();
 				
 				for(int i = 0; i < sh.getFkts().size(); i++){
-					if (sh.getFkts().get(i) != null){
+					Function f = sh.getFkts().get(i);
+					if (f != null){
 						double yU = sh.getFkts().get(i).calculate(sh.currentX);
-						float y = (float)Helper.unitToPx(0, yU, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).y;
 						float slope	= (float) sh.getFkts().get(i).slope(sh.currentX);
-
+						float y = (float)Helper.unitToPx(0, yU, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).y;
+						
 						texts.add("f" + (i + 1) + "(x) = " + df2.format(yU));
 						textsS.add("f'" + (i + 1) + "(x) = " + df2.format(slope));
 						colors.add(COLORS_GRAPHS[i % COLORS_GRAPHS.length]);
