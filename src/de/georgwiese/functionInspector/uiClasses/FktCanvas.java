@@ -1,5 +1,7 @@
 package de.georgwiese.functionInspector.uiClasses;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Currency;
@@ -9,14 +11,20 @@ import de.georgwiese.calculationFunktions.Function;
 import de.georgwiese.calculationFunktions.Point;
 import de.georgwiese.functionInspector.controller.PathCollector;
 import de.georgwiese.functionInspector.controller.StateHolder;
+import de.georgwiese.functionInspectorLite.R;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Bitmap.CompressFormat;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.os.Build;
@@ -42,6 +50,7 @@ public class FktCanvas extends LinearLayout {
 	
 	static final float BOX_PADDING = 5;
 	
+	Context c;
 	Paint paint;
 	StateHolder sh;
 	PathCollector pathCollector;
@@ -54,6 +63,7 @@ public class FktCanvas extends LinearLayout {
 	public FktCanvas(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		invalidate();
+		c = context;
 		paint = new Paint();
 		steps = new double[2];
 		steps[0] = 1;
@@ -346,6 +356,49 @@ public class FktCanvas extends LinearLayout {
 		}
 		//paint.setColor(COLOR_AXES);
 		//paint.setStrokeWidth(2);
+	}
+	
+	public File getFile(String path, String name){
+		Bitmap bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.RGB_565);
+		Canvas bitmapCanvas = new Canvas();
+		bitmapCanvas.setBitmap(bitmap);
+		bitmapCanvas.drawColor(Color.BLACK);
+		onDraw(bitmapCanvas);
+		if (sh.isPro){
+			Bitmap watermark= BitmapFactory.decodeResource(getResources(), R.drawable.watermark);
+			bitmapCanvas.drawBitmap(watermark, (float)getWidth()/2-watermark.getWidth()/2, getHeight()-watermark.getHeight()-20, new Paint());
+		}
+		AlertDialog.Builder b = new AlertDialog.Builder(c);
+		b.setPositiveButton(c.getString(R.string.ok), new DialogInterface.OnClickListener() {
+			@Override public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();}});
+		File fPath = new File(path);
+		fPath.mkdir();
+		File f = new File(path, name);
+		try{
+			if (f.exists()){
+				b.setTitle(R.string.file_error_title);
+				b.setMessage(R.string.file_error_message_exists);
+				b.create().show();
+				return null;
+			}
+			else{
+				FileOutputStream fos = new FileOutputStream(new File(path, name));
+				bitmap.compress(CompressFormat.JPEG,100,fos);
+				fos.flush();
+				fos.close();
+				b.setTitle(R.string.file_saved_title);
+				b.setMessage(R.string.file_saved_message);
+				b.create().show();
+				return f;
+			}
+			}catch(Exception e){
+				Log.e("Developer", e.toString());
+				b.setTitle(R.string.file_error_title);
+				b.setMessage(R.string.file_error_message_unknown);
+				b.create().show();
+				return null;
+			}
 	}
 	
 	@Override

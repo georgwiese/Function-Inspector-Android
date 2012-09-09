@@ -46,6 +46,7 @@ import de.georgwiese.functionInspector.controller.UIController;
 import de.georgwiese.functionInspector.controller.UpdateThread;
 import de.georgwiese.functionInspector.uiClasses.FktCanvas;
 import de.georgwiese.functionInspector.uiClasses.MyKeyboardView;
+import de.georgwiese.functionInspector.uiClasses.OverflowButton;
 
 /*
  * - package
@@ -665,14 +666,24 @@ public class MainScreen extends FragmentActivity {
     
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-    	if(keyCode==KeyEvent.KEYCODE_BACK){
-    		if (graph.getCurrentMenu()==FrameView.MENU_GRAPH && graph.isKBVisible())
+		Log.d("Developer", "Button Clicked!");
+    	if(keyCode==KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
+    		/*if (graph.getCurrentMenu()==FrameView.MENU_GRAPH && graph.isKBVisible())
     			graph.setKBVisibe(false);
     		else if (graph.getCurrentMenu()!=-1)
     			resetButtons();
     		else
     			finish();
-    		return true;
+    		return true;*/
+    		if (uiController.isKBvisible())
+    			uiController.setKBVisible(false);
+    		else if (uiController.isMenuVisible())
+    			uiController.hideAllMenus();
+    		else
+    			finish();
+    	}
+    	else if (keyCode == KeyEvent.KEYCODE_MENU){
+    		((OverflowButton)findViewById(R.id.menuButton)).onClick(null);
     	}
     	return false;
     }

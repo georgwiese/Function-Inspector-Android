@@ -94,7 +94,11 @@ public class OverflowButton extends ImageButton implements View_HasStateListener
 
 	@Override
 	public void onClick(View v) {
-		if (menu != null)
-			menu.show();
+		if (menu != null){
+			if (menu.isShowing())
+				menu.dismiss();
+			else
+				menu.show();
+		}
 	}
 }

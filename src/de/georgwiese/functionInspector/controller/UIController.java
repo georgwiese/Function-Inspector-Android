@@ -351,6 +351,16 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 		}
 	}
 	
+	public boolean isKBvisible(){
+		return kv.getVisibility() == View.VISIBLE;
+	}
+	
+	public boolean isMenuVisible(){
+		return menus[MENU_FKT].getVisibility() == View.VISIBLE ||
+				menus[MENU_PARAM].getVisibility() == View.VISIBLE ||
+				menus[MENU_POINTS].getVisibility() == View.VISIBLE;
+	}
+	
 	public void updateEfvs(){
 		// TODO: Implement features that are commented out
 		if (efv.size()==0)

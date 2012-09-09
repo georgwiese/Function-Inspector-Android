@@ -2,6 +2,7 @@ package de.georgwiese.functionInspector.uiClasses;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -43,5 +44,17 @@ public class MenuPopup extends MenuPopupHelper {
 	
 	public interface OnMenuItemClickListener{
 		public void onMenuItemClick(int menuID, int itemID);
+	}
+	
+	@Override
+	public boolean onKey(View v, int keyCode, KeyEvent event) {
+		// Undo what they have done in the original class,
+		// so the menu is not dismissed if menu button is
+		// up.
+        if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_MENU) {
+            dismiss();
+            return true;
+        }
+		return false;
 	}
 }
