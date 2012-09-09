@@ -58,6 +58,7 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 	public static final int NORMAL_COLOR = Color.parseColor("#000000");
 	public static final int ACTIVE_COLOR = Color.parseColor("#1c3640");
 	public static final int HIGHLIGHT_COLOR = Color.parseColor("#3691b3");
+	public static final int BAR_COLOR = Color.argb(200, 0, 0, 0);
 
 	MenuView menus[];
 	ImageButton menuButtons[];
@@ -75,7 +76,7 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 	ArrayList<EnterFunctionView> efv;
 	SwitchButtonSet menuParamSbs;
 	Button menuParamMin, menuParamValue, menuParamMax, menuFktPro, menuPointsPro;
-	CheckBox disRoots, disExtrema, disInfl, disInt, disDis;
+	CheckBox disRoots, disExtrema, disInfl, disInt, disDis, disSlope;
 	SeekBar menuParamSb;
 	OverflowButton menuButton;
 	
@@ -115,6 +116,7 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 		llEfvs    = (LinearLayout) ms.findViewById(R.id.ll_efvs);
 		menuContainer = (LinearLayout) ms.findViewById(R.id.ll_menus);
 		optionsBar = (LinearLayout) ms.findViewById(R.id.optionsBar);
+		optionsBar.setBackgroundColor(BAR_COLOR);
 		traceTv   = (TextView) ms.findViewById(R.id.mode_trace_tv);
 		kv   = (MyKeyboardView) ms.findViewById(R.id.keyboardView);
 		ad   = (AdView) ms.findViewById(R.id.adView);
@@ -153,6 +155,7 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 		disInfl         = (CheckBox) ms.findViewById(R.id.mv_points_inflections);
 		disInt          = (CheckBox) ms.findViewById(R.id.mv_points_intersections);
 		disDis          = (CheckBox) ms.findViewById(R.id.mv_points_discontinuities);
+		disSlope        = (CheckBox) ms.findViewById(R.id.cbDisSlope);
 		disExtrema.setEnabled(sh.isPro);
 		disInfl.setEnabled(sh.isPro);
 		disInt.setEnabled(sh.isPro);
@@ -163,6 +166,10 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 		disInt.setChecked(sh.disIntersections);
 		disDis.setChecked(sh.disDiscon);
 		menuPointsPro.setVisibility(sh.isPro?View.GONE:View.VISIBLE);
+		disSlope.setVisibility(View.GONE);
+		disSlope.setChecked(sh.disSlope);
+		disSlope.setEnabled(sh.isPro);
+		disSlope.setBackgroundColor(MenuView.BODY_BACKGROUND_COLOR);
 		
 		updateMenuParam(true);
 		menuParamSb.setOnSeekBarChangeListener(this);
@@ -204,6 +211,13 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 	public void setMaxParam(double value){
 		sh.setMaxParam(menuParamSbs.getState(), value);
 		updateMenuParam(true);
+	}
+	
+	public void setCurrentX(double value){
+		sh.currentX = value;
+		updateTraceTv();
+		sh.move(value - sh.getMiddle(0), 0);
+		fktCanvas.invalidate();
 	}
 	
 	/**
@@ -389,12 +403,20 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 			llButtons.setVisibility(View.GONE);
 			llTrace.startAnimation(menuIn);
 			llButtons.startAnimation(menuOut);
+			if (sh.isPro){
+				disSlope.setVisibility(View.VISIBLE);
+				disSlope.startAnimation(optionsIn);
+			}
 		}
 		else{
 			llTrace.setVisibility(View.GONE);
 			llButtons.setVisibility(View.VISIBLE);
 			llTrace.startAnimation(menuOut);
 			llButtons.startAnimation(menuIn);
+			if (disSlope.getVisibility() == View.VISIBLE){
+				disSlope.setVisibility(View.GONE);
+				disSlope.startAnimation(optionsOut);
+			}
 		}
 		hideAllMenus();
 		updateTraceTv();

@@ -58,6 +58,10 @@ public class InputController {
 		case R.id.mv_points_intersections:
 			sh.disIntersections = ((CheckBox) v).isChecked();
 			break;
+		case R.id.cbDisSlope:
+			sh.disSlope = ((CheckBox) v).isChecked();
+			canvas.invalidate();
+			break;
 		case R.id.mv_param_btParam:
 			dc.showDialog(DialogController.SET_PARAM_DIALOG);
 			break;
@@ -66,6 +70,9 @@ public class InputController {
 			break;
 		case R.id.mv_param_btMax:
 			dc.showDialog(DialogController.SET_MAX_DIALOG);
+			break;
+		case R.id.mode_trace_tv:
+			dc.showDialog(DialogController.SET_X_DIALOG);
 			break;
 		case R.id.menuFktBtPro:
 		case R.id.mv_points_btPro:
@@ -76,6 +83,10 @@ public class InputController {
 			break;
 		case R.id.zoom_plus:
 			sh.zoomIn();
+			break;
+		case R.id.center_button:
+			sh.reset();
+			canvas.resetPaths();
 			break;
 		}
 		canvas.invalidate();

@@ -35,6 +35,7 @@ public class DialogController {
 	public static final int SET_PARAM_DIALOG = 7;
 	public static final int SET_MIN_DIALOG   = 8;
 	public static final int SET_MAX_DIALOG   = 9;
+	public static final int SET_X_DIALOG     = 10;
 	
 	
 	Context c;
@@ -223,6 +224,15 @@ public class DialogController {
 									startActivity(i);
 								}
 							})
+	        				.setNeutralButton("Google +", new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									Intent i = new Intent(Intent.ACTION_VIEW);
+									i.setData(Uri.parse("https://plus.google.com/101546893405114417708"));
+									dialog.dismiss();
+									startActivity(i);
+								}
+							})
 	        				.setPositiveButton(R.string.cancel, new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
@@ -237,6 +247,7 @@ public class DialogController {
 		case SET_PARAM_DIALOG:
 		case SET_MIN_DIALOG:
 		case SET_MAX_DIALOG:
+		case SET_X_DIALOG:
 			final int dialogID = id;
 			new DialogFragment(){
 				public View onCreateView(LayoutInflater inflater,
@@ -246,6 +257,7 @@ public class DialogController {
 					if (dialogID == SET_PARAM_DIALOG) titleId = R.string.param_setParam;
 					if (dialogID == SET_MIN_DIALOG) titleId = R.string.param_setMinParam;
 					if (dialogID == SET_MAX_DIALOG) titleId = R.string.param_setMaxParam;
+					if (dialogID == SET_X_DIALOG) titleId = R.string.mode_setx_title;
 					getDialog().setTitle(titleId);
 					View v = inflater.inflate(R.layout.enter_number_dialog, container);
 
@@ -259,6 +271,7 @@ public class DialogController {
 							if (dialogID == SET_PARAM_DIALOG) uic.setParam(value);
 							if (dialogID == SET_MIN_DIALOG) uic.setMinParam(value);
 							if (dialogID == SET_MAX_DIALOG) uic.setMaxParam(value);
+							if (dialogID == SET_X_DIALOG) uic.setCurrentX(value);
 		    				getDialog().dismiss();
 		    			}
 		    		});

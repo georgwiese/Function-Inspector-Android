@@ -61,6 +61,8 @@
             android:layout_marginRight="10dp"
             android:background="#1c3640"
             android:minWidth="120dp"
+            android:onClick="onButtonClick"
+            android:clickable="true"
             android:paddingLeft="5dp"
             android:textColor="#ffffff"
             android:textSize="25dp" />
@@ -159,6 +161,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="#00ff00"
+        android:gravity="right"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -357,6 +360,15 @@
             -->
         </LinearLayout>
 
+        <CheckBox
+            android:id="@+id/cbDisSlope"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Display Slope"
+            android:textColor="#000000"
+            android:paddingRight="5dp"
+            android:onClick="onButtonClick" />
+
         <de.georgwiese.functionInspector.uiClasses.MyKeyboardView
             android:id="@+id/keyboardView"
             android:layout_width="fill_parent"
@@ -385,6 +397,13 @@
                 ads:loadAdOnCreate="true"
                 android:gravity="center"
                 android:visibility="gone" />
+
+            <Button
+                android:id="@+id/center_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="reset"
+                android:onClick="onButtonClick" />
 
             <View
                 android:layout_width="0dp"

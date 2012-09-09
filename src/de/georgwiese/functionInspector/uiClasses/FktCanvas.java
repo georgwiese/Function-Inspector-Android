@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Currency;
 
+import de.georgwiese.calculationFunktions.CalcFkts;
 import de.georgwiese.calculationFunktions.Function;
 import de.georgwiese.calculationFunktions.Point;
 import de.georgwiese.functionInspector.controller.PathCollector;
@@ -182,28 +183,6 @@ public class FktCanvas extends LinearLayout {
 		canvas.drawLine(0, (float)zero.y, getWidth(), (float) zero.y, paint);
 		paint.setStyle(Style.STROKE);
 		
-		//synchronized (lockDrawing){
-			/*
-			offsetX=unitToPxX(0)-lastOriginX-totalOffsetX;
-			offsetY=unitToPxY(0)-lastOriginY-totalOffsetY;
-			totalOffsetX+=offsetX;
-			totalOffsetY+=offsetY;
-			for (Path p:paths)
-				p.offset(offsetX, offsetY);
-			
-			Matrix matrix = new Matrix();
-			lastZoomX=zoomFactorX/totalZoomX;
-			totalZoomX*=lastZoomX;
-			lastZoomY=zoomFactorY/totalZoomY;
-			totalZoomY*=lastZoomY;
-			matrix.setScale((float)(lastZoomX),(float)(lastZoomY),unitToPxX(0),unitToPxY(0));
-			for (Path p:paths)
-				p.transform(matrix);
-			stepsX=getSteps(zoomFactorX, factorX);
-			stepsY=getSteps(zoomFactorY, factorY);
-			*/
-
-		
 		synchronized(pathCollector){
 			pathCollector.update();
 			
@@ -271,11 +250,7 @@ public class FktCanvas extends LinearLayout {
 				paint.setStyle(Style.FILL_AND_STROKE);
 				if(activePoint.getType() == Point.TYPE_DISCONTINUITY){
 					float x = (float)Helper.unitToPx(activePoint.getX(), 0, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).x;
-					//Path p = new Path();
-					//p.moveTo(x, 0);
-					//p.lineTo(x, getHeight());
 					paint.setStrokeWidth(6);
-					//canvas.drawPath(p, paint);
 					canvas.drawLine(x, 0, x, getHeight(), paint);
 					
 					// Draw value box
@@ -313,22 +288,34 @@ public class FktCanvas extends LinearLayout {
 				paint.setStrokeWidth(2);
 				paint.setColor(COLOR_TRACELINE);
 				canvas.drawLine(x, 0, x, getHeight(), paint);
-				
+
 				ArrayList<String> texts   = new ArrayList<String>();
+				ArrayList<String> textsS  = new ArrayList<String>();
 				ArrayList<Integer> colors = new ArrayList<Integer>();
 				
 				for(int i = 0; i < sh.getFkts().size(); i++){
 					if (sh.getFkts().get(i) != null){
 						double yU = sh.getFkts().get(i).calculate(sh.currentX);
 						float y = (float)Helper.unitToPx(0, yU, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).y;
-						
+						float slope	= (float) sh.getFkts().get(i).slope(sh.currentX);
+
 						texts.add("f" + (i + 1) + "(x) = " + df2.format(yU));
+						textsS.add("f'" + (i + 1) + "(x) = " + df2.format(slope));
 						colors.add(COLORS_GRAPHS[i % COLORS_GRAPHS.length]);
 						
 						paint.setColor(COLORS_GRAPHS[i % COLORS_GRAPHS.length]);
 						paint.setStyle(Style.FILL_AND_STROKE);
-						if (!Double.isNaN(yU))
+						if (!Double.isNaN(yU)){
 							canvas.drawCircle(x, y, 5, paint);
+							if (sh.disSlope){
+								// Draw Tangents
+								float zoomFactor = (float)(sh.getZoom(1) / sh.getZoom(0));
+								paint.setStrokeWidth(1);
+								if (!Float.isNaN(slope))
+									canvas.drawLine(0, y + slope * x * zoomFactor,
+											getWidth(), y - slope * (getWidth() - x) * zoomFactor, paint);
+							}
+						}
 					}
 				}
 
@@ -339,13 +326,20 @@ public class FktCanvas extends LinearLayout {
 				// calculate maximum width
 				for (String text:texts)
 					width = Math.max(width, paint.measureText(text));
+				for (String text:textsS)
+					width = Math.max(width, paint.measureText(text));
 				x = Math.min(x, getWidth() - width - 3*BOX_PADDING);
-				canvas.drawRect(x, BOX_PADDING, x + width + 2*BOX_PADDING, BOX_PADDING + texts.size()*40, paint);
+				float height = BOX_PADDING + texts.size()*40;
+				if (sh.disSlope)
+					height += textsS.size() * 40 + 30;
+				canvas.drawRect(x, BOX_PADDING, x + width + 2*BOX_PADDING, height, paint);
 				paint.setTextAlign(Align.LEFT);
 				paint.setStrokeWidth(0);
 				for (int i = 0; i < texts.size(); i++){
 					paint.setColor(colors.get(i));
 					canvas.drawText(texts.get(i), x + BOX_PADDING, BOX_PADDING + 30 + i*40, paint);
+					if(sh.disSlope)
+						canvas.drawText(textsS.get(i), x + BOX_PADDING, BOX_PADDING + texts.size() * 40 + 30 + 20 + i*40, paint);
 				}
 			}
 		}
@@ -358,6 +352,10 @@ public class FktCanvas extends LinearLayout {
 		super.onSizeChanged(w, h, oldw, oldh);
 		if (oscl != null)
 			oscl.onSizeChanged(w, h, oldw, oldh);
+		resetPaths();
+	}
+	
+	public void resetPaths(){
 		// Clear paths and tell it to redraw
 		synchronized (pathCollector) {
 			pathCollector.clearPaths();

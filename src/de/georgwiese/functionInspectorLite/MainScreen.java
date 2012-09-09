@@ -182,6 +182,7 @@ public class MainScreen extends FragmentActivity {
 		    	updateThread.start();
 		    	
 		    	removeSplashScreen();
+		    	//dialogController.showDialog(DialogController.FACEBOOK_DIALOG);
 			}
 		}, 1000);
     	

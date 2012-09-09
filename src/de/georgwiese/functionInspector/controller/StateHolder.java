@@ -37,6 +37,7 @@ public class StateHolder {
 	public boolean doZoom;			// whether or not the UpdateThread should zoom according to desiredZoom
 	public boolean preview;
 	public boolean tryUsed;
+	public boolean disSlope;
 	public boolean zoomXY;			// whether or not X and Y axes should be zoomed independently
 	ArrayList<Function> fkts;		// All the functions
 	Point activePoint;
@@ -70,6 +71,7 @@ public class StateHolder {
 	public static String KEY_POINTS   	= "points";
 	public static String KEY_TRY_USED  	= "tryUsed";
 	public static String KEY_ZOOMXY  	= "zoomXY";
+	public static String KEY_DISSLOPE  	= "disSlope";
 	PrefsController pc;
 	String screenshotFolder;
 	
@@ -82,12 +84,13 @@ public class StateHolder {
 	}
 	
 	public void initialize(Context c){
-		redraw  = true;
-		doDyn   = false;
-		doZoom  = false;
-		preview = false;
-		zoomXY  = pc.getPrefsBoolean(KEY_ZOOMXY, false) && isPro;
-		tryUsed = pc.getDataBoolean(KEY_TRY_USED, false);
+		redraw   = true;
+		doDyn    = false;
+		doZoom   = false;
+		preview  = false;
+		zoomXY   = pc.getPrefsBoolean(KEY_ZOOMXY, false) && isPro;
+		tryUsed  = pc.getDataBoolean(KEY_TRY_USED, false);
+		disSlope = pc.getDataBoolean(KEY_DISSLOPE, false) && isPro;
 		fkts = new ArrayList<Function>();
 		for (int i = 0; true; i++ ){
 			if ((i >= 3) && !isPro)
@@ -117,9 +120,7 @@ public class StateHolder {
 		middle = new double[2];
 		middle[0] = pc.getDataFloat(KEY_MIDDLE + 0, 0);
 		middle[1] = pc.getDataFloat(KEY_MIDDLE + 1, 0);
-		speed = new double[2];
-		speed[0] = 0.0;
-		speed[1] = 0.0;
+		speed = new double[]{0.0, 0.0};
 		prevTimeSpeed = 0;
 		prevTimeDynamics = 0;
 		mode = MODE_PAN;
@@ -133,6 +134,13 @@ public class StateHolder {
 		
 		// Prefs
 		screenshotFolder = pc.getPrefStr(KEY_FOLDER, "Function Inspector");
+	}
+	
+	public void reset(){
+		redraw 	= true;
+		zoom 	= new double[]{1.0, 1.0};
+		middle 	= new double[]{0.0, 0.0};
+		speed	= new double[]{0.0, 0.0};
 	}
 	
 	public void setIsPro(boolean value){
@@ -328,8 +336,9 @@ public class StateHolder {
 		pc.putDataBoolean(KEY_POINTS + "inflections", disInflections);
 		pc.putDataBoolean(KEY_POINTS + "intersections", disIntersections);
 		pc.putDataBoolean(KEY_POINTS + "discontinuities", disDiscon);
-		
+
 		pc.putDataBoolean(KEY_TRY_USED, tryUsed);
+		pc.putDataBoolean(KEY_DISSLOPE, disSlope);
 		pc.putPrefStr(KEY_FOLDER, screenshotFolder);
 	}
 }
