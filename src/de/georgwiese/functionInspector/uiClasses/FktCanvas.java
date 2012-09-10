@@ -365,7 +365,7 @@ public class FktCanvas extends LinearLayout {
 		bitmapCanvas.setBitmap(bitmap);
 		bitmapCanvas.drawColor(Color.BLACK);
 		onDraw(bitmapCanvas);
-		if (sh.isPro){
+		if (!sh.isPro){
 			Bitmap watermark= BitmapFactory.decodeResource(getResources(), R.drawable.watermark);
 			bitmapCanvas.drawBitmap(watermark, (float)getWidth()/2-watermark.getWidth()/2, getHeight()-watermark.getHeight()-20, new Paint());
 		}

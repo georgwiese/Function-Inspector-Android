@@ -1,5 +1,6 @@
 package de.georgwiese.functionInspector.controller;
 
+import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -9,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -69,13 +71,13 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 	PathCollector pc;
 	boolean isTablet, isLandscape;
 	FktCanvas fktCanvas;
-	LinearLayout llButtons, llTrace, menuContainer, optionsBar, llEfvs;
+	LinearLayout llButtons, llTrace, menuContainer, optionsBar, llEfvs, llSlope;
 	TextView traceTv;
 	MyKeyboardView kv;
 	AdView ad;
 	ArrayList<EnterFunctionView> efv;
 	SwitchButtonSet menuParamSbs;
-	Button menuParamMin, menuParamValue, menuParamMax, menuFktPro, menuPointsPro;
+	Button menuParamMin, menuParamValue, menuParamMax, menuFktPro, menuPointsPro, disTangentEq;
 	CheckBox disRoots, disExtrema, disInfl, disInt, disDis, disSlope;
 	SeekBar menuParamSb;
 	OverflowButton menuButton;
@@ -156,6 +158,8 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 		disInt          = (CheckBox) ms.findViewById(R.id.mv_points_intersections);
 		disDis          = (CheckBox) ms.findViewById(R.id.mv_points_discontinuities);
 		disSlope        = (CheckBox) ms.findViewById(R.id.cbDisSlope);
+		llSlope			= (LinearLayout) ms.findViewById(R.id.llSlope);
+		disTangentEq	= (Button) ms.findViewById(R.id.btTangentEq);
 		disExtrema.setEnabled(sh.isPro);
 		disInfl.setEnabled(sh.isPro);
 		disInt.setEnabled(sh.isPro);
@@ -166,10 +170,11 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 		disInt.setChecked(sh.disIntersections);
 		disDis.setChecked(sh.disDiscon);
 		menuPointsPro.setVisibility(sh.isPro?View.GONE:View.VISIBLE);
-		disSlope.setVisibility(View.GONE);
+		llSlope.setVisibility(View.GONE);
+		llSlope.setBackgroundColor(MenuView.BODY_BACKGROUND_COLOR);
 		disSlope.setChecked(sh.disSlope);
 		disSlope.setEnabled(sh.isPro);
-		disSlope.setBackgroundColor(MenuView.BODY_BACKGROUND_COLOR);
+		disTangentEq.setEnabled(sh.isPro);
 		
 		updateMenuParam(true);
 		menuParamSb.setOnSeekBarChangeListener(this);
@@ -362,7 +367,6 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 	}
 	
 	public void updateEfvs(){
-		// TODO: Implement features that are commented out
 		if (efv.size()==0)
 			efv.add(new EnterFunctionView(c, kv, this));
 		for (int i=0; i<efv.size(); i++){
@@ -414,8 +418,8 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 			llTrace.startAnimation(menuIn);
 			llButtons.startAnimation(menuOut);
 			if (sh.isPro){
-				disSlope.setVisibility(View.VISIBLE);
-				disSlope.startAnimation(optionsIn);
+				llSlope.setVisibility(View.VISIBLE);
+				llSlope.startAnimation(optionsIn);
 			}
 		}
 		else{
@@ -423,9 +427,9 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 			llButtons.setVisibility(View.VISIBLE);
 			llTrace.startAnimation(menuOut);
 			llButtons.startAnimation(menuIn);
-			if (disSlope.getVisibility() == View.VISIBLE){
-				disSlope.setVisibility(View.GONE);
-				disSlope.startAnimation(optionsOut);
+			if (llSlope.getVisibility() == View.VISIBLE){
+				llSlope.setVisibility(View.GONE);
+				llSlope.startAnimation(optionsOut);
 			}
 		}
 		hideAllMenus();
@@ -505,8 +509,7 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 			break;
 		case 1:
 			Intent iTable = new Intent(c, TableActivity.class);
-			// TODO: Table of Slopes?
-			iTable.putExtra("bool_slope", false);
+			iTable.putExtra(StateHolder.KEY_ISPRO, sh.isPro);
 			ArrayList<Function> fkts = sh.getFkts();
 			for (int j = 0 ; j<=fkts.size(); j++){
 				if (j==fkts.size())
@@ -558,6 +561,12 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 			((MainScreen) c).restart();
 			break;
 		}*/
+	}
+	
+	public File getFile(String name){
+		return fktCanvas.getFile(Environment.getExternalStorageDirectory().toString() +
+				"/" + sh.getScreenshotFolder() + "/", name);
+
 	}
 	
 	

@@ -1,6 +1,11 @@
 package de.georgwiese.functionInspector.controller;
 
+import java.io.File;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+
 import de.georgwiese.calculationFunktions.CalcFkts;
+import de.georgwiese.calculationFunktions.Function;
 import de.georgwiese.functionInspectorLite.MainScreen;
 import de.georgwiese.functionInspectorLite.R;
 import android.app.AlertDialog;
@@ -26,17 +31,18 @@ import android.widget.TextView;
 
 public class DialogController {
 
-	public static final int ABOUT_DIALOG     = 0;
-	public static final int PRO_DIALOG       = 1;
-	public static final int WELCOME_DIALOG   = 2;
-	public static final int TRY_DIALOG       = 3;
-	public static final int BUY_DIALOG       = 4; // TODO: Implement Buy Dialog
-	public static final int PIC_DIALOG       = 5;
-	public static final int FACEBOOK_DIALOG  = 6;
-	public static final int SET_PARAM_DIALOG = 7;
-	public static final int SET_MIN_DIALOG   = 8;
-	public static final int SET_MAX_DIALOG   = 9;
-	public static final int SET_X_DIALOG     = 10;
+	public static final int ABOUT_DIALOG     	= 0;
+	public static final int PRO_DIALOG       	= 1;
+	public static final int WELCOME_DIALOG   	= 2;
+	public static final int TRY_DIALOG       	= 3;
+	public static final int BUY_DIALOG       	= 4; // TODO: Implement Buy Dialog
+	public static final int PIC_DIALOG       	= 5;
+	public static final int FACEBOOK_DIALOG  	= 6;
+	public static final int SET_PARAM_DIALOG 	= 7;
+	public static final int SET_MIN_DIALOG   	= 8;
+	public static final int SET_MAX_DIALOG   	= 9;
+	public static final int SET_X_DIALOG     	= 10;
+	public static final int TANGENT_EQ_DIALOG	= 11;
 	
 	
 	Context c;
@@ -44,10 +50,14 @@ public class DialogController {
 	UIController uic;
 	StateHolder sh;
 	
+	DecimalFormat df1, df2;
+	
 	public DialogController(Context context, FragmentManager fragmentManager, StateHolder stateHolder) {
 		c = context;
 		fm = fragmentManager;
 		sh = stateHolder;
+		df1 = new DecimalFormat("0.0##");
+		df2 = new DecimalFormat("0.00");
 	}
 	
 	/**
@@ -158,6 +168,8 @@ public class DialogController {
 			
 		case PIC_DIALOG:
 			new DialogFragment(){
+				File ss;
+				
 				@Override
 				public void onCreate(Bundle savedInstanceState) {
 					super.onCreate(savedInstanceState);
@@ -170,42 +182,36 @@ public class DialogController {
 					getDialog().setTitle(R.string.pic_takeSc);
 					View v = inflater.inflate(R.layout.mv_screenshot, container);
 
-		    		EditText et_pic = (EditText)v.findViewById(R.id.mv_pic_et);
+		    		final EditText et_pic = (EditText)v.findViewById(R.id.mv_pic_et);
 		    		Button bt_pic = (Button)v.findViewById(R.id.mv_pic_save);
 		    		final Button bt_open = (Button)v.findViewById(R.id.mv_pic_open);
 		    		final Button bt_share = (Button)v.findViewById(R.id.mv_pic_share);
 		    		TextView path = (TextView)v.findViewById(R.id.mv_pic_path);
 		    		
-		    		// TODO: adjust text color according to background color
-		    		if (getTheme() == android.R.style.Theme_Holo_Light ||
-		    				getTheme() == android.R.style.Theme_Holo_Light_Dialog ||
-		    				getTheme() == android.R.style.Theme_Holo_Light_Panel){
-		    			path.setTextColor(Color.BLACK);
-		    		}
 		    		// TODO: implement Buttons behavior (screenshot)
 		    		bt_pic.setOnClickListener(new OnClickListener() {
 		    			@Override
 		    			public void onClick(View v) {
-		    				//ss=graph.saveFile(Environment.getExternalStorageDirectory().toString()+"/"+getSharedPreferences("prefs", 0).getString("prefs_folder", "Function Inspector")+"/", et_pic.getText().toString()+".jpg");
-		    				//bt_share.setEnabled(ss!=null);
-		    				//bt_open.setEnabled(ss!=null);
+		    				ss = uic.getFile(et_pic.getText().toString()+".jpg");
+		    				bt_share.setEnabled(ss!=null);
+		    				bt_open.setEnabled(ss!=null);
 		    			}
 		    		});
 		    		bt_open.setOnClickListener(new OnClickListener() {
 		    			@Override
 		    			public void onClick(View v) {
-		    				//Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-		    				//sendIntent.setDataAndType(Uri.fromFile(ss), "image/jpeg");
-		    				//startActivity(sendIntent);
+		    				Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+		    				sendIntent.setDataAndType(Uri.fromFile(ss), "image/jpeg");
+		    				startActivity(sendIntent);
 		    			}
 		    		});
 		    		bt_share.setOnClickListener(new OnClickListener() {
 		    			@Override
 		    			public void onClick(View v) {
-		    				//Intent sendIntent = new Intent(Intent.ACTION_SEND);
-		    				//sendIntent.setType("image/jpg");
-		    				//sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(ss));
-		    				//startActivity(Intent.createChooser(sendIntent, getString(R.string.pic_share)));
+		    				Intent sendIntent = new Intent(Intent.ACTION_SEND);
+		    				sendIntent.setType("image/jpg");
+		    				sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(ss));
+		    				startActivity(Intent.createChooser(sendIntent, getString(R.string.pic_share)));
 		    			}
 		    		});
 		    		path.setText(Environment.getExternalStorageDirectory() + "/" +
@@ -248,7 +254,7 @@ public class DialogController {
 							})
 	        				.create();
 	        	}
-	        }.show(fm, "welcome");
+	        }.show(fm, "socialMedia");
 			break;
 			
 		case SET_PARAM_DIALOG:
@@ -294,6 +300,40 @@ public class DialogController {
 				};
 			}.show(fm, "param");
 			break;
+			
+		case TANGENT_EQ_DIALOG:
+			String result = new String();
+			ArrayList<Function> fkts = sh.getFkts();
+			final double currentX = sh.currentX;
+			for (Function f:fkts){
+				if(f!=null){
+					double n = f.calculate(currentX)-f.slope(currentX)*currentX;
+					String between = n>=0?" + ":" - ";
+					if (Double.isNaN(f.slope(currentX)) || Double.isNaN(n))
+						result+="g"+Integer.toString(fkts.indexOf(f)+1)+"(x) = "+
+								"/"+"\n";					
+					else
+						result+="g"+Integer.toString(fkts.indexOf(f)+1)+"(x) = "+
+								df1.format(f.slope(currentX))+"x"+
+								between+df1.format(Math.abs(n))+"\n";
+				}
+			}
+			final String resultF = result;
+	        new DialogFragment(){
+	        	@Override
+	        	public Dialog onCreateDialog(Bundle savedInstanceState) {
+	        		return new AlertDialog.Builder(new ContextThemeWrapper(c, R.style.Theme_Sherlock_Dialog_FunctionInspector))
+	    			.setTitle(R.string.mode_slope_eq_title)
+	    			.setMessage(c.getString(R.string.mode_slope_eq_message) + 
+	    					df1.format(currentX)+":\n\n"+resultF)
+	    			.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+	    				@Override
+	    				public void onClick(DialogInterface dialog, int which) {
+	    				dialog.cancel();}
+	    			})
+	        				.create();
+	        	}
+	        }.show(fm, "tangent");
 			
 		default:
 			break;

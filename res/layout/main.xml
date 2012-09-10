@@ -202,7 +202,7 @@
                 android:id="@+id/menuParam"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="1dp"
+                android:paddingLeft="1dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
@@ -258,7 +258,7 @@
                 android:id="@+id/menuPoints"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="1dp"
+                android:paddingLeft="1dp"
                 android:layout_weight="1"
                 android:gravity="left"
                 android:orientation="vertical"
@@ -360,14 +360,32 @@
             -->
         </LinearLayout>
 
-        <CheckBox
-            android:id="@+id/cbDisSlope"
+        <LinearLayout
+            android:id="@+id/llSlope"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Display Slope"
-            android:textColor="#000000"
-            android:paddingRight="5dp"
-            android:onClick="onButtonClick" />
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:padding="5dp">
+
+	        <CheckBox
+	            android:id="@+id/cbDisSlope"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="Display Slope"
+	            android:textColor="#000000"
+	            android:paddingRight="5dp"
+	            android:onClick="onButtonClick" />
+
+	        <Button
+	            android:id="@+id/btTangentEq"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/mode_slope_eq_title"
+	            android:textColor="#000000"
+	            android:onClick="onButtonClick" />
+	        
+	    </LinearLayout>
 
         <de.georgwiese.functionInspector.uiClasses.MyKeyboardView
             android:id="@+id/keyboardView"

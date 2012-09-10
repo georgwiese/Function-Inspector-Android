@@ -88,6 +88,8 @@ public class InputController {
 			sh.reset();
 			canvas.resetPaths();
 			break;
+		case R.id.btTangentEq:
+			dc.showDialog(DialogController.TANGENT_EQ_DIALOG);
 		}
 		canvas.invalidate();
 	}
