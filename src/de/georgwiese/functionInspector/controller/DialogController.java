@@ -16,6 +16,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -63,7 +64,7 @@ public class DialogController {
 	        new DialogFragment(){
 	        	@Override
 	        	public Dialog onCreateDialog(Bundle savedInstanceState) {
-	        		return new AlertDialog.Builder(c)
+	        		return new AlertDialog.Builder(new ContextThemeWrapper(c, R.style.Theme_Sherlock_Dialog_FunctionInspector))
 	        				.setTitle(R.string.menu_about_str)
 	        				.setMessage(R.string.about)
 	        				.setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -81,7 +82,7 @@ public class DialogController {
 	        new DialogFragment(){
 	        	@Override
 	        	public Dialog onCreateDialog(Bundle savedInstanceState) {
-	        		return new AlertDialog.Builder(c)
+	        		return new AlertDialog.Builder(new ContextThemeWrapper(c, R.style.Theme_Sherlock_Dialog_FunctionInspector))
 	        				.setTitle(R.string.welcome_dialog_title)
 	        				.setMessage(R.string.welcome_dialog_message)
 	        				.setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -99,7 +100,7 @@ public class DialogController {
 	        new DialogFragment(){
 	        	@Override
 	        	public Dialog onCreateDialog(Bundle savedInstanceState) {
-	        		return new AlertDialog.Builder(c)
+	        		return new AlertDialog.Builder(new ContextThemeWrapper(c, R.style.Theme_Sherlock_Dialog_FunctionInspector))
 	        				.setTitle(R.string.pro_dialog_title)
 	        				.setMessage(R.string.pro_dialog_message)
 	        				.setIcon(R.drawable.icon_pro)
@@ -133,7 +134,7 @@ public class DialogController {
 	        new DialogFragment(){
 	        	@Override
 	        	public Dialog onCreateDialog(Bundle savedInstanceState) {
-	        		return new AlertDialog.Builder(c)
+	        		return new AlertDialog.Builder(new ContextThemeWrapper(c, R.style.Theme_Sherlock_Dialog_FunctionInspector))
     						.setTitle(R.string.pro_dialog_title)
     						.setMessage(R.string.try_dialog_message)
     						.setIcon(R.drawable.icon_pro)
@@ -157,6 +158,12 @@ public class DialogController {
 			
 		case PIC_DIALOG:
 			new DialogFragment(){
+				@Override
+				public void onCreate(Bundle savedInstanceState) {
+					super.onCreate(savedInstanceState);
+					setStyle(STYLE_NORMAL, R.style.Theme_Sherlock_Dialog_FunctionInspector);
+				};
+				
 				public View onCreateView(LayoutInflater inflater,
 						android.view.ViewGroup container, Bundle savedInstanceState) {
 					
@@ -212,7 +219,7 @@ public class DialogController {
 	        new DialogFragment(){
 	        	@Override
 	        	public Dialog onCreateDialog(Bundle savedInstanceState) {
-	        		return new AlertDialog.Builder(c)
+	        		return new AlertDialog.Builder(new ContextThemeWrapper(c, R.style.Theme_Sherlock_Dialog_FunctionInspector))
     						.setTitle(R.string.facebook_dialog_title)
     						.setMessage(R.string.facebook_dialog_message)
 	        				.setNegativeButton(R.string.facebook_dialog_visit, new DialogInterface.OnClickListener() {
@@ -250,6 +257,12 @@ public class DialogController {
 		case SET_X_DIALOG:
 			final int dialogID = id;
 			new DialogFragment(){
+				@Override
+				public void onCreate(Bundle savedInstanceState) {
+					super.onCreate(savedInstanceState);
+					setStyle(STYLE_NORMAL, R.style.Theme_Sherlock_Dialog_FunctionInspector);
+				};
+				
 				public View onCreateView(LayoutInflater inflater,
 						android.view.ViewGroup container, Bundle savedInstanceState) {
 					
@@ -267,11 +280,13 @@ public class DialogController {
 		    		bt.setOnClickListener(new OnClickListener() {
 		    			@Override
 		    			public void onClick(View v) {
-		    				double value = CalcFkts.calculate(et.getText().toString());
-							if (dialogID == SET_PARAM_DIALOG) uic.setParam(value);
-							if (dialogID == SET_MIN_DIALOG) uic.setMinParam(value);
-							if (dialogID == SET_MAX_DIALOG) uic.setMaxParam(value);
-							if (dialogID == SET_X_DIALOG) uic.setCurrentX(value);
+		    				if (!et.getText().toString().equals("")){
+			    				double value = CalcFkts.calculate(et.getText().toString());
+								if (dialogID == SET_PARAM_DIALOG) uic.setParam(value);
+								if (dialogID == SET_MIN_DIALOG) uic.setMinParam(value);
+								if (dialogID == SET_MAX_DIALOG) uic.setMaxParam(value);
+								if (dialogID == SET_X_DIALOG) uic.setCurrentX(value);
+		    				}
 		    				getDialog().dismiss();
 		    			}
 		    		});

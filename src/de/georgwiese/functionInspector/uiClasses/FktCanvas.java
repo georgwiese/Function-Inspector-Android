@@ -306,8 +306,9 @@ public class FktCanvas extends LinearLayout {
 				for(int i = 0; i < sh.getFkts().size(); i++){
 					Function f = sh.getFkts().get(i);
 					if (f != null){
-						double yU = sh.getFkts().get(i).calculate(sh.currentX);
-						float slope	= (float) sh.getFkts().get(i).slope(sh.currentX);
+						f.setParams(sh.getParams());
+						double yU = f.calculate(sh.currentX);
+						float slope	= (float) f.slope(sh.currentX);
 						float y = (float)Helper.unitToPx(0, yU, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).y;
 						
 						texts.add("f" + (i + 1) + "(x) = " + df2.format(yU));

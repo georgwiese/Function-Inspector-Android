@@ -82,11 +82,7 @@ public class RedrawThread extends Thread{
 						helperPaths.add(null);
 					}
 					else{
-						double [] params = sh.getParams();
-						//TODO: implement Function.setParams(double[] params)
-						f.setA(params[0]);
-						f.setB(params[1]);
-						f.setC(params[2]);
+						f.setParams(sh.getParams());
 						
 						hDiscon.add(PointMaker.getDiscontinuities(f, Helper.pxToUnit(-_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.pxToUnit(2*_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.getDeltaUnit(15,_zoomFactor[0])));
 						hExtrema.add(PointMaker.getExtrema(f, hDiscon.get(j), Helper.pxToUnit(-_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.pxToUnit(2*_width, 0, _zoomFactor, _middle, _width, _height).x, Helper.getDeltaUnit(15,_zoomFactor[0])));

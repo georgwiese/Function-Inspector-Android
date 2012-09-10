@@ -49,6 +49,7 @@ public class StateHolder {
 	double[] zoom;					// current zoom factor, zoom[0] on x, zoom [1] in y axis
 	double[] desiredZoom;			// To what Zoom level it should be animated
 	double[] desiredMiddle;
+	boolean zoomIn, moveRight, moveUp;
 	double[] moveUpdate;			// How much should be zoomed each frame
 	double[] factor;				// what number should be factored out when drawing the coordinate system
 	double[] middle;				// coordinate that is at the middle of the screen (current position)
@@ -148,6 +149,8 @@ public class StateHolder {
 		zoom 	= new double[]{1.0, 1.0};
 		middle 	= new double[]{0.0, 0.0};
 		speed	= new double[]{0.0, 0.0};
+		doZoom  = false;
+		doMove  = false;
 	}
 	
 	public void setIsPro(boolean value){
@@ -203,6 +206,7 @@ public class StateHolder {
 		desiredZoom[0] = zoom[0] * ZOOM_IN_FACTOR;
 		desiredZoom[1] = zoom[1] * ZOOM_IN_FACTOR;
 		speed = new double[]{0, 0};
+		zoomIn = true;
 		doZoom = true;
 	}
 	
@@ -211,6 +215,7 @@ public class StateHolder {
 		desiredZoom[1] = zoom[1] / ZOOM_IN_FACTOR;
 		speed = new double[]{0, 0};
 		doZoom = true;
+		zoomIn = false;
 	}
 	
 	public void moveDyn(double toX, double toY){
@@ -220,6 +225,8 @@ public class StateHolder {
 		//double value = Math.sqrt(toX * toX + toY * toY);
 		moveUpdate = new double[]{ moveBy[0] / FRAMES, moveBy[1] / FRAMES};
 		doMove = true;
+		moveRight = toX - middle[0] > 0;
+		moveUp    = toY - middle[1] > 0;
 	}
 	
 	public void zoom(double factor){
@@ -311,8 +318,10 @@ public class StateHolder {
 			middle[0] += moveUpdate[0] * (double) timeElapsed / (1000 / 60);
 			middle[1] += moveUpdate[1] * (double) timeElapsed / (1000 / 60);
 			// Check if done
-			if (Math.abs(middle[0] - desiredMiddle[0]) < Math.abs(moveUpdate[0]) * 2 &&
-					Math.abs(middle[1] - desiredMiddle[1]) < Math.abs(moveUpdate[1]) * 2)
+			if (((moveRight && middle[0] >= desiredMiddle[0]) ||
+					(!moveRight && middle[0] <= desiredMiddle[0])) &&
+					((moveUp && middle[1] >= desiredMiddle[1]) ||
+					(!moveUp && middle[1] <= desiredMiddle[1])))
 				doMove = false;
 		}
 		else{
@@ -329,13 +338,13 @@ public class StateHolder {
 	
 	public void updateZoom(long timeElapsed){
 		double factor = Math.pow(ZOOM_IN_UPDATE, (double)timeElapsed / (1000 / 60));
-		if (zoom[0] < desiredZoom[0])
+		if (zoomIn)
 			zoom(factor);
 		else
 			zoom(1 / factor);
 		// Check if done
-		if (Math.abs(zoom[0]/desiredZoom[0]-1) < (ZOOM_IN_UPDATE - 1) * 2 &&
-				Math.abs(zoom[1]/desiredZoom[1]-1) < (ZOOM_IN_UPDATE - 1) * 2)
+		if ((zoomIn && zoom[0] >= desiredZoom[0] && zoom[1] >= desiredZoom[1]) ||
+				(!zoomIn && zoom[0] <= desiredZoom[0] && zoom[1] <= desiredZoom[1]))
 			doZoom = false;
 	}
 	

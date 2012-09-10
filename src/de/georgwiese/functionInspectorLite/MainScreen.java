@@ -331,6 +331,8 @@ public class MainScreen extends FragmentActivity {
     	super.onStart();
     	if (stateHolder != null)
     		stateHolder.initialize(mContext);
+    	if (uiController != null)
+    		uiController.updateMode();
     	
     	/*
     	// Check, if graph is null, because onStart() is called twice, first by Activity life cycle, than manually.

@@ -216,7 +216,7 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 	public void setCurrentX(double value){
 		sh.currentX = value;
 		updateTraceTv();
-		sh.move(value - sh.getMiddle(0), 0);
+		sh.moveDyn(value, sh.getMiddle(1));
 		fktCanvas.invalidate();
 	}
 	
@@ -407,8 +407,8 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 		fktCanvas.invalidate();
 	}
 	
-	public void toggleMode(){
-		if (llButtons.getVisibility() == View.VISIBLE){
+	public void updateMode(){
+		if (sh.getMode() == StateHolder.MODE_TRACE){
 			llTrace.setVisibility(View.VISIBLE);
 			llButtons.setVisibility(View.GONE);
 			llTrace.startAnimation(menuIn);

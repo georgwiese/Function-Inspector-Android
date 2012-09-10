@@ -100,7 +100,7 @@ public class FktCanvasGestureListener extends SimpleOnGestureListener implements
 		
 		sh.toggleMode();
 		sh.currentX = Helper.pxToUnit(e.getX(), 0, sh.getZoom(), sh.getMiddle(), canvas.getWidth(), canvas.getHeight()).x;
-		uic.toggleMode();
+		uic.updateMode();
 		canvas.invalidate();
 	}
 	
@@ -186,7 +186,7 @@ public class FktCanvasGestureListener extends SimpleOnGestureListener implements
 		
 		if (sh.getMode() == StateHolder.MODE_TRACE){
 			sh.toggleMode();
-			uic.toggleMode();
+			uic.updateMode();
 			canvas.invalidate();
 			return true;
 		}
