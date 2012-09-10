@@ -1,21 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-  xmlns:android="http://schemas.android.com/apk/res/android">
-<PreferenceCategory android:title="@string/prefs_pcAppearance">
-<CheckBoxPreference android:summary="@string/prefs_startFullscreen_summary" android:title="@string/prefs_startFullscreen_title" android:enabled="true" android:key="prefs_startFullscreen" android:defaultValue="false"></CheckBoxPreference>
-<ListPreference android:summary="@string/prefs_color_summary" android:key="prefs_color" android:title="@string/prefs_color_title" android:dialogTitle="@string/prefs_color_title" android:entryValues="@array/colorSchemes_values" android:entries="@array/colorSchemes" android:defaultValue="1"></ListPreference>
-</PreferenceCategory>
-<PreferenceCategory android:title="@string/prefs_pcBehavior">
-<CheckBoxPreference android:summary="@string/prefs_zoomXY_summary" android:title="@string/prefs_zoomXY_title" android:enabled="true" android:key="prefs_zoomXY" android:defaultValue="true"></CheckBoxPreference>
-<EditTextPreference android:summary="@string/prefs_folder_summary" android:title="@string/prefs_folder_title" android:enabled="true" android:key="prefs_folder" android:defaultValue="Function Inspector"></EditTextPreference>
-<Preference android:summary="@string/prefs_factor_summary" android:title="@string/prefs_factor_title" android:enabled="true" android:key="prefs_factor"></Preference>
-</PreferenceCategory>
-<PreferenceCategory android:title="@string/prefs_pcDeveloper">
-<Preference android:summary="@string/prefs_survey_summary" android:title="@string/prefs_survey_title" android:key="prefs_survey"></Preference>
-<Preference android:summary="@string/prefs_email_summary" android:title="@string/prefs_email_title" android:key="prefs_email"></Preference>
-<Preference android:summary="@string/prefs_blog_summary" android:title="@string/prefs_blog_title" android:key="prefs_blog"></Preference>
-<Preference android:summary="@string/prefs_facebook_summary" android:title="@string/prefs_facebook_title" android:key="prefs_facebook"></Preference>
-</PreferenceCategory>
-<PreferenceCategory android:title="@string/prefs_pcPro"><Preference android:key="prefs_pro"></Preference>
-</PreferenceCategory>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/prefs_pcAppearance" >
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:enabled="true"
+            android:key="prefs_startFullscreen"
+            android:summary="@string/prefs_startFullscreen_summary"
+            android:title="@string/prefs_startFullscreen_title" >
+        </CheckBoxPreference>
+<!-- 
+        <ListPreference
+            android:defaultValue="1"
+            android:dialogTitle="@string/prefs_color_title"
+            android:entries="@array/colorSchemes"
+            android:entryValues="@array/colorSchemes_values"
+            android:key="prefs_color"
+            android:summary="@string/prefs_color_summary"
+            android:title="@string/prefs_color_title" >
+        </ListPreference> -->
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/prefs_pcBehavior" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:enabled="true"
+            android:key="prefs_zoomXY"
+            android:summary="@string/prefs_zoomXY_summary"
+            android:title="@string/prefs_zoomXY_title" >
+        </CheckBoxPreference>
+
+        <EditTextPreference
+            android:defaultValue="Function Inspector"
+            android:enabled="true"
+            android:key="prefs_folder"
+            android:summary="@string/prefs_folder_summary"
+            android:title="@string/prefs_folder_title" >
+        </EditTextPreference>
+
+        <Preference
+            android:enabled="true"
+            android:key="prefs_factor"
+            android:summary="@string/prefs_factor_summary"
+            android:title="@string/prefs_factor_title" >
+        </Preference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/prefs_pcDeveloper" >
+        <Preference
+            android:key="prefs_survey"
+            android:summary="@string/prefs_survey_summary"
+            android:title="@string/prefs_survey_title" >
+        </Preference>
+        <Preference
+            android:key="prefs_email"
+            android:summary="@string/prefs_email_summary"
+            android:title="@string/prefs_email_title" >
+        </Preference>
+        <Preference
+            android:key="prefs_blog"
+            android:summary="@string/prefs_blog_summary"
+            android:title="@string/prefs_blog_title" >
+        </Preference>
+        <Preference
+            android:key="prefs_facebook"
+            android:summary="@string/prefs_facebook_summary"
+            android:title="@string/prefs_facebook_title" >
+        </Preference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/prefs_pcPro" >
+        <Preference android:key="prefs_pro" >
+        </Preference>
+    </PreferenceCategory>
+
 </PreferenceScreen>

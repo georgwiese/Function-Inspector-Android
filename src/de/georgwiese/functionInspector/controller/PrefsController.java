@@ -22,6 +22,10 @@ public class PrefsController {
 		return c.getSharedPreferences(KEY_PREFS, 0).getBoolean(key, defaultV);
 	}
 	
+	public int getPrefsInt(String key, int defaultV){
+		return c.getSharedPreferences(KEY_PREFS, 0).getInt(key, defaultV);
+	}
+	
 	// Put Pref
 	public void putPrefStr(String key, String value){
 		c.getSharedPreferences(KEY_PREFS, 0).edit().putString(key, value).commit();

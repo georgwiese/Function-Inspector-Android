@@ -38,7 +38,7 @@ public class Prefs extends PreferenceActivity {
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				SharedPreferences.Editor editor = prefs.edit();
-				editor.putBoolean("prefs_startFullscreen", (Boolean) newValue);
+				editor.putBoolean(StateHolder.KEY_FULLSCREEN, (Boolean) newValue);
 				editor.commit();
 				return true;
 			}
@@ -85,6 +85,7 @@ public class Prefs extends PreferenceActivity {
 				LinearLayout ll = new LinearLayout(mContext);
 				ll.setOrientation(LinearLayout.VERTICAL);
 				ll.setPadding(20, 0, 20, 20);
+				ll.setGravity(Gravity.CENTER);
 				LinearLayout ll2 = new LinearLayout(mContext);
 				ll2.setOrientation(LinearLayout.VERTICAL);
 				TextView x = new TextView(mContext);
@@ -96,23 +97,23 @@ public class Prefs extends PreferenceActivity {
 				SwitchButtonSet sbx = new SwitchButtonSet(mContext, null, 4);
 				sbx.setCaptions(new String[]{"1","PI","e", "DEG"});
 				sbx.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-				sbx.setState(prefs.getInt("prefs_factor_x", 0));
+				sbx.setState(prefs.getInt(StateHolder.KEY_FACTOR + 0, 0));
 				sbx.setOnStateChangedListener(new SwitchButtonSet.OnStateChangedListener() {
 					@Override
 					public void onStateChanged(int newState) {
 						SharedPreferences.Editor editor = prefs.edit();
-						editor.putInt("prefs_factor_x", newState);
+						editor.putInt(StateHolder.KEY_FACTOR + 0, newState);
 						editor.commit();
 					}
 				});
 				SwitchButtonSet sby = new SwitchButtonSet(mContext, null, 4);
-				sby.setState(prefs.getInt("prefs_factor_y", 0));
+				sby.setState(prefs.getInt(StateHolder.KEY_FACTOR + 1, 0));
 				sby.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 				sby.setOnStateChangedListener(new SwitchButtonSet.OnStateChangedListener() {
 					@Override
 					public void onStateChanged(int newState) {
 						SharedPreferences.Editor editor = prefs.edit();
-						editor.putInt("prefs_factor_y", newState);
+						editor.putInt(StateHolder.KEY_FACTOR + 1, newState);
 						editor.commit();
 					}
 				});

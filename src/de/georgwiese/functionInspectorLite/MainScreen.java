@@ -329,10 +329,22 @@ public class MainScreen extends FragmentActivity {
     protected void onStart() {
     	
     	super.onStart();
-    	if (stateHolder != null)
+    	if (stateHolder != null){
     		stateHolder.initialize(mContext);
+    		
+    		//Handle Fullscreen
+        	if (stateHolder.fullscreen){
+            	getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    	        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+    		}	
+    		else{
+    			getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+    	        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    		}
+    	}
     	if (uiController != null)
     		uiController.updateMode();
+    	
     	
     	/*
     	// Check, if graph is null, because onStart() is called twice, first by Activity life cycle, than manually.

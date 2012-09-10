@@ -34,6 +34,7 @@ import de.georgwiese.calculationFunktions.CalcFkts;
 import de.georgwiese.calculationFunktions.Function;
 import de.georgwiese.functionInspector.uiClasses.EnterFunctionView;
 import de.georgwiese.functionInspector.uiClasses.FktCanvas;
+import de.georgwiese.functionInspector.uiClasses.Helper;
 import de.georgwiese.functionInspector.uiClasses.MenuPopup.OnMenuItemClickListener;
 import de.georgwiese.functionInspector.uiClasses.MenuView;
 import de.georgwiese.functionInspector.uiClasses.MyKeyboardView;
@@ -437,7 +438,8 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 	}
 	
 	public void updateTraceTv(){
-		traceTv.setText("x = " + df2.format(sh.currentX));
+		traceTv.setText("x = " + df2.format(sh.currentX / sh.getFactor(0)) +
+				Helper.getFactorString(sh.getFactor(0)));
 	}
 	
 	public void setLandscape(boolean value){

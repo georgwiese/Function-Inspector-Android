@@ -1,5 +1,7 @@
 package de.georgwiese.functionInspector.uiClasses;
 
+import java.text.DecimalFormat;
+
 /**
  * Collection of helper Methods useful for translating coordinate systems.
  * @author Georg Wiese
@@ -54,6 +56,20 @@ public class Helper {
 		else
 			steps=1;
 		return steps*Math.pow(10, exponent)*factor;
+	}
+	
+	public static String getFactorString(double factor){
+
+		if (factor == Math.PI)
+			return "\u03C0";
+		if (factor == Math.PI/180)
+			return "\u00B0";
+		if (factor == Math.E)
+			return "e";
+		if (factor == 1.0)
+			return "";
+		DecimalFormat df = new DecimalFormat("0.0##");
+		return "*" + df.format(factor);
 	}
 
 }

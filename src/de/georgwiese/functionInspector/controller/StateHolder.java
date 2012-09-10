@@ -77,8 +77,12 @@ public class StateHolder {
 	public static String KEY_TRY_USED  	= "tryUsed";
 	public static String KEY_ZOOMXY  	= "zoomXY";
 	public static String KEY_DISSLOPE  	= "disSlope";
+	public static String KEY_FULLSCREEN	= "fullscreen";
+	public static String KEY_FACTOR		= "factor";
+	
 	PrefsController pc;
 	String screenshotFolder;
+	public boolean fullscreen;
 	
 	public StateHolder(Context c, boolean isPro){
 		pc = new PrefsController(c);
@@ -95,6 +99,7 @@ public class StateHolder {
 		doZoom   = false;
 		preview  = false;
 		zoomXY   = pc.getPrefsBoolean(KEY_ZOOMXY, false) && isPro;
+		fullscreen = pc.getPrefsBoolean(KEY_FULLSCREEN, false) && isPro;
 		tryUsed  = pc.getDataBoolean(KEY_TRY_USED, false);
 		disSlope = pc.getDataBoolean(KEY_DISSLOPE, false) && isPro;
 		fkts = new ArrayList<Function>();
@@ -120,9 +125,6 @@ public class StateHolder {
 		zoom[0] = pc.getDataFloat(KEY_ZOOM + 0, 1);
 		zoom[1] = (isPro && zoomXY)?pc.getDataFloat(KEY_ZOOM + 1, 1):zoom[0];
 		desiredZoom = zoom.clone();
-		factor = new double[2];
-		factor[0] = 1.0;
-		factor[1] = 1.0;
 		middle = new double[2];
 		middle[0] = pc.getDataFloat(KEY_MIDDLE + 0, 0);
 		middle[1] = pc.getDataFloat(KEY_MIDDLE + 1, 0);
@@ -142,6 +144,16 @@ public class StateHolder {
 		
 		// Prefs
 		screenshotFolder = pc.getPrefStr(KEY_FOLDER, "Function Inspector");
+		factor = new double[2];
+		for (int i = 0; i < 2; i++){
+			int factorID = pc.getPrefsInt(KEY_FACTOR + i, 0);
+			switch(factorID){
+			case 0: factor[i] = 1.0; break;
+			case 1: factor[i] = Math.PI; break;
+			case 2: factor[i] = Math.E; break;
+			case 3: factor[i] = Math.PI/180; break;
+			}
+		}
 	}
 	
 	public void reset(){

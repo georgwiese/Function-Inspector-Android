@@ -135,8 +135,9 @@ public class FktCanvas extends LinearLayout {
 			canvas.drawLine(x, (float)zero.y, x, (float)zero.y+5, paint);
 			paint.setStrokeWidth(1);
 			if (i!=0 & i%2==0){
-				String text;
-				if (sh.getFactor(0) == Math.PI)
+				double factoredOut = i * steps[0] / sh.getFactor(0);
+				String text = df1.format(factoredOut) + Helper.getFactorString(sh.getFactor(0));
+				/*if (sh.getFactor(0) == Math.PI)
 					text=df1.format(i*steps[0]/Math.PI)+"\u03C0";
 				else if (sh.getFactor(0) == Math.PI/180)
 					text=df1.format(i*steps[0]/Math.PI*180)+"\u00B0";
@@ -144,7 +145,7 @@ public class FktCanvas extends LinearLayout {
 					text=df1.format(i*steps[0]/Math.E)+"e";
 				else
 					text=df1.format(i*steps[0]);
-				//TODO: Implement borderTop and borderBottom
+				*/
 				if (zero.y <= getHeight()-borderBottom-30 && zero.y>=0)
 					canvas.drawText(text, x, (float)zero.y+20, paint);
 				else if (zero.y > getHeight()-borderBottom-30)
@@ -165,15 +166,16 @@ public class FktCanvas extends LinearLayout {
 			canvas.drawLine((float) zero.x, y, (float) zero.x-3, y, paint);
 			paint.setStrokeWidth(1);
 			if (i!=0 & i%2==0){
-				String text;
-				if (sh.getFactor(1) == Math.PI)
+				double factoredOut = i * steps[1] / sh.getFactor(1);
+				String text = df1.format(factoredOut) + Helper.getFactorString(sh.getFactor(1));
+				/*if (sh.getFactor(1) == Math.PI)
 					text=df1.format(i*steps[1]/Math.PI)+"\u03C0";
 				else if (sh.getFactor(1) == Math.PI/180)
 					text=df1.format(i*steps[1]/Math.PI*180)+"\u00B0";
 				else if (sh.getFactor(1) == Math.E)
 					text=df1.format(i*steps[1]/Math.E)+"e";
 				else
-					text=df1.format(i*steps[1]);
+					text=df1.format(i*steps[1]);*/
 				
 				if (zero.x <= getWidth() && zero.x>=45)
 					canvas.drawText(text, (float) (zero.x-10), y+5, paint);
@@ -264,7 +266,8 @@ public class FktCanvas extends LinearLayout {
 					canvas.drawLine(x, 0, x, getHeight(), paint);
 					
 					// Draw value box
-					String text = "x = " + df2.format(activePoint.getX());
+					String text = "x = " + df2.format(activePoint.getX() / sh.getFactor(0)) +
+							Helper.getFactorString(sh.getFactor(0));
 					paint.setColor(COLOR_BOX);
 					paint.setTextSize(20);
 					float width = paint.measureText(text);
@@ -280,7 +283,10 @@ public class FktCanvas extends LinearLayout {
 					canvas.drawCircle(x, y, 7, paint);
 					
 					// Draw value box
-					String text = "( " + df2.format(activePoint.getX()) + " | " + df2.format(activePoint.getY()) + " )";
+					String text = "( " + df2.format(activePoint.getX() / sh.getFactor(0)) +
+							Helper.getFactorString(sh.getFactor(0)) + " | " +
+							df2.format(activePoint.getY() / sh.getFactor(1)) +
+							Helper.getFactorString(sh.getFactor(1)) + " )";
 					paint.setColor(COLOR_BOX);
 					paint.setTextSize(20);
 					float width = paint.measureText(text);
@@ -311,7 +317,8 @@ public class FktCanvas extends LinearLayout {
 						float slope	= (float) f.slope(sh.currentX);
 						float y = (float)Helper.unitToPx(0, yU, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).y;
 						
-						texts.add("f" + (i + 1) + "(x) = " + df2.format(yU));
+						texts.add("f" + (i + 1) + "(x) = " + df2.format(yU / sh.getFactor(1)) +
+								Helper.getFactorString(sh.getFactor(1)));
 						textsS.add("f'" + (i + 1) + "(x) = " + df2.format(slope));
 						colors.add(COLORS_GRAPHS[i % COLORS_GRAPHS.length]);
 						
