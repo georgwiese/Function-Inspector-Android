@@ -62,7 +62,7 @@ public class MainScreen extends FragmentActivity {
 	public static final int VERSION_PRO=FrameView.VERSION_PRO;
 	private int version=VERSION_LITE;
 	
-	public static final boolean IS_PRO = false;
+	public static final boolean IS_PRO = true;
 	
 	// For licensing (not done currently)
 	/*

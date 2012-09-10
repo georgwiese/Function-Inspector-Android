@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="TextView"
-        android:textColor="#ffffff"
         android:textSize="14dip" >
     </TextView>
 
@@ -29,7 +28,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=".jpg"
-            android:textColor="#ffffff"
             android:textSize="14dip" >
         </TextView>
     </LinearLayout>

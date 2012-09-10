@@ -2,6 +2,7 @@ package de.georgwiese.functionInspector.controller;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.util.TypedValue;
@@ -23,9 +24,9 @@ public class StateHolder {
 	public static final int MODE_TRACE = 1;
 	
 	// Constants dealing with speed
-	static final double FRICTION_FACTOR = 0.97;
-	static final double MAX_SPEED       = 1;	// in dp / ms
-	static final double MIN_SPEED		= 0.001;
+	static final double FRICTION_FACTOR = 0.96;
+	static final double MAX_SPEED       = 0.8;	 // in dp / ms
+	static final double MIN_SPEED		= 0.001; // in px / ms
 	
 	// Constants dealing with zoom and dynamic moving
 	static final int FRAMES = 30;
@@ -79,10 +80,13 @@ public class StateHolder {
 	public static String KEY_DISSLOPE  	= "disSlope";
 	public static String KEY_FULLSCREEN	= "fullscreen";
 	public static String KEY_FACTOR		= "factor";
+	public static String KEY_SFKTS		= "savedF";
+	public static String VAL_SFKTS_END	= "savedF_end";
 	
 	PrefsController pc;
 	String screenshotFolder;
 	public boolean fullscreen;
+	ArrayList<String> savedFkts;
 	
 	public StateHolder(Context c, boolean isPro){
 		pc = new PrefsController(c);
@@ -135,6 +139,7 @@ public class StateHolder {
 		prevTimeDynamics = 0;
 		mode = MODE_PAN;
 		maxSpeedPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (float)MAX_SPEED, c.getResources().getDisplayMetrics());
+		Log.d("Developer", "maxSpeed in px/ms: " + maxSpeedPx);
 		
 		disRoots 			= pc.getDataBoolean(KEY_POINTS + "roots", false);
 		disExtrema 			= pc.getDataBoolean(KEY_POINTS + "extrema", false) && isPro;
@@ -154,6 +159,14 @@ public class StateHolder {
 			case 3: factor[i] = Math.PI/180; break;
 			}
 		}
+        savedFkts = new ArrayList<String>();
+        for (int i=0;i<100;i++){
+        	String value = pc.getDataStr(KEY_SFKTS + i, VAL_SFKTS_END);
+        			//c.getSharedPreferences("data", Activity.MODE_PRIVATE).getString("f_"+Integer.toString(i), "null");
+        	if (!value.equals(VAL_SFKTS_END) && (isPro | savedFkts.size()<3))
+        		savedFkts.add(value);
+        	else break;
+        }
 	}
 	
 	public void reset(){
@@ -182,20 +195,6 @@ public class StateHolder {
 	
 	public void clearFkts(){
 		fkts.clear();
-	}
-	
-	/**
-	 * Will store all functions in SharedPreference
-	 */
-	public void storeFkts(){
-		int i = 0;
-		for (Function f: fkts){
-			if (f != null){
-				pc.putDataStr(KEY_FKTS + i, f.getString());
-				i++;
-			}
-		}
-		pc.putDataStr(KEY_FKTS + i, VAL_FKTS_END);
 	}
 	
 	public Point getActivePoint() {
@@ -305,8 +304,10 @@ public class StateHolder {
 		middle[1] += dy;
 		long currentTime = AnimationUtils.currentAnimationTimeMillis();
 		if (prevTimeSpeed != 0 && prevTimeSpeed != currentTime){
-			speed[0] = 0.5 * speed[0] + 0.5 * dx / (currentTime - prevTimeSpeed);
-			speed[1] = 0.5 * speed[1] + 0.5 * dy / (currentTime - prevTimeSpeed);
+			speed[0] = 0.2 * speed[0] + 0.8 * dx / (currentTime - prevTimeSpeed);
+			speed[1] = 0.2 * speed[1] + 0.8 * dy / (currentTime - prevTimeSpeed);
+			speed[0]  = Math.signum(speed[0]) * Math.min(Math.abs(speed[0]), Helper.getDeltaUnit(maxSpeedPx, zoom[0]));
+			speed[1]  = Math.signum(speed[1]) * Math.min(Math.abs(speed[1]), Helper.getDeltaUnit(maxSpeedPx, zoom[1]));
 		}
 		//Log.d("Developer", "Speed: " + Math.sqrt(speed[0] * speed[0] + speed[1] * speed[1]));
 
@@ -369,6 +370,24 @@ public class StateHolder {
 		this.screenshotFolder = screenshotFolder;
 	}
 	
+	public String[] getSavedFktsArray(){
+		String[] result = new String[savedFkts.size()];
+		for (int i=0;i<savedFkts.size();i++)
+			result[i]=savedFkts.get(i);
+		return result;
+	}
+	
+	public void addSavedFkt(String fkt){
+		if (savedFkts.size()>=100)
+			savedFkts.remove(0);
+		savedFkts.add(fkt);
+	}
+	
+	public void deleteSavedFkt(int index){
+		if (index<savedFkts.size())
+			savedFkts.remove(index);
+	}
+	
 	public void saveCurrentState(){
 		pc.putDataFloat(KEY_MIDDLE + 0, (float)middle[0]);
 		pc.putDataFloat(KEY_MIDDLE + 1, (float)middle[1]);
@@ -389,5 +408,26 @@ public class StateHolder {
 		pc.putDataBoolean(KEY_TRY_USED, tryUsed);
 		pc.putDataBoolean(KEY_DISSLOPE, disSlope);
 		pc.putPrefStr(KEY_FOLDER, screenshotFolder);
+		
+		// Store Functions
+		int i = 0;
+		for (Function f: fkts){
+			if (f != null){
+				pc.putDataStr(KEY_FKTS + i, f.getString());
+				i++;
+			}
+		}
+		pc.putDataStr(KEY_FKTS + i, VAL_FKTS_END);
+		
+		// Store saved Functions
+		i = 0;
+		for (String f: savedFkts){
+			if (f != null){
+				Log.d("Developer", "Save Function: " + f);
+				pc.putDataStr(KEY_SFKTS + i, f);
+				i++;
+			}
+		}
+		pc.putDataStr(KEY_SFKTS + i, VAL_SFKTS_END);
 	}
 }

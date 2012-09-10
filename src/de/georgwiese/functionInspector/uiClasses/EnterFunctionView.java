@@ -311,6 +311,10 @@ public class EnterFunctionView extends LinearLayout {
 				qa.show();}});*/
 	}
 	
+	public void setId(int id){
+		overflow.setMenuID(id);
+	}
+	
 	public void setColor(int c){
 		color=c;
 		tv.setTextColor(c);
@@ -323,5 +327,13 @@ public class EnterFunctionView extends LinearLayout {
 	
 	public EditText getEt(){
 		return et;
+	}
+	
+	public String getText(){
+		return et.getEditableText().toString();
+	}
+	
+	public void setText(String text){
+		et.setText(text);
 	}
 }

@@ -3,10 +3,15 @@ package de.georgwiese.functionInspector.controller;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import com.google.ads.AdView;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -35,6 +40,7 @@ import de.georgwiese.calculationFunktions.Function;
 import de.georgwiese.functionInspector.uiClasses.EnterFunctionView;
 import de.georgwiese.functionInspector.uiClasses.FktCanvas;
 import de.georgwiese.functionInspector.uiClasses.Helper;
+import de.georgwiese.functionInspector.uiClasses.IntegralCalcDialog;
 import de.georgwiese.functionInspector.uiClasses.MenuPopup.OnMenuItemClickListener;
 import de.georgwiese.functionInspector.uiClasses.MenuView;
 import de.georgwiese.functionInspector.uiClasses.MyKeyboardView;
@@ -62,6 +68,8 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 	public static final int ACTIVE_COLOR = Color.parseColor("#1c3640");
 	public static final int HIGHLIGHT_COLOR = Color.parseColor("#3691b3");
 	public static final int BAR_COLOR = Color.argb(200, 0, 0, 0);
+	
+	public static final int MENU_ID_MAIN = -1;
 
 	MenuView menus[];
 	ImageButton menuButtons[];
@@ -141,6 +149,7 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 		};
 		String[] optionsPro = {optionsLite[0], optionsLite[1], optionsLite[2], optionsLite[3]};
 		menuButton.buildMenu(sh.isPro?optionsPro:optionsLite, this);
+		menuButton.setMenuID(MENU_ID_MAIN);
 		
 		df1 = new DecimalFormat("0.0##");
 		df2 = new DecimalFormat("0.00");
@@ -395,8 +404,10 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 			efv.get(i).setColor(FktCanvas.COLORS_GRAPHS[i % FktCanvas.COLORS_GRAPHS.length]);
 		}
 		llEfvs.removeAllViews();
-		for (EnterFunctionView e:efv)
-			llEfvs.addView(e);
+		for (int i = 0; i < efv.size(); i++){
+			efv.get(i).setId(i);
+			llEfvs.addView(efv.get(i));
+		}
 		if (efv.size()==3 && !sh.isPro)
 			menuFktPro.setVisibility(View.VISIBLE);
 		else
@@ -407,7 +418,6 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 		sh.clearFkts();
 		for (EnterFunctionView e:efv)
 			sh.addFkt(CalcFkts.formatFktString(e.getEt().getText().toString()));
-		sh.storeFkts();
 
 		fktCanvas.invalidate();
 	}
@@ -501,39 +511,106 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 
 	@Override
 	public void onMenuItemClick(int menuID, int itemID) {
-		//String[] options = {"About", "Pro", "Welcome", "Try", "Facebook", "Pic", "Buy", "set Param.", "set min Param.", "set max Param."};
+		
+		if(menuID == MENU_ID_MAIN){
 		// Preferences, Table, Screenshot, About, Pro
 		switch(itemID){
-		case 0:
-    		Intent iPref = new Intent(c, Prefs.class);
-    		iPref.putExtra(StateHolder.KEY_ISPRO, sh.isPro);
-    		c.startActivity(iPref);
-			break;
-		case 1:
-			Intent iTable = new Intent(c, TableActivity.class);
-			iTable.putExtra(StateHolder.KEY_ISPRO, sh.isPro);
-			ArrayList<Function> fkts = sh.getFkts();
-			for (int j = 0 ; j<=fkts.size(); j++){
-				if (j==fkts.size())
-					iTable.putExtra("fkt"+Integer.toString(j), "end");
-				else
-					iTable.putExtra("fkt"+Integer.toString(j), fkts.size()>0 && fkts.get(j)!=null?fkts.get(j).getString():"empty");
+			case 0:
+	    		Intent iPref = new Intent(c, Prefs.class);
+	    		iPref.putExtra(StateHolder.KEY_ISPRO, sh.isPro);
+	    		c.startActivity(iPref);
+				break;
+			case 1:
+				Intent iTable = new Intent(c, TableActivity.class);
+				iTable.putExtra(StateHolder.KEY_ISPRO, sh.isPro);
+				ArrayList<Function> fkts = sh.getFkts();
+				for (int j = 0 ; j<=fkts.size(); j++){
+					if (j==fkts.size())
+						iTable.putExtra("fkt"+Integer.toString(j), "end");
+					else
+						iTable.putExtra("fkt"+Integer.toString(j), fkts.size()>0 && fkts.get(j)!=null?fkts.get(j).getString():"empty");
+				}
+				iTable.putExtra("paramA", sh.getParams()[0]);
+				iTable.putExtra("paramB", sh.getParams()[1]);
+				iTable.putExtra("paramC", sh.getParams()[2]);
+				c.startActivity(iTable);
+				break;
+			case 2:
+				dc.showDialog(DialogController.PIC_DIALOG); break;
+			case 3:
+				dc.showDialog(DialogController.ABOUT_DIALOG); break;
+			case 4:
+				dc.showDialog(DialogController.PRO_DIALOG); break;
+			case 5:
+				sh.setIsPro(!sh.isPro);
+				((MainScreen) c).restart();
+				break;
 			}
-			iTable.putExtra("paramA", sh.getParams()[0]);
-			iTable.putExtra("paramB", sh.getParams()[1]);
-			iTable.putExtra("paramC", sh.getParams()[2]);
-			c.startActivity(iTable);
-			break;
-		case 2:
-			dc.showDialog(DialogController.PIC_DIALOG); break;
-		case 3:
-			dc.showDialog(DialogController.ABOUT_DIALOG); break;
-		case 4:
-			dc.showDialog(DialogController.PRO_DIALOG); break;
-		case 5:
-			sh.setIsPro(!sh.isPro);
-			((MainScreen) c).restart();
-			break;
+		}
+		else{
+			// Integral, save, Open, Manage
+			switch(itemID){
+			case 0:
+				(new IntegralCalcDialog(c, efv.get(menuID).getText(), sh.getParams())).show();
+				break;
+			case 1:
+				if (!sh.isPro)
+					Toast.makeText(c, R.string.fkt_menu_lite, Toast.LENGTH_LONG).show();
+				else if (!efv.get(menuID).getText().equals("")){
+					sh.addSavedFkt(efv.get(menuID).getText().toString());
+					Toast.makeText(c, R.string.saved_saved, Toast.LENGTH_LONG).show();
+				}
+				break;
+			case 2:
+				final int menuIDf = menuID;
+				if (!sh.isPro)
+					Toast.makeText(c, R.string.fkt_menu_lite, Toast.LENGTH_LONG).show();
+				else{
+					final String[] empty = {c.getResources().getString(R.string.saved_empty)};
+					final String[] items = sh.getSavedFktsArray().length>0?sh.getSavedFktsArray():empty;
+					AlertDialog.Builder b = new AlertDialog.Builder(c);
+					b.setTitle(R.string.saved_choose);
+					b.setItems(items, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							if (!items[which].equals(empty[0])){
+								efv.get(menuIDf).setText("");
+								efv.get(menuIDf).setText(items[which]);
+							}
+							dialog.cancel();
+						}
+					});
+					b.create().show();
+				}
+				break;
+			case 3:
+				if (!sh.isPro)
+					Toast.makeText(c, R.string.fkt_menu_lite, Toast.LENGTH_LONG).show();
+				else{
+					AlertDialog.Builder b = new AlertDialog.Builder(c);
+					final ArrayList<Integer> del = new ArrayList<Integer>();
+					final String[] empty = {c.getResources().getString(R.string.saved_empty)};
+					final String[] items = sh.getSavedFktsArray().length>0?sh.getSavedFktsArray():empty;
+					b.setTitle(R.string.saved_delete);
+					b.setMultiChoiceItems(items, null, new OnMultiChoiceClickListener() {
+						public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+							if (isChecked)
+								del.add(which);
+						}
+					});
+					b.setPositiveButton(R.string.saved_delete_bt, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							Collections.sort(del);
+							for (int i=del.size()-1;i>=0;i--)
+								sh.deleteSavedFkt(del.get(i));
+							dialog.cancel();
+						}
+					});
+					b.create().show();
+				}
+				break;
+			}
 		}
 		
 		/*

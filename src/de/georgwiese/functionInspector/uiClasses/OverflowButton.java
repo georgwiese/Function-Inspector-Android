@@ -44,6 +44,11 @@ public class OverflowButton extends ImageButton implements View_HasStateListener
 		}
 	}
 	
+	public void setMenuID(int id){
+		if (menu != null)
+			menu.setMenuID(id);
+	}
+	
 	public OverflowButton(Context context){
 		this(context, null);
 		setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));

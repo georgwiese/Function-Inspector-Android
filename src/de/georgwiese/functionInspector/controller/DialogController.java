@@ -74,7 +74,7 @@ public class DialogController {
 	        new DialogFragment(){
 	        	@Override
 	        	public Dialog onCreateDialog(Bundle savedInstanceState) {
-	        		return new AlertDialog.Builder(new ContextThemeWrapper(c, R.style.Theme_Sherlock_Dialog_FunctionInspector))
+	        		return new AlertDialog.Builder(c)
 	        				.setTitle(R.string.menu_about_str)
 	        				.setMessage(R.string.about)
 	        				.setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -92,7 +92,7 @@ public class DialogController {
 	        new DialogFragment(){
 	        	@Override
 	        	public Dialog onCreateDialog(Bundle savedInstanceState) {
-	        		return new AlertDialog.Builder(new ContextThemeWrapper(c, R.style.Theme_Sherlock_Dialog_FunctionInspector))
+	        		return new AlertDialog.Builder(c)
 	        				.setTitle(R.string.welcome_dialog_title)
 	        				.setMessage(R.string.welcome_dialog_message)
 	        				.setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -110,7 +110,7 @@ public class DialogController {
 	        new DialogFragment(){
 	        	@Override
 	        	public Dialog onCreateDialog(Bundle savedInstanceState) {
-	        		return new AlertDialog.Builder(new ContextThemeWrapper(c, R.style.Theme_Sherlock_Dialog_FunctionInspector))
+	        		return new AlertDialog.Builder(c)
 	        				.setTitle(R.string.pro_dialog_title)
 	        				.setMessage(R.string.pro_dialog_message)
 	        				.setIcon(R.drawable.icon_pro)
@@ -144,7 +144,7 @@ public class DialogController {
 	        new DialogFragment(){
 	        	@Override
 	        	public Dialog onCreateDialog(Bundle savedInstanceState) {
-	        		return new AlertDialog.Builder(new ContextThemeWrapper(c, R.style.Theme_Sherlock_Dialog_FunctionInspector))
+	        		return new AlertDialog.Builder(c)
     						.setTitle(R.string.pro_dialog_title)
     						.setMessage(R.string.try_dialog_message)
     						.setIcon(R.drawable.icon_pro)
@@ -169,13 +169,13 @@ public class DialogController {
 		case PIC_DIALOG:
 			new DialogFragment(){
 				File ss;
-				
+				/*
 				@Override
 				public void onCreate(Bundle savedInstanceState) {
 					super.onCreate(savedInstanceState);
 					setStyle(STYLE_NORMAL, R.style.Theme_Sherlock_Dialog_FunctionInspector);
 				};
-				
+				*/
 				public View onCreateView(LayoutInflater inflater,
 						android.view.ViewGroup container, Bundle savedInstanceState) {
 					
@@ -225,7 +225,7 @@ public class DialogController {
 	        new DialogFragment(){
 	        	@Override
 	        	public Dialog onCreateDialog(Bundle savedInstanceState) {
-	        		return new AlertDialog.Builder(new ContextThemeWrapper(c, R.style.Theme_Sherlock_Dialog_FunctionInspector))
+	        		return new AlertDialog.Builder(c)
     						.setTitle(R.string.facebook_dialog_title)
     						.setMessage(R.string.facebook_dialog_message)
 	        				.setNegativeButton(R.string.facebook_dialog_visit, new DialogInterface.OnClickListener() {
@@ -263,12 +263,13 @@ public class DialogController {
 		case SET_X_DIALOG:
 			final int dialogID = id;
 			new DialogFragment(){
+				/*
 				@Override
 				public void onCreate(Bundle savedInstanceState) {
 					super.onCreate(savedInstanceState);
 					setStyle(STYLE_NORMAL, R.style.Theme_Sherlock_Dialog_FunctionInspector);
 				};
-				
+				*/
 				public View onCreateView(LayoutInflater inflater,
 						android.view.ViewGroup container, Bundle savedInstanceState) {
 					
@@ -322,7 +323,7 @@ public class DialogController {
 	        new DialogFragment(){
 	        	@Override
 	        	public Dialog onCreateDialog(Bundle savedInstanceState) {
-	        		return new AlertDialog.Builder(new ContextThemeWrapper(c, R.style.Theme_Sherlock_Dialog_FunctionInspector))
+	        		return new AlertDialog.Builder(c)
 	    			.setTitle(R.string.mode_slope_eq_title)
 	    			.setMessage(c.getString(R.string.mode_slope_eq_message) + 
 	    					df1.format(currentX)+":\n\n"+resultF)
