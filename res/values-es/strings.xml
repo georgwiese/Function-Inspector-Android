@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<string name="cancel">Cancelar</string>
-<string name="facebook_dialog_title">Function Inspector en Facebook!</string>
-<string name="facebook_dialog_message">Si le gusta Function Inspector,
+
+    <string name="cancel">Cancelar</string>
+    <string name="facebook_dialog_title">Function Inspector en Facebook!</string>
+    <string name="facebook_dialog_message">Si le gusta Function Inspector,
 										le sugiero que visite la nueva
 										página en  Facebook ;)</string>
-<string name="facebook_dialog_visit">Visitar</string>
-<string name="prefs_facebook_title">Facebook</string>
-<string name="prefs_facebook_summary">Visita la página de Facebook para estar al tanto!</string>
-<string name="keyboard_advice">Desliza para mas!</string>
-<string name="keyboard_info_title">Funciones</string>
-<string name="keyboard_info_message">Those are the functions that you can use in your equations:\n\n
+    <string name="facebook_dialog_visit">Visitar</string>
+    <string name="prefs_facebook_title">Facebook</string>
+    <string name="prefs_facebook_summary">Visita la página de Facebook para estar al tanto!</string>
+    <string name="keyboard_advice">Desliza para mas!</string>
+    <string name="keyboard_info_title">Funciones</string>
+    <string name="keyboard_info_message">Those are the functions that you can use in your equations:\n\n
 								- sqrt(): Raíz cuadrada\n
 								- abs(): Valor absoluto\n
 								- ln(): Logaritmo natural\n
@@ -26,37 +27,38 @@
 								- tanh(): Tangente hiperbólica\n
 								- asinh(): Seno hiperbólico invertido\n
 								- acosh(): Coseno hiperbólico invertido\n
-								- atanh(): Tangente hiperbólica invertida\n
-								</string>
-<string name="fkt_enterFkt">Escriba la función:</string>
-<string name="fkt_buyPro">Numero ilimitado de funciones en la versión PRO!</string>
-<string name="param_setParam">Configurar parámetros:</string>
-<string name="param_setMinParam">Definir parámetro mínimo:</string>
-<string name="param_setMaxParam">Definir parámetro máximo:</string>
-<string name="param_min">mín.</string>
-<string name="param_max">máx.</string>
-<string name="points_specialPoints">Puntos especiales:</string>
-<string name="points_roots">Muestra raices</string>
-<string name="points_inflection">Muestra puntos de inflexión</string>
-<string name="points_extrema">Muestra extremos</string>
-<string name="points_discontinuities">Mostrar discontinuidades</string>
-<string name="points_intersections">Muestra Intersecciones</string>
-<string name="points_pro">Usar características de la versión PRO!</string>
-<string name="points_roots_label">Raíz</string>
-<string name="points_inflection_label">Puntos de inflexión</string>
-<string name="points_extrema_label">Extremo local</string>
-<string name="points_discontinuities_label">Discontinuidad</string>
-<string name="points_intersections_label"> Intersección </string>
-<string name="pic_takeSc">Captura de pantalla:</string>
-<string name="pic_save">Guardar</string>
-<string name="pic_open">Abrir</string>
-<string name="pic_share">Compartir</string>
-<string name="menu_screenshot_str">Captura de pantalla</string>
-<string name="menu_about_str">Información</string>
-<string name="menu_upgrade_str">Actualizar a PRO</string>
-<string name="menu_fullscreen_str">Cambiar a pantalla completa</string>
-<string name="menu_fullscreen_disabled">Disculpa, pero está es una característica PRO!</string>
-<string name="about">Function Inspector LITE 3.2\n\nEstá aplicación es
+								- atanh(): Tangente hiperbólica invertida\n</string>
+    <string name="fkt_enterFkt">Escriba la función:</string>
+    <string name="fkt_buyPro">Numero ilimitado de funciones en la versión PRO!</string>
+    <string name="param_setParam">Configurar parámetros:</string>
+    <string name="param_setMinParam">Definir parámetro mínimo:</string>
+    <string name="param_setMaxParam">Definir parámetro máximo:</string>
+    <string name="param_min">mín.</string>
+    <string name="param_max">máx.</string>
+    <string name="points_specialPoints">Puntos especiales:</string>
+    <string name="points_roots">Muestra raices</string>
+    <string name="points_inflection">Muestra puntos de inflexión</string>
+    <string name="points_extrema">Muestra extremos</string>
+    <string name="points_discontinuities">Mostrar discontinuidades</string>
+    <string name="points_intersections">Muestra Intersecciones</string>
+    <string name="points_pro">Usar características de la versión PRO!</string>
+    <string name="points_roots_label">Raíz</string>
+    <string name="points_inflection_label">Puntos de inflexión</string>
+    <string name="points_extrema_label">Extremo local</string>
+    <string name="points_discontinuities_label">Discontinuidad</string>
+    <string name="points_intersections_label"> Intersección </string>
+    <string name="pic_takeSc">Captura de pantalla:</string>
+    <string name="pic_save">Guardar</string>
+    <string name="pic_open">Abrir</string>
+    <string name="pic_share">Compartir</string>
+    <string name="menu_screenshot_str">Captura de pantalla</string>
+    <string name="menu_about_str">Información</string>
+    <string name="menu_upgrade_str">Actualizar a PRO</string>
+    <string name="menu_fullscreen_str">Cambiar a pantalla completa</string>
+    <string name="menu_fullscreen_disabled">Disculpa, pero está es una característica PRO!</string>
+    <string name="about_title_lite">Function Inspector LITE 4.0\n\n</string>
+    <string name="about_title_pro">Function Inspector PRO 4.0\n\n</string>
+    <string name="about">Está aplicación es
 		desarrollada por Georg Wiese.\n
 		Traducción al español  por Mario Aguirre Bárcenas.\n
 		Por favor dame tus comentarios y reporta cualquier error!, la información de contacto esta en la configuración.\n\n
@@ -124,33 +126,31 @@
 		Versión 0.9.1:\n
 		 - Mejorar icono\n
 		 - Desplazamiento suave\n</string>
-<string name="ok">OK</string>
-<string name="pro_dialog_buy">Comprar</string>
-<string name="pro_dialog_notnow">Ahora no</string>
-<string name="pro_dialog_try">Prueba gratis</string>
-<string name="pro_dialog_title">Function Inspector PRO</string>
-<string name="pro_dialog_message">Por favor considere comparar la versión PRO de Function Inspector!\n
+    <string name="ok">OK</string>
+    <string name="pro_dialog_buy">Comprar</string>
+    <string name="pro_dialog_notnow">Ahora no</string>
+    <string name="pro_dialog_try">Prueba gratis</string>
+    <string name="pro_dialog_title">Function Inspector PRO</string>
+    <string name="pro_dialog_message">Por favor considere comparar la versión PRO de Function Inspector!\n
 										Esto es lo obtienes:\n
 										- ilimitado numero de ecuaciones\n
 										- sin anuncios, pantalla completa\n
 										- mostrar mínimos/máximos, discontinuidades, intersecciones de gráficas y puntos de inflexión\n
 										- obtener la pendiente de cualquier punto en la gráfica\n
-										- segundo color\n
 										- tres parámetros\n
 										- captura de pantalla sin marca de agua\n\n
-										Usted puede usar una prueba gratis usando el botón de abajo.\n\n
-										</string>
-<string name="buy_dialog_message">Function Inspector PRO se vende en
+										Usted puede usar una prueba gratis usando el botón de abajo.\n\n</string>
+    <string name="buy_dialog_message">Function Inspector PRO se vende en
 									en varias plataformas por lo cual puede
 									tener diferentes precios.\n\n</string>
-<string name="try_dialog_message">Usted puede probar Function Inspector PRO
+    <string name="try_dialog_message">Usted puede probar Function Inspector PRO
 									hasta que lo reinicie.\n
 									para comenzar el periodo de prueba,
 									click en el botón de abajo.</string>
-<string name="try_dialog_button">Probar</string>
-<string name="try_dialog_button_inactive">Ya usado!</string>
-<string name="welcome_dialog_title">Bienvenido a Function Inspector!</string>
-<string name="welcome_dialog_message">Gracias por descargar Function Inspector!\n
+    <string name="try_dialog_button">Probar</string>
+    <string name="try_dialog_button_inactive">Ya usado!</string>
+    <string name="welcome_dialog_title">Bienvenido a Function Inspector!</string>
+    <string name="welcome_dialog_message">Gracias por descargar Function Inspector!\n
 										como desarrollador de esta aplicación te pido que la votes
 										en el Android Maket y que dejes un comentario si gustas!\n\n
 										Si no estas satisfecho con Function Inspector, por favor
@@ -158,106 +158,106 @@
 										que encontraras en la configuración!\n\n
 										También me ayudarias mucho si te tomas unos segundos para
 										para realizar la encuesta que esta ligada en la configuración ;)\n\n
-										Georg Wiese\n\n
-									</string>
-<string name="file_error_title">ERROR</string>
-<string name="file_error_message_exists">Archivo existente!</string>
-<string name="file_error_message_unknown">Nombre de archivo no valido!</string>
-<string name="file_saved_title">Archivo guardado</string>
-<string name="file_saved_message">la captura de pantalla se guardo!</string>
-<string name="prefs_title">Configuración</string>
-<string name="prefs_pcAppearance">Apariencia</string>
-<string name="prefs_startFullscreen_title">Pantalla completa</string>
-<string name="prefs_startFullscreen_summary">Para iniciar Function Inspector PRO en modo de pantalla completa</string>
-<string name="prefs_color_title">Combinación de colores</string>
-<string name="prefs_color_summary">Elija el esquema de color deseado</string>
-<string name="prefs_pcBehavior">Comportamiento</string>
-<string name="prefs_zoomXY_title">Zoom fijo</string>
-<string name="prefs_zoomXY_summary">Marcar, si desea mantener la misma escala entre X e Y </string>
-<string name="prefs_folder_title">Carpeta Captura de pantalla </string>
-<string name="prefs_folder_summary">Aquí se guardan sus Captura de pantalla </string>
-<string name="prefs_pcDeveloper">Info. desarrollador &amp; Comentarios</string>
-<string name="prefs_survey_title">Tomar encuesta</string>
-<string name="prefs_survey_summary">Por favor toma unos segundos para llenar la encuesta</string>
-<string name="prefs_email_title">Email al desarrollador</string>
-<string name="prefs_email_summary">Envia sugerencias, reporta un error, o características deseadas</string>
-<string name="prefs_email_send">Enviar Email</string>
-<string name="prefs_email_subjectPro">Comentarios de Function Inspector PRO</string>
-<string name="prefs_email_subjectLite">Comentarios de Function Inspector LITE</string>
-<string name="prefs_blog_title">Visita el blog</string>
-<string name="prefs_blog_summary">http://georgwiese.blogspot.com</string>
-<string name="prefs_pcPro">Function inspector PRO</string>
-<string name="prefs_proPro_title">Gracias! ;)</string>
-<string name="prefs_proPro_summary">Espero disfrutes Function Inspector PRO!</string>
-<string name="prefs_proLite_title">Obtener versión PRO</string>
-<string name="prefs_proLite_summary">Haz uso de nuevas características de Function Inspector PRO!</string>
-<string name="prefs_factor_title">Factor de</string>
-<string name="prefs_factor_summary">Aquí, se puede factorizar ciertas constantes de las etiquetas.</string>
-<string name="prefs_factor_x">eje-x:</string>
-<string name="prefs_factor_y">eje-y:</string>
-<string name="mode_choose">Seleccionar modo:</string>
-<string name="mode_title">Modo:</string>
-<string name="mode_pan_name">Normal</string>
-<string name="mode_trace_name">Trazar</string>
-<string name="mode_slope_name">Pendiente</string>
-<string name="mode_trace_pairs">Pares de valores:</string>
-<string name="mode_slope_pairs">Pendientes:</string>
-<string name="mode_slope_eq_title">Ecuaciones de la tangente</string>
-<string name="mode_slope_eq_message">Estas son las ecuaciones de la tangente en x =</string>
-<string name="mode_disabled_title">Lo siento!</string>
-<string name="mode_disabled_message">Esta característica sólo se activa en Function Inspector PRO!</string>
-<string name="mode_setx">Establecer x</string>
-<string name="mode_setx_title">Ingresar valor de x:</string>
-<string name="mode_gettable">Tabla</string>
-<string name="mode_info_title"> Información de Seguimiento/Pendiente</string>
-<string name="mode_info_text">Con Function Inspector en modo Seguimieto o Pendiente,
+										Georg Wiese\n\n</string>
+    <string name="file_error_title">ERROR</string>
+    <string name="file_error_message_exists">Archivo existente!</string>
+    <string name="file_error_message_unknown">Nombre de archivo no valido!</string>
+    <string name="file_saved_title">Archivo guardado</string>
+    <string name="file_saved_message">la captura de pantalla se guardo!</string>
+    <string name="prefs_title">Configuración</string>
+    <string name="prefs_pcAppearance">Apariencia</string>
+    <string name="prefs_startFullscreen_title">Pantalla completa</string>
+    <string name="prefs_startFullscreen_summary">Para iniciar Function Inspector PRO en modo de pantalla completa</string>
+    <string name="prefs_color_title">Combinación de colores</string>
+    <string name="prefs_color_summary">Elija el esquema de color deseado</string>
+    <string name="prefs_pcBehavior">Comportamiento</string>
+    <string name="prefs_zoomXY_title">Zoom fijo</string>
+    <string name="prefs_zoomXY_summary">Marcar, si desea mantener la misma escala entre X e Y </string>
+    <string name="prefs_folder_title">Carpeta Captura de pantalla </string>
+    <string name="prefs_folder_summary">Aquí se guardan sus Captura de pantalla </string>
+    <string name="prefs_pcDeveloper">Info. desarrollador &amp; Comentarios</string>
+    <string name="prefs_survey_title">Tomar encuesta</string>
+    <string name="prefs_survey_summary">Por favor toma unos segundos para llenar la encuesta</string>
+    <string name="prefs_email_title">Email al desarrollador</string>
+    <string name="prefs_email_summary">Envia sugerencias, reporta un error, o características deseadas</string>
+    <string name="prefs_email_send">Enviar Email</string>
+    <string name="prefs_email_subjectPro">Comentarios de Function Inspector PRO</string>
+    <string name="prefs_email_subjectLite">Comentarios de Function Inspector LITE</string>
+    <string name="prefs_blog_title">Visita el blog</string>
+    <string name="prefs_blog_summary">http://georgwiese.blogspot.com</string>
+    <string name="prefs_pcPro">Function inspector PRO</string>
+    <string name="prefs_proPro_title">Gracias! ;)</string>
+    <string name="prefs_proPro_summary">Espero disfrutes Function Inspector PRO!</string>
+    <string name="prefs_proLite_title">Obtener versión PRO</string>
+    <string name="prefs_proLite_summary">Haz uso de nuevas características de Function Inspector PRO!</string>
+    <string name="prefs_factor_title">Factor de</string>
+    <string name="prefs_factor_summary">Aquí, se puede factorizar ciertas constantes de las etiquetas.</string>
+    <string name="prefs_factor_x">eje-x:</string>
+    <string name="prefs_factor_y">eje-y:</string>
+    <string name="mode_choose">Seleccionar modo:</string>
+    <string name="mode_title">Modo:</string>
+    <string name="mode_pan_name">Normal</string>
+    <string name="mode_trace_name">Trazar</string>
+    <string name="mode_slope_name">Pendiente</string>
+    <string name="mode_trace_pairs">Pares de valores:</string>
+    <string name="mode_slope_pairs">Pendientes:</string>
+    <string name="mode_slope_eq_title">Ecuaciones de la tangente</string>
+    <string name="mode_slope_eq_message">Estas son las ecuaciones de la tangente en x =</string>
+    <string name="mode_disabled_title">Lo siento!</string>
+    <string name="mode_disabled_message">Esta característica sólo se activa en Function Inspector PRO!</string>
+    <string name="mode_setx">Establecer x</string>
+    <string name="mode_setx_title">Ingresar valor de x:</string>
+    <string name="mode_gettable">Tabla</string>
+    <string name="mode_info_title"> Información de Seguimiento/Pendiente</string>
+    <string name="mode_info_text">Con Function Inspector en modo Seguimieto o Pendiente,
 								tocar la pantalla establece el valor de x de un punto de
 								cada gráfica.\n
 								Panorámico se puede lograr mediante el uso de dos dedos y
 								el zoom sigue funcionando con doble clic y los botones
 								de zoom.</string>
-<string name="mode_info_cb">No mostrar otra vez</string>
-<string name="table_title">Tabla</string>
-<string name="table_startV">Valor inicial:</string>
-<string name="table_endV">Valor final:</string>
-<string name="table_interval">Intervalo:</string>
-<string name="table_button">Mostrar tabla</string>
-<string name="table_back">Regresar</string>
-<string name="table_error_invalid">Los valores introducidos no son válidos!</string>
-<string name="table_error_startEnd">El valor final tiene que ser mayor que el valor inicial!</string>
-<string name="table_warning_dialog_title"> Advertencia </string>
-<string name="table_warning_dialog_message">Solo las tres primeras funciones serán mostradas!</string>
-<string name="table_showPoints">Añadir puntos especiales dentro del rango</string>
-<string name="table_choose">Elegir un máximo de tres funciones:</string>
-<string name="ic_title">IntegralCalc no esta instalado!</string>
-<string name="ic_text">IntegralCalc es una aplicación que también
+    <string name="mode_info_cb">No mostrar otra vez</string>
+    <string name="table_title">Tabla</string>
+    <string name="table_startV">Valor inicial:</string>
+    <string name="table_endV">Valor final:</string>
+    <string name="table_interval">Intervalo:</string>
+    <string name="table_button">Mostrar tabla</string>
+    <string name="table_back">Regresar</string>
+    <string name="table_error_invalid">Los valores introducidos no son válidos!</string>
+    <string name="table_error_startEnd">El valor final tiene que ser mayor que el valor inicial!</string>
+    <string name="table_warning_dialog_title"> Advertencia </string>
+    <string name="table_warning_dialog_message">Solo las tres primeras funciones serán mostradas!</string>
+    <string name="table_showPoints">Añadir puntos especiales dentro del rango</string>
+    <string name="table_choose">Elegir un máximo de tres funciones:</string>
+    <string name="ic_title">IntegralCalc no esta instalado!</string>
+    <string name="ic_text">IntegralCalc es una aplicación que también
 						es desarrollada por Georg Wiese que permite
 						calcular la integral definida de cualquier
 						función.\n
 						A partir de Function Inspector 2.5
 						y IntegralCalc 2.0 ambas aplicacioens
 						están vinculadas.\n</string>
-<string name="ic_market">liga Android Market:</string>
-<string name="fkt_menu_integral">IntegralCalc</string>
-<string name="fkt_menu_save">Guardar función</string>
-<string name="fkt_menu_open">Abrir funciónn</string>
-<string name="fkt_menu_manage">Administrar las funciones guardadas</string>
-<string name="fkt_menu_lite">Esta característica sólo funciona en la versión PRO!</string>
-<string name="saved_choose">Seleccionar la función:</string>
-<string name="saved_empty">No se guardaron las funciones!</string>
-<string name="saved_saved">Función guardada con exito!</string>
-<string name="saved_delete">seleccionar funciones a borrar:</string>
-<string name="saved_delete_bt">Borrar</string>
-<string name="ic_function">Función:</string>
-<string name="ic_left_border">Borde izquierdo:</string>
-<string name="ic_right_border">Borde derecho:</string>
-<string name="ic_accuracy">Precisión</string>
-<string name="ic_calculate_int">Calcular integral</string>
-<string name="ic_calculate_area">Calcular área</string>
-<string name="ic_calculating">Calculando...</string>
-<string name="ic_integral">Integral:</string>
-<string name="ic_area">Área:</string>
-<string name="ic_error_fieldsEmpty">ERROR: 	Campos vacíos!</string>
-<string name="ic_error_inputInvalid">ERROR: Entrada invalida!</string>
-<string name="ic_result">Resultado</string>
+    <string name="ic_market">liga Android Market:</string>
+    <string name="fkt_menu_integral">IntegralCalc</string>
+    <string name="fkt_menu_save">Guardar función</string>
+    <string name="fkt_menu_open">Abrir funciónn</string>
+    <string name="fkt_menu_manage">Administrar las funciones guardadas</string>
+    <string name="fkt_menu_lite">Esta característica sólo funciona en la versión PRO!</string>
+    <string name="saved_choose">Seleccionar la función:</string>
+    <string name="saved_empty">No se guardaron las funciones!</string>
+    <string name="saved_saved">Función guardada con exito!</string>
+    <string name="saved_delete">seleccionar funciones a borrar:</string>
+    <string name="saved_delete_bt">Borrar</string>
+    <string name="ic_function">Función:</string>
+    <string name="ic_left_border">Borde izquierdo:</string>
+    <string name="ic_right_border">Borde derecho:</string>
+    <string name="ic_accuracy">Precisión</string>
+    <string name="ic_calculate_int">Calcular integral</string>
+    <string name="ic_calculate_area">Calcular área</string>
+    <string name="ic_calculating">Calculando...</string>
+    <string name="ic_integral">Integral:</string>
+    <string name="ic_area">Área:</string>
+    <string name="ic_error_fieldsEmpty">ERROR: 	Campos vacíos!</string>
+    <string name="ic_error_inputInvalid">ERROR: Entrada invalida!</string>
+    <string name="ic_result">Resultado</string>
+
 </resources>

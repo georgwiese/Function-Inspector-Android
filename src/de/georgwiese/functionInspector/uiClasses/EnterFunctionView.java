@@ -223,7 +223,6 @@ public class EnterFunctionView extends LinearLayout {
 		    		ic.show();}
 		    		
 		    		*/
-				// TODO: Implement Integral
 				//uic.getParams();
 				//(new IntegralCalcDialog(mContext, et.getText().toString(), fv.getParams())).show();
 				//if (qa!=null)
@@ -235,7 +234,6 @@ public class EnterFunctionView extends LinearLayout {
 		final ActionItem save = new ActionItem();
 		save.setTitle(mContext.getResources().getString(R.string.fkt_menu_save));
 		save.setIcon(mContext.getResources().getDrawable(R.drawable.save_icon));
-		// TODO: Implement save Functions
 		/*save.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

@@ -1,13 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical">
-    <CheckBox android:id="@+id/mv_points_roots" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/points_roots" android:textColor="#000000"></CheckBox>
-    <CheckBox android:id="@+id/mv_points_extrema" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/points_extrema" android:textColor="#000000"></CheckBox>
-    <CheckBox android:id="@+id/mv_points_inflections" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/points_inflection" android:textColor="#000000"></CheckBox>
-    <CheckBox android:id="@+id/mv_points_discontinuities" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/points_discontinuities" android:textColor="#000000"></CheckBox>
-    <CheckBox android:id="@+id/mv_points_intersections" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/points_intersections" android:textColor="#000000"></CheckBox>
-    <Button android:text="@string/points_pro" android:id="@+id/mv_points_btPro" android:layout_width="fill_parent" android:layout_height="wrap_content"></Button>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <CheckBox
+        android:id="@+id/mv_points_roots"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/points_roots"
+        android:textColor="#000000" >
+    </CheckBox>
+
+    <CheckBox
+        android:id="@+id/mv_points_extrema"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/points_extrema"
+        android:textColor="#000000" >
+    </CheckBox>
+
+    <CheckBox
+        android:id="@+id/mv_points_inflections"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/points_inflection"
+        android:textColor="#000000" >
+    </CheckBox>
+
+    <CheckBox
+        android:id="@+id/mv_points_discontinuities"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/points_discontinuities"
+        android:textColor="#000000" >
+    </CheckBox>
+
+    <CheckBox
+        android:id="@+id/mv_points_intersections"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/points_intersections"
+        android:textColor="#000000" >
+    </CheckBox>
+
+    <Button
+        android:id="@+id/mv_points_btPro"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/points_pro" >
+    </Button>
+
 </LinearLayout>

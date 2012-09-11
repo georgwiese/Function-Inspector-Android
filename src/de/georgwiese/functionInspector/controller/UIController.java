@@ -139,15 +139,16 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 		
 		menuButton = (OverflowButton) ms.findViewById(R.id.menuButton);
 		//String[] options = {"About", "Pro", "Welcome", "Try", "Facebook", "Pic", "Buy", "set Param.", "set min Param.", "set max Param.", "switch LITE / PRO"};
-		// Preferences, Table, Screenshot, About, (Pro, Switch)
+		// Preferences, Table, Screenshot, About, Help, (Pro, Switch)
 		String[] optionsLite = {c.getResources().getString(R.string.prefs_title),
 				c.getResources().getString(R.string.table_title),
 				c.getResources().getString(R.string.menu_screenshot_str),
 				c.getResources().getString(R.string.menu_about_str),
+				c.getResources().getString(R.string.help_title),
 				c.getResources().getString(R.string.pro_dialog_title),
 				"Switch to PRO"
 		};
-		String[] optionsPro = {optionsLite[0], optionsLite[1], optionsLite[2], optionsLite[3]};
+		String[] optionsPro = {optionsLite[0], optionsLite[1], optionsLite[2], optionsLite[3], optionsLite[4]};
 		menuButton.buildMenu(sh.isPro?optionsPro:optionsLite, this);
 		menuButton.setMenuID(MENU_ID_MAIN);
 		
@@ -513,7 +514,7 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 	public void onMenuItemClick(int menuID, int itemID) {
 		
 		if(menuID == MENU_ID_MAIN){
-		// Preferences, Table, Screenshot, About, Pro
+			// Preferences, Table, Screenshot, About, Help, (Pro, Switch)
 		switch(itemID){
 			case 0:
 	    		Intent iPref = new Intent(c, Prefs.class);
@@ -540,8 +541,10 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 			case 3:
 				dc.showDialog(DialogController.ABOUT_DIALOG); break;
 			case 4:
-				dc.showDialog(DialogController.PRO_DIALOG); break;
+				dc.showDialog(DialogController.HELP_DIALOG); break;
 			case 5:
+				dc.showDialog(DialogController.PRO_DIALOG); break;
+			case 6:
 				sh.setIsPro(!sh.isPro);
 				((MainScreen) c).restart();
 				break;

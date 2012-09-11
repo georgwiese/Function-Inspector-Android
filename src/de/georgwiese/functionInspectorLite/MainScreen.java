@@ -2,6 +2,7 @@ package de.georgwiese.functionInspectorLite;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Random;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -52,8 +53,8 @@ import de.georgwiese.functionInspector.uiClasses.OverflowButton;
  * - package
  * - VERSION_
  * - title, icon, permission
- * - string
- * - Menu
+ * - string --> obsolete
+ * - Menu --> obsolete
  */
 
 public class MainScreen extends FragmentActivity {
@@ -62,7 +63,7 @@ public class MainScreen extends FragmentActivity {
 	public static final int VERSION_PRO=FrameView.VERSION_PRO;
 	private int version=VERSION_LITE;
 	
-	public static final boolean IS_PRO = true;
+	public static final boolean IS_PRO = false;
 	
 	// For licensing (not done currently)
 	/*
@@ -318,7 +319,27 @@ public class MainScreen extends FragmentActivity {
         if (mSplashDialog != null) {
             mSplashDialog.dismiss();
             mSplashDialog = null;
+
+    		// If First startup, show welcome dialog
+    		if (dialogController != null && stateHolder != null){
+    	        SharedPreferences sp = getSharedPreferences("data", MODE_PRIVATE);
+    	    	Random r = new Random();
+    			if (sp.getBoolean(StateHolder.KEY_FIRSTSTART, true)){
+    	        	SharedPreferences.Editor e = sp.edit();
+    	        	e.putBoolean(StateHolder.KEY_FIRSTSTART, false);
+    	        	e.commit();
+    	        	dialogController.showDialog(DialogController.WELCOME_DIALOG);
+    	        }
+    			// If LITE Version, show FB dialog (1/12), PRO dialog (1/4) or nothing (2/3) after 1.5 seconds
+    	    	else if (r.nextInt(3)==1 && !stateHolder.isPro){
+    	    		if (r.nextInt(4)==1)
+    	    			dialogController.showDialog(DialogController.FACEBOOK_DIALOG);
+    	    		else
+    	    			dialogController.showDialog(DialogController.PRO_DIALOG);
+    	    	}
+    		}
         }
+
     }
     
     /**
@@ -490,6 +511,7 @@ public class MainScreen extends FragmentActivity {
     	}
     }
     */
+    /*
     protected Dialog onCreateDialog(int id) {
     	switch (id){
     	case ABOUT_DIALOG:
@@ -646,6 +668,7 @@ public class MainScreen extends FragmentActivity {
     		return null;
     	}
     }
+    */
     
     public void resetButtons(){
     	graph.hideAllMenus();
@@ -710,10 +733,12 @@ public class MainScreen extends FragmentActivity {
     
     @Override
     public boolean onTrackballEvent(MotionEvent event) {
-    	if (!graph.onTrackballEvent(event))
-    		return super.onTrackballEvent(event);
-    	else
-    		return true;
+    	// TODO: Implement Trackball Event
+    	return super.onTrackballEvent(event);
+    	//if (!graph.onTrackballEvent(event))
+    	//	return super.onTrackballEvent(event);
+    	//else
+    	//	return true;
     }
     
     public void onButtonClick(View v){

@@ -1,33 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<string name="cancel">Abbrechen</string>
-<string name="fkt_enterFkt">Funktionen:</string>
-<string name="fkt_buyPro">Unendlich viele Funktionen in der PRO Version!</string>
-<string name="param_setParam">Parameter festlegen:</string>
-<string name="param_setMinParam">Minimum-Parameter festlegen:</string>
-<string name="param_setMaxParam">Maximum-Parameter festlegen:</string>
-<string name="points_specialPoints">Besondere Punkte:</string>
-<string name="points_roots">Nullstellen anzeigen</string>
-<string name="points_inflection">Wendepunkte anzeigen</string>
-<string name="points_extrema">Extrempunkte anzeigen</string>
-<string name="points_discontinuities">Definitionslücken anzeigen</string>
-<string name="points_intersections">Graphenschnittpunkte anzeigen</string>
-<string name="points_roots_label">Nullstelle</string>
-<string name="points_inflection_label">Wendepunkt</string>
-<string name="points_extrema_label">Extrempunkt</string>
-<string name="points_discontinuities_label">Definitionslücke</string>
-<string name="points_intersections_label">Graphenschnittpunkt</string>
-<string name="points_pro">Deaktivierte Funktionen in der PRO Version!</string>
-<string name="pic_takeSc">Screenshot aufnehmen:</string>
-<string name="pic_save">Speichern</string>
-<string name="pic_open">Öffnen</string>
-<string name="pic_share">Weiterleiten</string>
-<string name="menu_about_str">Info</string>
-<string name="menu_upgrade_str">Upgrade auf PRO</string>
-<string name="menu_screenshot_str">Screenshot</string>
-<string name="menu_fullscreen_str">Fullscreen umschalten</string>
-<string name="menu_fullscreen_disabled">Das ist ein PRO feature!</string>
-<string name="about">Function Inspector LITE v3.2\n\nDiese Anwendung wurde von
+
+    <string name="cancel">Abbrechen</string>
+    <string name="fkt_enterFkt">Funktionen:</string>
+    <string name="fkt_buyPro">Unendlich viele Funktionen in der PRO Version!</string>
+    <string name="param_setParam">Parameter festlegen:</string>
+    <string name="param_setMinParam">Minimum-Parameter festlegen:</string>
+    <string name="param_setMaxParam">Maximum-Parameter festlegen:</string>
+    <string name="points_specialPoints">Besondere Punkte:</string>
+    <string name="points_roots">Nullstellen anzeigen</string>
+    <string name="points_inflection">Wendepunkte anzeigen</string>
+    <string name="points_extrema">Extrempunkte anzeigen</string>
+    <string name="points_discontinuities">Definitionslücken anzeigen</string>
+    <string name="points_intersections">Graphenschnittpunkte anzeigen</string>
+    <string name="points_roots_label">Nullstelle</string>
+    <string name="points_inflection_label">Wendepunkt</string>
+    <string name="points_extrema_label">Extrempunkt</string>
+    <string name="points_discontinuities_label">Definitionslücke</string>
+    <string name="points_intersections_label">Graphenschnittpunkt</string>
+    <string name="points_pro">Deaktivierte Funktionen in der PRO Version!</string>
+    <string name="pic_takeSc">Screenshot aufnehmen:</string>
+    <string name="pic_save">Speichern</string>
+    <string name="pic_open">Öffnen</string>
+    <string name="pic_share">Weiterleiten</string>
+    <string name="menu_about_str">Info</string>
+    <string name="menu_upgrade_str">Upgrade auf PRO</string>
+    <string name="menu_screenshot_str">Screenshot</string>
+    <string name="menu_fullscreen_str">Fullscreen umschalten</string>
+    <string name="menu_fullscreen_disabled">Das ist ein PRO feature!</string>
+    <string name="about_title_lite">Function Inspector LITE 4.0\n\n</string>
+    <string name="about_title_pro">Function Inspector PRO 4.0\n\n</string>
+    <string name="about">Diese Anwendung wurde von
 		Georg Wiese entwickelt.\n
 		Bitten berichten Sie über Fehler und geben Sie Feedback! In den Einstellungen finden Sie Kontaktinformationen.\n\n
 		Update 3.2:\n
@@ -95,12 +98,12 @@
 		Update 0.9.1:\n
 		 - verbessertes Icon\n
 		 - schnelleres Scrollen\n</string>
-<string name="ok">OK</string>
-<string name="pro_dialog_buy">Kaufen</string>
-<string name="pro_dialog_notnow">Jetzt nicht</string>
-<string name="pro_dialog_try">Trial</string>
-<string name="pro_dialog_title">Function Inspector Pro</string>
-<string name="pro_dialog_message">Wenn Ihnen diese App gefällt, kaufen Sie bitte die PRO Version von Function Inspector!\n
+    <string name="ok">OK</string>
+    <string name="pro_dialog_buy">Kaufen</string>
+    <string name="pro_dialog_notnow">Jetzt nicht</string>
+    <string name="pro_dialog_try">Trial</string>
+    <string name="pro_dialog_title">Function Inspector Pro</string>
+    <string name="pro_dialog_message">Wenn Ihnen diese App gefällt, kaufen Sie bitte die PRO Version von Function Inspector!\n
 											Features:\n
 											- Unbegrenzte Anzahl von Funktionen\n
 											- Werbefrei, Fullscreen aktivierbar\n
@@ -108,27 +111,25 @@
 											- Anstieg-Modus freischalten\n
 											- Unabhängige x- und y-Skalierung\n
 											- Drei Parameter\n
-											- zweites Farb-Schema\n
 											- Screenshots ohne Wasserzeichen\n\n
 											Sie können die PRO-Version auch kurz testen,
-											indem Sie auf den Trial-Button klicken.\n\n
-											</string>
-<string name="facebook_dialog_title">Function Inspector auf Facebook!</string>
-<string name="facebook_dialog_message">Wenn Sie Function Inspector mögen,
+											indem Sie auf den Trial-Button klicken.\n\n</string>
+    <string name="facebook_dialog_title">Function Inspector auf Facebook!</string>
+    <string name="facebook_dialog_message">Wenn Sie Function Inspector mögen,
 										möchte ich Ihnen vorschlagen, die
 										FI Facebook-Seite zu besuchen ;)</string>
-<string name="facebook_dialog_visit">Besuchen</string>
-<string name="buy_dialog_message">Function Inspector PRO wird auf mehreren Plattformen
+    <string name="facebook_dialog_visit">Besuchen</string>
+    <string name="buy_dialog_message">Function Inspector PRO wird auf mehreren Plattformen
 									verkauft. Diese können jeweils unterschiedliche
 									Preise haben.\n\n</string>
-<string name="try_dialog_message">Sie können Function Inspector PRO einmalig
+    <string name="try_dialog_message">Sie können Function Inspector PRO einmalig
 									testen, bis Sie neustarten.\n
 									Um den Testvorgang zu starten,
 									klicken Sie den Button.</string>
-<string name="try_dialog_button">Trial starten!</string>
-<string name="try_dialog_button_inactive">Bereits benutzt!</string>
-<string name="welcome_dialog_title">Willkommen in Function Inspector!</string>
-<string name="welcome_dialog_message">Vielen Dank, dass Sie sich für Function Inspector entschieden
+    <string name="try_dialog_button">Trial starten!</string>
+    <string name="try_dialog_button_inactive">Bereits benutzt!</string>
+    <string name="welcome_dialog_title">Willkommen in Function Inspector!</string>
+    <string name="welcome_dialog_message">Vielen Dank, dass Sie sich für Function Inspector entschieden
 										haben!\n
 										Als Entwickler dieser Anwendung bitte ich Sie, sie im Market
 										zu bewerten bzw. zu kommentieren, wenn Sie mögen!\n\n
@@ -138,96 +139,93 @@
 										finden!\n\n
 										Außerdem würden Sie mit mit dem Ausfüllen der Umfrage in
 										den Einstellungen helfen ;)
-										Georg Wiese\n\n
-									</string>
-<string name="file_error_title">FEHLER</string>
-<string name="file_error_message_exists">Die Datei existiert bereits!</string>
-<string name="file_error_message_unknown">Ungültiger Dateiname!</string>
-<string name="file_saved_title">Datei gespeichert</string>
-<string name="file_saved_message">Der Screenshot wurde erfolgreich gespeichert!</string>
-
-<string name="prefs_title">Einstellungen</string>
-<string name="prefs_pcAppearance">Erscheinen</string>
-<string name="prefs_startFullscreen_title">Fullscreen-Modus</string>
-<string name="prefs_startFullscreen_summary">Wählen Sie dies aus, um Sie Function Inspector PRO im Fullscreen-Modus zu starten</string>
-<string name="prefs_color_title">Farbschema</string>
-<string name="prefs_color_summary">Wählen Sie Ihr gewünschtes Farbschema aus</string>
-<string name="prefs_pcBehavior">Verhalten</string>
-<string name="prefs_zoomXY_title">Fixierter Zoom</string>
-<string name="prefs_zoomXY_summary">Wählen Sie dies aus, um die Skalierung in x- und y-Richtung immer gleich zu lassen.</string>
-<string name="prefs_folder_title">Screenshot Ordner</string>
-<string name="prefs_folder_summary">Hier werden Ihre Screenshots gespeichert</string>
-<string name="prefs_factor_title">Ausklammern</string>
-<string name="prefs_factor_summary">Hier können Sie Konstanten aus den Bezeichnungen ausklammern.</string>
-<string name="prefs_factor_x">X-Achse:</string>
-<string name="prefs_factor_y">Y-Achse:</string>
-<string name="prefs_pcDeveloper">Entwickler Info &amp; Feedback</string>
-<string name="prefs_survey_title">Umfrage ausfüllen</string>
-<string name="prefs_survey_summary">Bitte nehmen Sie sich ein paar Sekunden Zeit, um diese Umfrage auszufüllen (in Englisch!)</string>
-<string name="prefs_email_title">Email an den Entwickler</string>
-<string name="prefs_email_summary">Bitte mailen Sie Vorschläge, Fehlerberichte, erwünschte Funktionen und Feedback</string>
-<string name="prefs_email_send">Email an den Entwickler</string>
-<string name="prefs_blog_title">Blog ansehen</string>
-<string name="prefs_facebook_title">Facebook-Seite</string>
-<string name="prefs_facebook_summary">Besuchen Sie die Function Inspector Facebook-Seite!</string>
-<string name="prefs_pcPro">Function inspector PRO</string>
-<string name="prefs_proPro_title">Viele Dank! ;)</string>
-<string name="prefs_proPro_summary">Ich hoffe Sie sind mit Function Inspector PRO zufrieden!</string>
-<string name="prefs_proLite_title">PRO-Version kaufen</string>
-<string name="prefs_proLite_summary">Nutzen Sie die zahlreichen Funktionen von Function Inspector PRO!</string>
-<string name="mode_title">Modus:</string>
-<string name="mode_pan_name">Normal</string>
-<string name="mode_trace_name">Trace</string>
-<string name="mode_trace_pairs">Wertepaare:</string>
-<string name="mode_slope_name">Anstieg</string>
-<string name="mode_slope_pairs">Anstiege:</string>
-<string name="mode_slope_eq_title">Tangentengleichungen</string>
-<string name="mode_slope_eq_message">Dies sind die Tangentengleichungen an der Stelle x=</string>
-<string name="mode_disabled_title">Entschuldigung!</string>
-<string name="mode_disabled_message">Diese Funktion ist Function Inspector PRO vorbehalten!</string>
-<string name="mode_setx">x festlegen</string>
-<string name="mode_setx_title">Geben Sie den x-Wert ein:</string>
-<string name="mode_gettable">Wertetabelle</string>
-<string name="mode_info_title">Tracing/Anstieg-Modus Info</string>
-<string name="mode_info_text">Wenn Function Inspector in den Trace/Anstieg-Modus geschaltet ist,
+										Georg Wiese\n\n</string>
+    <string name="file_error_title">FEHLER</string>
+    <string name="file_error_message_exists">Die Datei existiert bereits!</string>
+    <string name="file_error_message_unknown">Ungültiger Dateiname!</string>
+    <string name="file_saved_title">Datei gespeichert</string>
+    <string name="file_saved_message">Der Screenshot wurde erfolgreich gespeichert!</string>
+    <string name="prefs_title">Einstellungen</string>
+    <string name="prefs_pcAppearance">Erscheinen</string>
+    <string name="prefs_startFullscreen_title">Fullscreen-Modus</string>
+    <string name="prefs_startFullscreen_summary">Wählen Sie dies aus, um Sie Function Inspector PRO im Fullscreen-Modus zu starten</string>
+    <string name="prefs_color_title">Farbschema</string>
+    <string name="prefs_color_summary">Wählen Sie Ihr gewünschtes Farbschema aus</string>
+    <string name="prefs_pcBehavior">Verhalten</string>
+    <string name="prefs_zoomXY_title">Fixierter Zoom</string>
+    <string name="prefs_zoomXY_summary">Wählen Sie dies aus, um die Skalierung in x- und y-Richtung immer gleich zu lassen.</string>
+    <string name="prefs_folder_title">Screenshot Ordner</string>
+    <string name="prefs_folder_summary">Hier werden Ihre Screenshots gespeichert</string>
+    <string name="prefs_factor_title">Ausklammern</string>
+    <string name="prefs_factor_summary">Hier können Sie Konstanten aus den Bezeichnungen ausklammern.</string>
+    <string name="prefs_factor_x">X-Achse:</string>
+    <string name="prefs_factor_y">Y-Achse:</string>
+    <string name="prefs_pcDeveloper">Entwickler Info &amp; Feedback</string>
+    <string name="prefs_survey_title">Umfrage ausfüllen</string>
+    <string name="prefs_survey_summary">Bitte nehmen Sie sich ein paar Sekunden Zeit, um diese Umfrage auszufüllen (in Englisch!)</string>
+    <string name="prefs_email_title">Email an den Entwickler</string>
+    <string name="prefs_email_summary">Bitte mailen Sie Vorschläge, Fehlerberichte, erwünschte Funktionen und Feedback</string>
+    <string name="prefs_email_send">Email an den Entwickler</string>
+    <string name="prefs_blog_title">Blog ansehen</string>
+    <string name="prefs_facebook_title">Facebook-Seite</string>
+    <string name="prefs_facebook_summary">Besuchen Sie die Function Inspector Facebook-Seite!</string>
+    <string name="prefs_pcPro">Function inspector PRO</string>
+    <string name="prefs_proPro_title">Viele Dank! ;)</string>
+    <string name="prefs_proPro_summary">Ich hoffe Sie sind mit Function Inspector PRO zufrieden!</string>
+    <string name="prefs_proLite_title">PRO-Version kaufen</string>
+    <string name="prefs_proLite_summary">Nutzen Sie die zahlreichen Funktionen von Function Inspector PRO!</string>
+    <string name="mode_title">Modus:</string>
+    <string name="mode_pan_name">Normal</string>
+    <string name="mode_trace_name">Trace</string>
+    <string name="mode_trace_pairs">Wertepaare:</string>
+    <string name="mode_slope_name">Anstieg</string>
+    <string name="mode_slope_pairs">Anstiege:</string>
+    <string name="mode_slope_eq_title">Tangentengleichungen</string>
+    <string name="mode_slope_eq_message">Dies sind die Tangentengleichungen an der Stelle x=</string>
+    <string name="mode_disabled_title">Entschuldigung!</string>
+    <string name="mode_disabled_message">Diese Funktion ist Function Inspector PRO vorbehalten!</string>
+    <string name="mode_setx">x festlegen</string>
+    <string name="mode_setx_title">Geben Sie den x-Wert ein:</string>
+    <string name="mode_gettable">Wertetabelle</string>
+    <string name="mode_info_title">Tracing/Anstieg-Modus Info</string>
+    <string name="mode_info_text">Wenn Function Inspector in den Trace/Anstieg-Modus geschaltet ist,
 								legt eine Bildschirmberührung den x-Wert eines Punktes
 								auf jedem Graphen fest.\n
 								Verschieben kann man das Koordinatensystem, indem man
 								zwei Finger verwendet. Zoomen geht über einen Doppelklick
-								oder den Zoom-Buttons.
-								</string>
-<string name="mode_info_cb">Nicht noch einmal anzeigen</string>
-<string name="table_title">Wertetabelle</string>
-<string name="table_startV">Startwert:</string>
-<string name="table_endV">Endwert:</string>
-<string name="table_interval">Interval:</string>
-<string name="table_button">Wertetabelle anzeigen</string>
-<string name="table_back">Zurück</string>
-<string name="table_error_invalid">Die Eingaben sind ungültig!</string>
-<string name="table_error_startEnd">Der Endwert muss größer als der Startwert sein!</string>
-<string name="table_warning_dialog_title">Warnung</string>
-<string name="table_warning_dialog_message">Es werden nur die ersten drei Funktionen angezeigt!</string>
-<string name="table_choose">Wählen Sie bis zu drei Funktionen aus:</string>
-<string name="ic_title">IntegralCalc nicht installiert!</string>
-<string name="ic_text">IntegralCalc wurde von Georg Wiese geschrieben
+								oder den Zoom-Buttons.</string>
+    <string name="mode_info_cb">Nicht noch einmal anzeigen</string>
+    <string name="table_title">Wertetabelle</string>
+    <string name="table_startV">Startwert:</string>
+    <string name="table_endV">Endwert:</string>
+    <string name="table_interval">Interval:</string>
+    <string name="table_button">Wertetabelle anzeigen</string>
+    <string name="table_back">Zurück</string>
+    <string name="table_error_invalid">Die Eingaben sind ungültig!</string>
+    <string name="table_error_startEnd">Der Endwert muss größer als der Startwert sein!</string>
+    <string name="table_warning_dialog_title">Warnung</string>
+    <string name="table_warning_dialog_message">Es werden nur die ersten drei Funktionen angezeigt!</string>
+    <string name="table_choose">Wählen Sie bis zu drei Funktionen aus:</string>
+    <string name="ic_title">IntegralCalc nicht installiert!</string>
+    <string name="ic_text">IntegralCalc wurde von Georg Wiese geschrieben
 						und berechnet das bestimmte Integral
 						beliebiger Funktionen.\n
 						Ab Function Inspector 2.5 und IntegralCalc 2.0
 						sind beide Programme miteinander verlinkt.\n</string>
-<string name="ic_market">Android Market-Link:</string>
-<string name="fkt_menu_integral">Bestimmtes Integral</string>
-<string name="fkt_menu_save">Funktion speichern</string>
-<string name="fkt_menu_open">Funktion öffnen</string>
-<string name="fkt_menu_manage">Funktionen verwalten</string>
-<string name="fkt_menu_lite">Dieses Feature funktioniert nur in der PRO-Version!</string>
-<string name="saved_choose">Funktion auswählen:</string>
-<string name="saved_empty">Keine gespeicherten Funktionen!</string>
-<string name="saved_saved">Funktion erfolgreich gespeichert!</string>
-<string name="saved_delete">Zu löschende Funktion auswählen:</string>
-<string name="saved_delete_bt">Löschen</string>
-<string name="keyboard_advice">Wischen für mehr!</string>
-<string name="keyboard_info_title">Funktionen</string>
-<string name="keyboard_info_message">Sie können folgende Funktionen in Ihren Gleichungen benutzen:\n\n
+    <string name="ic_market">Android Market-Link:</string>
+    <string name="fkt_menu_integral">Bestimmtes Integral</string>
+    <string name="fkt_menu_save">Funktion speichern</string>
+    <string name="fkt_menu_open">Funktion öffnen</string>
+    <string name="fkt_menu_manage">Funktionen verwalten</string>
+    <string name="fkt_menu_lite">Dieses Feature funktioniert nur in der PRO-Version!</string>
+    <string name="saved_choose">Funktion auswählen:</string>
+    <string name="saved_empty">Keine gespeicherten Funktionen!</string>
+    <string name="saved_saved">Funktion erfolgreich gespeichert!</string>
+    <string name="saved_delete">Zu löschende Funktion auswählen:</string>
+    <string name="saved_delete_bt">Löschen</string>
+    <string name="keyboard_advice">Wischen für mehr!</string>
+    <string name="keyboard_info_title">Funktionen</string>
+    <string name="keyboard_info_message">Sie können folgende Funktionen in Ihren Gleichungen benutzen:\n\n
 								- sqrt(): Quadratwurzel\n
 								- abs(): Betrag\n
 								- ln(): Natürlicher Logarithmus\n
@@ -243,19 +241,18 @@
 								- tanh(): Hyperbolischer Tangens\n
 								- asinh(): Hyperbolischer Arcus-Sinus\n
 								- acosh(): Hyperbolischer Arcus-Kosinus\n
-								- atanh(): Hyperbolischer Arcus-Tangens\n
-								</string>
-	<string name="ic_function">Funktion:</string>
-	<string name="ic_left_border">Linke Grenze:</string>
-	<string name="ic_right_border">Rechte Grenze:</string>
-	<string name="ic_accuracy">Genauigkeit:</string>
-	<string name="ic_calculate_int">Berechne Integral</string>
-	<string name="ic_calculate_area">Berechne Fläche</string>
-	<string name="ic_calculating">Bitte warten...</string>
-	<string name="ic_integral">Integral:</string>
-	<string name="ic_area">Fläche:</string>
-	<string name="ic_error_fieldsEmpty">FEHLER: Felder sind leer!</string>
-	<string name="ic_error_inputInvalid">FEHLER: Eingabe ist fehlerhaft!</string>
-	<string name="ic_result">Ergebnis</string>
-	
+								- atanh(): Hyperbolischer Arcus-Tangens\n</string>
+    <string name="ic_function">Funktion:</string>
+    <string name="ic_left_border">Linke Grenze:</string>
+    <string name="ic_right_border">Rechte Grenze:</string>
+    <string name="ic_accuracy">Genauigkeit:</string>
+    <string name="ic_calculate_int">Berechne Integral</string>
+    <string name="ic_calculate_area">Berechne Fläche</string>
+    <string name="ic_calculating">Bitte warten...</string>
+    <string name="ic_integral">Integral:</string>
+    <string name="ic_area">Fläche:</string>
+    <string name="ic_error_fieldsEmpty">FEHLER: Felder sind leer!</string>
+    <string name="ic_error_inputInvalid">FEHLER: Eingabe ist fehlerhaft!</string>
+    <string name="ic_result">Ergebnis</string>
+
 </resources>

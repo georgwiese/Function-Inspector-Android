@@ -1,48 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
-NEW NEW NEW NEW NEW NEW NEW NEW
-
-	- prefs_factor_...
-	- ic_...
-	- mode_slope_eq...
-	- table_...
-	- about
- -->
 <resources>
-<string name="cancel">Cancel</string>
-<string name="app_name_pro">Function Inspector PRO</string>
-<string name="app_name_lite">Function Inspector LITE</string>
-<string name="fkt_enterFkt">Enter function:</string>
-<string name="fkt_buyPro">Unlimited number of functions in PRO version!</string>
-<string name="param_setParam">Set parameter:</string>
-<string name="param_setMinParam">Set minimum parameter:</string>
-<string name="param_setMaxParam">Set maximum parameter:</string>
-<string name="param_min">min.</string>
-<string name="param_max">max.</string>
-<string name="points_specialPoints">Special points:</string>
-<string name="points_roots">Display roots</string>
-<string name="points_inflection">Display inflection points</string>
-<string name="points_extrema">Display extrema</string>
-<string name="points_discontinuities">Display discontinuities</string>
-<string name="points_intersections">Display intersections of graphs</string>
-<string name="points_roots_label">Root</string>
-<string name="points_inflection_label">Inflection point</string>
-<string name="points_extrema_label">Local extremum</string>
-<string name="points_discontinuities_label">Discontinuity</string>
-<string name="points_intersections_label">Intersection</string>
-<string name="points_pro">Use disabled features in PRO version!</string>
-<string name="pic_takeSc">Take screenshot:</string>
-<string name="pic_save">Save</string>
-<string name="pic_open">Open</string>
-<string name="pic_share">Share</string>
-<string name="menu_about_str">Info</string>
-<string name="menu_upgrade_str">Upgrade to PRO</string>
-<string name="menu_screenshot_str">Take screenshot</string>
-<string name="menu_fullscreen_str">Toggle fullscreen</string>
-<string name="menu_fullscreen_disabled">Sorry, but this is a PRO feature!</string>
-<string name="about">Function Inspector LITE 3.2\n\nThis application was
-		developed by Georg Wiese.\n
+
+    <string name="cancel">Cancel</string>
+    <string name="app_name_pro">Function Inspector PRO</string>
+    <string name="app_name_lite">Function Inspector LITE</string>
+    <string name="fkt_enterFkt">Enter function:</string>
+    <string name="fkt_buyPro">Unlimited number of functions in PRO version!</string>
+    <string name="param_setParam">Set parameter:</string>
+    <string name="param_setMinParam">Set minimum parameter:</string>
+    <string name="param_setMaxParam">Set maximum parameter:</string>
+    <string name="param_min">min.</string>
+    <string name="param_max">max.</string>
+    <string name="points_specialPoints">Special points:</string>
+    <string name="points_roots">Display roots</string>
+    <string name="points_inflection">Display inflection points</string>
+    <string name="points_extrema">Display extrema</string>
+    <string name="points_discontinuities">Display discontinuities</string>
+    <string name="points_intersections">Display intersections of graphs</string>
+    <string name="points_roots_label">Root</string>
+    <string name="points_inflection_label">Inflection point</string>
+    <string name="points_extrema_label">Local extremum</string>
+    <string name="points_discontinuities_label">Discontinuity</string>
+    <string name="points_intersections_label">Intersection</string>
+    <string name="points_pro">Use disabled features in PRO version!</string>
+    <string name="pic_takeSc">Take screenshot:</string>
+    <string name="pic_save">Save</string>
+    <string name="pic_open">Open</string>
+    <string name="pic_share">Share</string>
+    <string name="menu_about_str">Info</string>
+    <string name="menu_upgrade_str">Upgrade to PRO</string>
+    <string name="menu_screenshot_str">Take screenshot</string>
+    <string name="menu_fullscreen_str">Toggle fullscreen</string>
+    <string name="menu_fullscreen_disabled">Sorry, but this is a PRO feature!</string>
+    <string name="about_title_lite">Function Inspector LITE 4.0\n\n</string>
+    <string name="about_title_pro">Function Inspector PRO 4.0\n\n</string>
+    <string name="about">This application was developed by Georg Wiese.\n
 		Please give some feedback and report any bugs! You can find contact information in the settings.\n\n
+		Update 4.0:\n
+		 - New Design\n
+		 - Help\n
+		 - Improved UI (Tablet support)\n
+		 - Several bug fixes\n\n
 		Update 3.2:\n
 		 - Integrated definite Integral\n
 		 - Tangent equation\n
@@ -106,38 +104,31 @@ NEW NEW NEW NEW NEW NEW NEW NEW
 		Update 0.9.1:\n
 		 - improved icon\n
 		 - smoother scrolling\n</string>
-<string name="ok">OK</string>
-<string name="pro_dialog_buy">Buy</string>
-<string name="pro_dialog_notnow">Not now</string>
-<string name="pro_dialog_try">Free trial</string>
-<string name="pro_dialog_title">Function Inspector PRO</string>
-<string name="pro_dialog_message">Please consider to buy the PRO version of Function Inspector!\n
+    <string name="ok">OK</string>
+    <string name="pro_dialog_buy">Buy</string>
+    <string name="pro_dialog_notnow">Not now</string>
+    <string name="pro_dialog_try">Free trial</string>
+    <string name="pro_dialog_title">Function Inspector PRO</string>
+    <string name="pro_dialog_message">Please consider to buy the PRO version of Function Inspector!\n
 										This is what you get:\n
 										- unlimited number of equations\n
 										- no ads, full screen\n
 										- display extrema, discontinuities, intersections of graphs and inflection points\n
 										- get the slope of the graph in any point\n
-										- second color scheme\n
 										- three parameters\n
 										- screen shot without water mark\n\n
-										You can use a free trial by clicking the button below.\n\n
-										</string>
-<string name="facebook_dialog_title">Function Inspector on Facebook!</string>
-<string name="facebook_dialog_message">If you like Function Inspector,
-										I suggest visiting the new
-										Function Inspector Facebook page ;)</string>
-<string name="facebook_dialog_visit">Visit</string>
-<string name="buy_dialog_message">Function Inspector PRO is being sold on
+										You can use a free trial by clicking the button below.\n\n</string>
+    <string name="buy_dialog_message">Function Inspector PRO is being sold on
 									various platforms which might have different
 									prices.\n\n</string>
-<string name="try_dialog_message">You can test Function Inspector PRO
+    <string name="try_dialog_message">You can test Function Inspector PRO
 									once until you restart it.\n
 									In order to start the trial period,
 									click the button below.</string>
-<string name="try_dialog_button">Start trial</string>
-<string name="try_dialog_button_inactive">Already used!</string>
-<string name="welcome_dialog_title">Welcome to Function Inspector!</string>
-<string name="welcome_dialog_message">Thank you for your decision to download Function Inspector!\n
+    <string name="try_dialog_button">Start trial</string>
+    <string name="try_dialog_button_inactive">Already used!</string>
+    <string name="welcome_dialog_title">Welcome to Function Inspector!</string>
+    <string name="welcome_dialog_message">Thank you for your decision to download Function Inspector!\n
 										As the developer of this application I ask you to rate
 										it the Android market and leave a comment if you like to!\n\n
 										If you are not satisfied with Function Inspector, please let
@@ -145,100 +136,99 @@ NEW NEW NEW NEW NEW NEW NEW NEW
 										in the settings!\n\n
 										Also, you would help me a lot if you would take a few seconds
 										to take the survey that is linked to in the settings ;)\n\n
-										Georg Wiese\n\n
-									</string>
-<string name="file_error_title">ERROR</string>
-<string name="file_error_message_exists">File already exists!</string>
-<string name="file_error_message_unknown">Invalid file name!</string>
-<string name="file_saved_title">File saved</string>
-<string name="file_saved_message">The screenshot was saved successfully!</string>
-<string name="prefs_title">Settings</string>
-<string name="prefs_pcAppearance">Appearance</string>
-<string name="prefs_startFullscreen_title">Fullscreen mode</string>
-<string name="prefs_startFullscreen_summary">Check if you want to start Function Inspector PRO in fullscreen mode</string>
-<string name="prefs_color_title">Color scheme</string>
-<string name="prefs_color_summary">Choose your desired color scheme</string>
-<string name="prefs_pcBehavior">Behavior</string>
-<string name="prefs_zoomXY_title">Fixed Zoom</string>
-<string name="prefs_zoomXY_summary">Check if you want to keep the same ratio between X and Y scale</string>
-<string name="prefs_folder_title">Screenshot folder</string>
-<string name="prefs_folder_summary">This is where your screenshots are saved</string>
-<string name="prefs_factor_title">Factor out</string>
-<string name="prefs_factor_summary">Here, you can factor out certain constants from the labels.</string>
-<string name="prefs_factor_x">x-axis:</string>
-<string name="prefs_factor_y">y-axis:</string>
-<string name="prefs_pcDeveloper">Developer info &amp; Feedback</string>
-<string name="prefs_survey_title">Take survey</string>
-<string name="prefs_survey_summary">Please take a few seconds to fill out a survey</string>
-<string name="prefs_email_title">Email developer</string>
-<string name="prefs_email_summary">Please email any suggestions, bug reports, desired features and feedback</string>
-<string name="prefs_email_send">Email developer</string>
-<string name="prefs_email_subjectPro">Function Inspector PRO Feedback</string>
-<string name="prefs_email_subjectLite">Function Inspector LITE Feedback</string>
-<string name="prefs_blog_title">Visit blog</string>
-<string name="prefs_blog_summary">http://georgwiese.blogspot.com</string>
-<string name="prefs_facebook_title">Facebook page</string>
-<string name="prefs_facebook_summary">Visit the Function Inspector Facebook page to stay tuned!</string>
-<string name="prefs_pcPro">Function inspector PRO</string>
-<string name="prefs_proPro_title">Thank you! ;)</string>
-<string name="prefs_proPro_summary">I hope you enjoy Function Inspector PRO!</string>
-<string name="prefs_proLite_title">Get PRO version</string>
-<string name="prefs_proLite_summary">Make use of plenty new features in Function Inspector PRO!</string>
-<string name="mode_title">Mode:</string>
-<string name="mode_pan_name">Normal</string>
-<string name="mode_trace_name">Trace</string>
-<string name="mode_trace_pairs">Pairs of values:</string>
-<string name="mode_slope_name">Slope</string>
-<string name="mode_slope_pairs">Slopes:</string>
-<string name="mode_slope_eq_title">Tangent equations</string>
-<string name="mode_slope_eq_message">Those are the tangent equations at x=</string>
-<string name="mode_disabled_title">Sorry!</string>
-<string name="mode_disabled_message">This feature is only enabled in Function Inspector PRO!</string>
-<string name="mode_setx">Set x</string>
-<string name="mode_setx_title">Enter x-value:</string>
-<string name="mode_gettable">Table</string>
-<string name="mode_info_title">Tracing/Slope mode info</string>
-<string name="mode_info_text">When Function Inspector is in Tracing or Slope mode,
+										Georg Wiese\n\n</string>
+    <string name="file_error_title">ERROR</string>
+    <string name="file_error_message_exists">File already exists!</string>
+    <string name="file_error_message_unknown">Invalid file name!</string>
+    <string name="file_saved_title">File saved</string>
+    <string name="file_saved_message">The screenshot was saved successfully!</string>
+    <string name="prefs_title">Settings</string>
+    <string name="prefs_pcAppearance">Appearance</string>
+    <string name="prefs_startFullscreen_title">Fullscreen mode</string>
+    <string name="prefs_startFullscreen_summary">Check if you want to start Function Inspector PRO in fullscreen mode</string>
+    <string name="prefs_color_title">Color scheme</string>
+    <string name="prefs_color_summary">Choose your desired color scheme</string>
+    <string name="prefs_pcBehavior">Behavior</string>
+    <string name="prefs_zoomXY_title">Fixed Zoom</string>
+    <string name="prefs_zoomXY_summary">Check if you want to keep the same ratio between X and Y scale</string>
+    <string name="prefs_folder_title">Screenshot folder</string>
+    <string name="prefs_folder_summary">This is where your screenshots are saved</string>
+    <string name="prefs_factor_title">Factor out</string>
+    <string name="prefs_factor_summary">Here, you can factor out certain constants from the labels.</string>
+    <string name="prefs_factor_x">x-axis:</string>
+    <string name="prefs_factor_y">y-axis:</string>
+    <string name="prefs_pcDeveloper">Developer info &amp; Feedback</string>
+    <string name="prefs_survey_title">Take survey</string>
+    <string name="prefs_survey_summary">Please take a few seconds to fill out a survey</string>
+    <string name="prefs_email_title">Email developer</string>
+    <string name="prefs_email_summary">Please email any suggestions, bug reports, desired features and feedback</string>
+    <string name="prefs_email_send">Email developer</string>
+    <string name="prefs_email_subjectPro">Function Inspector PRO Feedback</string>
+    <string name="prefs_email_subjectLite">Function Inspector LITE Feedback</string>
+    <string name="prefs_blog_title">Visit blog</string>
+    <string name="prefs_blog_summary">http://georgwiese.blogspot.com</string>
+    <string name="prefs_facebook_title">Facebook page</string>
+    <string name="prefs_facebook_summary">Visit the Function Inspector Facebook page to stay tuned!</string>
+    <string name="prefs_pcPro">Function inspector PRO</string>
+    <string name="prefs_proPro_title">Thank you! ;)</string>
+    <string name="prefs_proPro_summary">I hope you enjoy Function Inspector PRO!</string>
+    <string name="prefs_proLite_title">Get PRO version</string>
+    <string name="prefs_proLite_summary">Make use of plenty new features in Function Inspector PRO!</string>
+    <string name="mode_title">Mode:</string>
+    <string name="mode_pan_name">Normal</string>
+    <string name="mode_trace_name">Trace</string>
+    <string name="mode_trace_pairs">Pairs of values:</string>
+    <string name="mode_slope_name">Slope</string>
+    <string name="mode_slope_pairs">Slopes:</string>
+    <string name="mode_slope_eq_title">Tangent equations</string>
+    <string name="mode_slope_eq_message">Those are the tangent equations at x=</string>
+    <string name="mode_disabled_title">Sorry!</string>
+    <string name="mode_disabled_message">This feature is only enabled in Function Inspector PRO!</string>
+    <string name="mode_setx">Set x</string>
+    <string name="mode_setx_title">Enter x-value:</string>
+    <string name="mode_gettable">Table</string>
+    <string name="mode_info_title">Tracing/Slope mode info</string>
+    <string name="mode_info_text">When Function Inspector is in Tracing or Slope mode,
 								touching the screen sets the x-value of a point of
 								each graph.\n
 								Panning can be achieved by using two fingers and
 								zooming still works with double click and the
 								zoom buttons.</string>
-<string name="mode_info_cb">Do not show again</string>
-<string name="table_title">Table</string>
-<string name="table_startV">Start value:</string>
-<string name="table_endV">End value:</string>
-<string name="table_interval">Interval:</string>
-<string name="table_button">Show Table</string>
-<string name="table_back">Back</string>
-<string name="table_error_invalid">The entered values are invalid!</string>
-<string name="table_error_startEnd">The End value has to be bigger than the Start value!</string>
-<string name="table_warning_dialog_title">Warning</string>
-<string name="table_warning_dialog_message">Only the first three functions will be displayed!</string>
-<string name="table_showPoints">Add special points within range</string>
-<string name="table_choose">Choose up to three functions:</string>
-<string name="ic_title">IntegralCalc not installed!</string>
-<string name="ic_text">IntegralCalc is an application that is
+    <string name="mode_info_cb">Do not show again</string>
+    <string name="table_title">Table</string>
+    <string name="table_startV">Start value:</string>
+    <string name="table_endV">End value:</string>
+    <string name="table_interval">Interval:</string>
+    <string name="table_button">Show Table</string>
+    <string name="table_back">Back</string>
+    <string name="table_error_invalid">The entered values are invalid!</string>
+    <string name="table_error_startEnd">The End value has to be bigger than the Start value!</string>
+    <string name="table_warning_dialog_title">Warning</string>
+    <string name="table_warning_dialog_message">Only the first three functions will be displayed!</string>
+    <string name="table_showPoints">Add special points within range</string>
+    <string name="table_choose">Choose up to three functions:</string>
+    <string name="ic_title">IntegralCalc not installed!</string>
+    <string name="ic_text">IntegralCalc is an application that is
 						also made by Georg Wiese and allows you
 						to calculate the definite integral of any
 						function.\n
 						Starting with Function Inspector
 						2.5 and IntegralCalc 2.0 both applications
 						are linked.\n</string>
-<string name="ic_market">Android Market link:</string>
-<string name="fkt_menu_integral">Definite integral</string>
-<string name="fkt_menu_save">Save function</string>
-<string name="fkt_menu_open">Open function</string>
-<string name="fkt_menu_manage">Manage saved functions</string>
-<string name="fkt_menu_lite">This feature only works in the PRO version!</string>
-<string name="saved_choose">Choose function:</string>
-<string name="saved_empty">No saved functions!</string>
-<string name="saved_saved">Function successfully saved!</string>
-<string name="saved_delete">Choose function to delete:</string>
-<string name="saved_delete_bt">Delete</string>
-<string name="keyboard_advice">Slide for more!</string>
-<string name="keyboard_info_title">Functions</string>
-<string name="keyboard_info_message">Those are the functions that you can use in your equations:\n\n
+    <string name="ic_market">Android Market link:</string>
+    <string name="fkt_menu_integral">Definite integral</string>
+    <string name="fkt_menu_save">Save function</string>
+    <string name="fkt_menu_open">Open function</string>
+    <string name="fkt_menu_manage">Manage saved functions</string>
+    <string name="fkt_menu_lite">This feature only works in the PRO version!</string>
+    <string name="saved_choose">Choose function:</string>
+    <string name="saved_empty">No saved functions!</string>
+    <string name="saved_saved">Function successfully saved!</string>
+    <string name="saved_delete">Choose function to delete:</string>
+    <string name="saved_delete_bt">Delete</string>
+    <string name="keyboard_advice">Slide for more!</string>
+    <string name="keyboard_info_title">Functions</string>
+    <string name="keyboard_info_message">Those are the functions that you can use in your equations:\n\n
 								- sqrt(): Square Root\n
 								- abs(): Absolute Value\n
 								- ln(): Natural Logarithm\n
@@ -254,24 +244,98 @@ NEW NEW NEW NEW NEW NEW NEW NEW
 								- tanh(): Hyperbolic Tangent\n
 								- asinh(): Inverse Hyperbolic Sine\n
 								- acosh(): Inverse Hyperbolic Cosine\n
-								- atanh(): Inverse Hyperbolic Tangent\n
-								</string>
-	<string name="ic_function">Function:</string>
-	<string name="ic_left_border">Left border:</string>
-	<string name="ic_right_border">Right border:</string>
-	<string name="ic_accuracy">Accuracy</string>
-	<string name="ic_calculate_int">Calculate integral</string>
-	<string name="ic_calculate_area">Calculate area</string>
-	<string name="ic_calculating">Calculating...</string>
-	<string name="ic_integral">Integral:</string>
-	<string name="ic_area">Area:</string>
-	<string name="ic_error_fieldsEmpty">ERROR: Fields left empty!</string>
-	<string name="ic_error_inputInvalid">ERROR: Input is invalid!</string>
-	<string name="ic_result">Result</string>
-	
-	<!-- NEW NEW NEW NEW NEW -->
-	
-	<string name="mode_trace_advice">Tap to exit</string>
+								- atanh(): Inverse Hyperbolic Tangent\n</string>
+    <string name="ic_function">Function:</string>
+    <string name="ic_left_border">Left border:</string>
+    <string name="ic_right_border">Right border:</string>
+    <string name="ic_accuracy">Accuracy</string>
+    <string name="ic_calculate_int">Calculate integral</string>
+    <string name="ic_calculate_area">Calculate area</string>
+    <string name="ic_calculating">Calculating...</string>
+    <string name="ic_integral">Integral:</string>
+    <string name="ic_area">Area:</string>
+    <string name="ic_error_fieldsEmpty">ERROR: Fields left empty!</string>
+    <string name="ic_error_inputInvalid">ERROR: Input is invalid!</string>
+    <string name="ic_result">Result</string>
 
-	
+    <!-- NEW NEW NEW NEW NEW -->
+
+    <string name="trace_advice">Tap to exit</string>
+    <string name="table_functionValue">Function Value</string>
+    <string name="trace_disSlope">Display Slope</string>
+    <string name="reset">Reset</string>
+	<!-- 	Update 4.0:\n
+		 - New Design\n
+		 - Help\n
+		 - Improved UI (Tablet support)\n
+		 - Several bug fixes\n\n -->
+    <string name="help_title">Help</string>
+    <string name="help_message">Function Inspector is a tool that
+        						allows you to plot graphs and receive
+        						further information.
+        						\n\n
+        						--> The coordinate system\n
+        						You can navigate just as you might have expected it,
+        						by dragging the coordinate system, pinch-to-zoom and
+        						double tapping in order to zoom in. Pressing the reset
+        						Button on the bottom left will bring you back to a
+        						centered coordinate system and default zoom values.
+        						\n\n
+        						--> Menu \"Enter Function\"\n
+        						Press the \"f(x)\" icon in order to open the \"Enter
+        						Function\" menu.\n
+        						Here, you can use the custom Math keyboard to
+        						enter any equations you like. Swipe to the left
+        						on the keyboard in order to get more functions.
+        						Whatever function you entered will be plotted
+        						immediately. Also, you can use the \"More\" button
+        						next to each function to calculate the definite
+        						integral or save / open this equation (PRO feature).
+        						\n\n
+        						--> Menu \"Set parameter\"\n
+        						This is where you can set your parameters a, b and c
+        						to whatever value you like.
+        						\n\n
+        						--> Menu \"Special points\"\n
+        						In this menu, you can choose to display points like
+        						roots or extrema. Once you have done that, you can
+        						click on it on order to get the actual coordinates.
+        						\n\n
+        						--> \"Trace\" mode\n
+        						When you long press the coordinate system, you will switch
+        						into Trace mode. Here, any touch input will set the current
+        						x value which will then be used to calculate function values
+        						at this specific position. If it needs to be more exact,
+        						click on the current x value and type in any value in the
+        						dialog that will appear. If you\'re using the PRO version,
+        						you will also be able to display the current slopes as well
+        						as getting the tangent equation of each graph at that
+        						specific point. You will get back to normal mode
+        						by tapping the screen once.
+        						\n\n
+        						--> Table\n
+        						If you need a list of function (or, in PRO, slope) values,
+        						you can generate a table by selecting \"Table\" from the menu
+        						you get by clicking the More-icon on the bottom right. This
+        						should be self-explanatory.
+        						\n\n
+        						--> Screenshot and setting\n
+        						The \"Take Screenshot\" menu will let you save and share what
+        						you currently see. It will be saved to your SD card and to
+        						the folder you set in the settings. There are also more
+        						settings to discover.
+        						\n\n\n
+        						I hope you found this useful. If there are any questions left,
+        						don\'t hesitate to write an Email ;)
+        						
+        						</string>
+    <string name="facebook_dialog_title">Function Inspector on Facebook and Google+!</string>
+    <string name="facebook_dialog_message">If you like Function Inspector,
+											you should check out the profiles at Facebook and Google Plus.
+											</string>
+    <string name="facebook_dialog_visitFB">Facebook</string>
+    <string name="facebook_dialog_visitGB">Google+</string>
+    <string name="prefs_socialMedia_title">Social Media</string>
+    <string name="prefs_socialMedia_subtitle">Visit the Function Inspector profile on Facebook and Google Plus</string>
+
 </resources>

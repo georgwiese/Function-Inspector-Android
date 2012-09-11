@@ -13,6 +13,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -43,6 +44,7 @@ public class DialogController {
 	public static final int SET_MAX_DIALOG   	= 9;
 	public static final int SET_X_DIALOG     	= 10;
 	public static final int TANGENT_EQ_DIALOG	= 11;
+	public static final int HELP_DIALOG			= 12;
 	
 	
 	Context c;
@@ -51,6 +53,7 @@ public class DialogController {
 	StateHolder sh;
 	
 	DecimalFormat df1, df2;
+	Resources r;
 	
 	public DialogController(Context context, FragmentManager fragmentManager, StateHolder stateHolder) {
 		c = context;
@@ -58,6 +61,7 @@ public class DialogController {
 		sh = stateHolder;
 		df1 = new DecimalFormat("0.0##");
 		df2 = new DecimalFormat("0.00");
+		r = c.getResources();
 	}
 	
 	/**
@@ -71,12 +75,14 @@ public class DialogController {
 	public void showDialog(int id){
 		switch (id) {
 		case ABOUT_DIALOG:
+			final String title = sh.isPro ? r.getString(R.string.about_title_pro) :
+				r.getString(R.string.about_title_lite);
 	        new DialogFragment(){
 	        	@Override
 	        	public Dialog onCreateDialog(Bundle savedInstanceState) {
 	        		return new AlertDialog.Builder(c)
 	        				.setTitle(R.string.menu_about_str)
-	        				.setMessage(R.string.about)
+	        				.setMessage(title + r.getString(R.string.about))
 	        				.setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
@@ -99,6 +105,13 @@ public class DialogController {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
 									dialog.dismiss();
+								}
+							})
+	        				.setPositiveButton(R.string.help_title, new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									dialog.dismiss();
+									showDialog(HELP_DIALOG);
 								}
 							})
 	        				.create();
@@ -148,7 +161,6 @@ public class DialogController {
     						.setTitle(R.string.pro_dialog_title)
     						.setMessage(R.string.try_dialog_message)
     						.setIcon(R.drawable.icon_pro)
-    						// TODO: Implement Try Dialog Functionality
 	        				.setNegativeButton(sh.tryUsed?R.string.try_dialog_button_inactive:R.string.try_dialog_button,
 	        						new DialogInterface.OnClickListener() {
 								@Override
@@ -188,7 +200,6 @@ public class DialogController {
 		    		final Button bt_share = (Button)v.findViewById(R.id.mv_pic_share);
 		    		TextView path = (TextView)v.findViewById(R.id.mv_pic_path);
 		    		
-		    		// TODO: implement Buttons behavior (screenshot)
 		    		bt_pic.setOnClickListener(new OnClickListener() {
 		    			@Override
 		    			public void onClick(View v) {
@@ -228,7 +239,7 @@ public class DialogController {
 	        		return new AlertDialog.Builder(c)
     						.setTitle(R.string.facebook_dialog_title)
     						.setMessage(R.string.facebook_dialog_message)
-	        				.setNegativeButton(R.string.facebook_dialog_visit, new DialogInterface.OnClickListener() {
+	        				.setNegativeButton(R.string.facebook_dialog_visitFB, new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
 									Intent i = new Intent(Intent.ACTION_VIEW);
@@ -237,7 +248,7 @@ public class DialogController {
 									startActivity(i);
 								}
 							})
-	        				.setNeutralButton("Google +", new DialogInterface.OnClickListener() {
+	        				.setNeutralButton(R.string.facebook_dialog_visitGB, new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
 									Intent i = new Intent(Intent.ACTION_VIEW);
@@ -335,6 +346,25 @@ public class DialogController {
 	        				.create();
 	        	}
 	        }.show(fm, "tangent");
+	        break;
+	        
+		case HELP_DIALOG:
+			new DialogFragment(){
+	        	@Override
+	        	public Dialog onCreateDialog(Bundle savedInstanceState) {
+	        		return new AlertDialog.Builder(c)
+	        				.setTitle(R.string.help_title)
+	        				.setMessage(R.string.help_message)
+	        				.setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									dialog.dismiss();
+								}
+							})
+	        				.create();
+	        	}
+	        }.show(fm, "help");
+			break;
 			
 		default:
 			break;

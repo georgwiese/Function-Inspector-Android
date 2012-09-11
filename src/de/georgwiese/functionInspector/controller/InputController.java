@@ -8,6 +8,8 @@ import com.actionbarsherlock.internal.view.menu.MenuPopupHelper;
 import de.georgwiese.functionInspector.uiClasses.FktCanvas;
 import de.georgwiese.functionInspectorLite.R;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -90,6 +92,12 @@ public class InputController {
 			break;
 		case R.id.btTangentEq:
 			dc.showDialog(DialogController.TANGENT_EQ_DIALOG);
+			break;
+		case R.id.beta_feedback:
+			Intent i = new Intent(Intent.ACTION_VIEW);
+			i.setData(Uri.parse("http://georgwiese.blogspot.com/2012/09/fi-4-0-beta.html?m=1"));
+			c.startActivity(i);
+			break;
 		}
 		canvas.invalidate();
 	}
