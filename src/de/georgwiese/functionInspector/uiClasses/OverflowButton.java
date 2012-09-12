@@ -20,7 +20,9 @@ import com.actionbarsherlock.internal.view.menu.MenuBuilder;
 import com.actionbarsherlock.internal.view.menu.MenuPopupHelper;
 
 import de.georgwiese.functionInspector.controller.UIController;
-import de.georgwiese.functionInspectorLite.R;
+import de.georgwiese.functionInspectorLite.*;
+import de.georgwiese.functionInspectorPro.*;
+import de.georgwiese.functionInspectorUnlock.*;
 
 public class OverflowButton extends ImageButton implements View_HasStateListenerSupport, OnClickListener {
 

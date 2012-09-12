@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import de.georgwiese.functionInspectorLite.R;
+import de.georgwiese.functionInspectorLite.*;
+import de.georgwiese.functionInspectorPro.*;
+import de.georgwiese.functionInspectorUnlock.*;
 
 /**
  * Class that encapsulates an empty menu with title

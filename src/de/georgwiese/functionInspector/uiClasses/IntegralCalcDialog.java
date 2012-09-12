@@ -19,7 +19,9 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 import de.georgwiese.calculationFunktions.CalcFkts;
 import de.georgwiese.calculationFunktions.Function;
-import de.georgwiese.functionInspectorLite.R;
+import de.georgwiese.functionInspectorLite.*;
+import de.georgwiese.functionInspectorPro.*;
+import de.georgwiese.functionInspectorUnlock.*;
 
 public class IntegralCalcDialog extends Dialog {
 	final Context mContext;

@@ -2,7 +2,13 @@ package de.georgwiese.functionInspectorLite;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Random;
+
+import com.appbarbecue.AppBarbecueClient;
+import com.appbarbecue.core.BoomCodesListener;
+import com.appbarbecue.core.Feature;
+import com.google.ads.AdView;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -35,8 +41,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import de.georgwiese.calculationFunktions.Function;
-import de.georgwiese.functionInspector.FrameView;
-import de.georgwiese.functionInspector.MarketArrayAdapter;
 import de.georgwiese.functionInspector.MarketInfo;
 import de.georgwiese.functionInspector.controller.DialogController;
 import de.georgwiese.functionInspector.controller.InputController;
@@ -51,19 +55,13 @@ import de.georgwiese.functionInspector.uiClasses.OverflowButton;
 
 /*
  * - package
- * - VERSION_
+ * - VERSION_ --> obsolete
  * - title, icon, permission
  * - string --> obsolete
  * - Menu --> obsolete
  */
 
 public class MainScreen extends FragmentActivity {
-	// Version IDs
-	public static final int VERSION_LITE=FrameView.VERSION_LITE;
-	public static final int VERSION_PRO=FrameView.VERSION_PRO;
-	private int version=VERSION_LITE;
-	
-	public static final boolean IS_PRO = false;
 	
 	// For licensing (not done currently)
 	/*
@@ -79,7 +77,6 @@ public class MainScreen extends FragmentActivity {
 	
 	Context mContext;
 	
-	FrameView graph;
 	public ImageButton bt_graph, bt_param,bt_points,bt_photo;
 	
 	public static final int ABOUT_DIALOG=0;
@@ -89,6 +86,9 @@ public class MainScreen extends FragmentActivity {
 	public static final int BUY_DIALOG=4;
 	public static final int PIC_DIALOG=5;
 	public static final int FACEBOOK_DIALOG=6;
+	
+	public static final String KEY_UNLOCK_FEATURE = "proUnlock";
+	
 	private Dialog aboutDialog, buyDialog, picDialog;
 	private AlertDialog proDialog;
 	private AlertDialog welcomeDialog;
@@ -157,13 +157,16 @@ public class MainScreen extends FragmentActivity {
 			@Override
 			public void run() {
 		    	setContentView(R.layout.main);
-		    	stateHolder = new StateHolder(mContext, IS_PRO);
+		    	boolean isPro = getClass().getPackage().getName().equals("de.georgwiese.functionInspectorPro");
+		    	if(getClass().getPackage().getName().equals("de.georgwiese.functionInspectorUnlock"))
+		    		isPro |= AppBarbecueClient.getInstance().isFeatureUnlocked(KEY_UNLOCK_FEATURE);
+		    	stateHolder = new StateHolder(mContext, isPro);
 		    	DisplayMetrics dm = getResources().getDisplayMetrics();
 		    	// Determine the approximate width in inch.
 		    	//China Tablet: 5, Nexus 7 6, LGOS: 3.4
 		    	boolean isTablet = Math.max(dm.widthPixels / dm.xdpi, dm.heightPixels / dm.ydpi) > 4.5;
 		    	canvas = (FktCanvas) findViewById(R.id.fktCanvas);
-		    	dialogController = new DialogController(mContext, getSupportFragmentManager(), stateHolder);
+		    	dialogController = new DialogController(mContext, getSupportFragmentManager(), stateHolder, MainScreen.this);
 		    	pathCollector = new PathCollector(stateHolder, canvas);
 		    	uiController = new UIController(mContext, stateHolder, pathCollector, dialogController, isTablet, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
 		    	dialogController.setUIContoller(uiController);
@@ -324,19 +327,23 @@ public class MainScreen extends FragmentActivity {
     		if (dialogController != null && stateHolder != null){
     	        SharedPreferences sp = getSharedPreferences("data", MODE_PRIVATE);
     	    	Random r = new Random();
-    			if (sp.getBoolean(StateHolder.KEY_FIRSTSTART, true)){
+    	    	//((AdView) findViewById(R.id.adView)).setVisibility(View.VISIBLE);
+                if (getClass().getPackage().getName().equals("de.georgwiese.functionInspectorUnlock") &&
+                		!AppBarbecueClient.getInstance().isFeatureUnlocked(KEY_UNLOCK_FEATURE))
+    	    		dialogController.showDialog(DialogController.UNLOCK_DIALOG);
+    	    	else if (sp.getBoolean(StateHolder.KEY_FIRSTSTART, true)){
     	        	SharedPreferences.Editor e = sp.edit();
     	        	e.putBoolean(StateHolder.KEY_FIRSTSTART, false);
     	        	e.commit();
     	        	dialogController.showDialog(DialogController.WELCOME_DIALOG);
     	        }
-    			// If LITE Version, show FB dialog (1/12), PRO dialog (1/4) or nothing (2/3) after 1.5 seconds
-    	    	else if (r.nextInt(3)==1 && !stateHolder.isPro){
-    	    		if (r.nextInt(4)==1)
-    	    			dialogController.showDialog(DialogController.FACEBOOK_DIALOG);
-    	    		else
-    	    			dialogController.showDialog(DialogController.PRO_DIALOG);
-    	    	}
+				// If LITE Version, show FB dialog (1/12), PRO dialog (1/4) or nothing (2/3) after 1.5 seconds
+		    	else if (r.nextInt(3)==1 && !stateHolder.isPro){
+		    		if (r.nextInt(4)==1)
+		    			dialogController.showDialog(DialogController.FACEBOOK_DIALOG);
+		    		else
+		    			dialogController.showDialog(DialogController.PRO_DIALOG);
+		    	}
     		}
         }
 
@@ -669,7 +676,7 @@ public class MainScreen extends FragmentActivity {
     	}
     }
     */
-    
+    /*
     public void resetButtons(){
     	graph.hideAllMenus();
     	bt_graph.setBackgroundResource(bgDrawable);
@@ -700,7 +707,7 @@ public class MainScreen extends FragmentActivity {
     		break;
     	}
     }
-    
+    */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 		Log.d("Developer", "Button Clicked!");

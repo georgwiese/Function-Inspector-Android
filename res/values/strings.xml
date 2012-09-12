@@ -337,5 +337,29 @@
     <string name="facebook_dialog_visitGB">Google+</string>
     <string name="prefs_socialMedia_title">Social Media</string>
     <string name="prefs_socialMedia_subtitle">Visit the Function Inspector profile on Facebook and Google Plus</string>
+    
+    <!-- UNLOCK -->
+    <string name="unlock_title">Unlock</string>
+    <string name="unlock_message">Welcome to Function Inspector PRO Unlock. \n
+        							The purpose of this version of Function
+        							Inspector is to redeem any code you
+        							may have gotten somewhere. If you don\'t
+        							have any code, you should either install
+        							Function Inspector LITE or buy the PRO
+        							version. \n
+        							If you do have a code to redeem, click
+        							\"Unlock\" and enter it. You do not need
+        							to log in or anything other than entering
+        							your code. Note that any letters within
+        							the code are capitalized automatically. \n
+        							If you have already unlocked Function
+        							Inspector on this particular device but
+        							reinstalled the app, you can easily unlock
+        							it again by clicking \"Unlock\", \"Options\"
+        							and \"Sync features\".
+        							</string>
+    <string name="unlock_lite">Get LITE version</string>
+    <string name="unlock_pro">Buy PRO version</string>
+    <string name="unlock_unlock">Unlock</string>
 
 </resources>

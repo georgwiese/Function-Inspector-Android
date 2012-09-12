@@ -3,11 +3,12 @@ package de.georgwiese.functionInspector.controller;
 import java.util.ArrayList;
 
 import de.georgwiese.calculationFunktions.Point;
-import de.georgwiese.functionInspector.SwitchButtonSet;
 import de.georgwiese.functionInspector.uiClasses.FktCanvas;
 import de.georgwiese.functionInspector.uiClasses.Helper;
 import de.georgwiese.functionInspector.uiClasses.Point2D;
-import de.georgwiese.functionInspectorLite.R;
+import de.georgwiese.functionInspectorLite.*;
+import de.georgwiese.functionInspectorPro.*;
+import de.georgwiese.functionInspectorUnlock.*;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;

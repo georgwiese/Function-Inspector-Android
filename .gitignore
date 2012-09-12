@@ -1,2 +1,5 @@
 bin
 gen
+src/de/georgwiese/functionInspectorLite/FunctionInspectorApplication.java
+src/de/georgwiese/functionInspectorPro/FunctionInspectorApplication.java
+src/de/georgwiese/functionInspectorUnlock/FunctionInspectorApplication.java

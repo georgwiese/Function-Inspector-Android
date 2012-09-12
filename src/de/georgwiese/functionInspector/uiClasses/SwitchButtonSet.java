@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import de.georgwiese.functionInspectorLite.*;
 import de.georgwiese.functionInspectorPro.*;
+import de.georgwiese.functionInspectorUnlock.*;
 
 /**
  * This class still needs review.

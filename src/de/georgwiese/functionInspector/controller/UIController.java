@@ -47,10 +47,9 @@ import de.georgwiese.functionInspector.uiClasses.MyKeyboardView;
 import de.georgwiese.functionInspector.uiClasses.OverflowButton;
 import de.georgwiese.functionInspector.uiClasses.SwitchButtonSet;
 import de.georgwiese.functionInspector.uiClasses.SwitchButtonSet.OnStateChangedListener;
-import de.georgwiese.functionInspectorLite.MainScreen;
-import de.georgwiese.functionInspectorLite.Prefs;
-import de.georgwiese.functionInspectorLite.R;
-import de.georgwiese.functionInspectorLite.TableActivity;
+import de.georgwiese.functionInspectorLite.*;
+import de.georgwiese.functionInspectorPro.*;
+import de.georgwiese.functionInspectorUnlock.*;
 
 /**
  * Class to control verious UI Elements, for example

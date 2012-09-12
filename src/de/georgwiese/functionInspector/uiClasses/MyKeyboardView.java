@@ -24,6 +24,7 @@ import android.widget.TextView;
 import de.georgwiese.functionInspector.controller.UIController;
 import de.georgwiese.functionInspectorLite.*;
 import de.georgwiese.functionInspectorPro.*;
+import de.georgwiese.functionInspectorUnlock.*;
 
 /**
  * THIS CLASS STILL NEEDS REVIEW

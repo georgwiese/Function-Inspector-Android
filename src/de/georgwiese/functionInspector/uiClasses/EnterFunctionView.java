@@ -3,8 +3,6 @@ package de.georgwiese.functionInspector.uiClasses;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import net.londatiga.android.ActionItem;
-import net.londatiga.android.QuickAction;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -35,6 +33,7 @@ import de.georgwiese.calculationFunktions.CalcFkts;
 import de.georgwiese.functionInspector.controller.UIController;
 import de.georgwiese.functionInspectorLite.*;
 import de.georgwiese.functionInspectorPro.*;
+import de.georgwiese.functionInspectorUnlock.*;
 
 /**
  * THIS CLASS STILL NEEDS REVIEW
@@ -194,119 +193,6 @@ public class EnterFunctionView extends LinearLayout {
 		options[3] =  mContext.getResources().getString(R.string.fkt_menu_manage);
 		overflow.buildMenu(options, uic);
 		addView(overflow);
-		
-		//MORE
-		final boolean isPro=true;
-		final ActionItem dIntegral = new ActionItem();
-		dIntegral.setTitle(mContext.getResources().getString(R.string.fkt_menu_integral));
-		dIntegral.setIcon(mContext.getResources().getDrawable(R.drawable.integral_icon));
-		dIntegral.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {/*
-				Intent i = new Intent();
-				i.setClassName("de.georgwiese.integralcalculator", "de.georgwiese.integralcalculator.StartPage");
-				i.putExtra("fkt", et.getText().toString());
-				if (fv.isCallable(i))
-					mContext.startActivity(i);
-				else{
-		    		Dialog ic = new Dialog (mContext);
-		    		ic.setContentView(R.layout.ic_layout);
-		    		ic.setTitle(R.string.ic_title);
-		    		ImageButton bIc = (ImageButton) ic.findViewById(R.id.bt_ic_market);
-		    		bIc.setOnClickListener(new OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=de.georgwiese.integralcalculator"));
-							mContext.startActivity(intent);
-						}				
-					});
-		    		ic.show();}
-		    		
-		    		*/
-				//uic.getParams();
-				//(new IntegralCalcDialog(mContext, et.getText().toString(), fv.getParams())).show();
-				//if (qa!=null)
-				//	qa.dismiss();
-			}});
-		//final ActionItem iIntegral = new ActionItem();
-		//iIntegral.setTitle("Indefinite integral");
-		//iIntegral.setIcon(mContext.getResources().getDrawable(R.drawable.wa_icon));
-		final ActionItem save = new ActionItem();
-		save.setTitle(mContext.getResources().getString(R.string.fkt_menu_save));
-		save.setIcon(mContext.getResources().getDrawable(R.drawable.save_icon));
-		/*save.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (!isPro)
-					Toast.makeText(mContext, R.string.fkt_menu_lite, Toast.LENGTH_LONG).show();
-				else if (!et.getText().toString().equals("")){
-					fv.addSavedFkt(et.getText().toString());
-					Toast.makeText(mContext, R.string.saved_saved, Toast.LENGTH_LONG).show();}}
-		});*/
-		final ActionItem open = new ActionItem();
-		open.setTitle(mContext.getResources().getString(R.string.fkt_menu_open));
-		open.setIcon(mContext.getResources().getDrawable(R.drawable.open_icon));
-		/*open.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (!isPro)
-					Toast.makeText(mContext, R.string.fkt_menu_lite, Toast.LENGTH_LONG).show();
-				else{
-					final String[] empty = {mContext.getResources().getString(R.string.saved_empty)};
-					final String[] items = fv.getSavedFktsArray().length>0?fv.getSavedFktsArray():empty;
-					AlertDialog.Builder b = new AlertDialog.Builder(mContext);
-					b.setTitle(mContext.getResources().getString(R.string.saved_choose));
-					b.setItems(items, new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							if (!items[which].equals(empty[0])){
-								et.setText("");
-								et.setText(items[which]);
-							}
-							dialog.cancel();
-						}
-					});
-					b.create().show();}}});*/
-		final ActionItem manage = new ActionItem();
-		manage.setTitle(mContext.getResources().getString(R.string.fkt_menu_manage));
-		manage.setIcon(mContext.getResources().getDrawable(R.drawable.manage_icon));
-		/*manage.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (!isPro)
-					Toast.makeText(mContext, R.string.fkt_menu_lite, Toast.LENGTH_LONG).show();
-				else{
-					AlertDialog.Builder b = new AlertDialog.Builder(mContext);
-					final ArrayList<Integer> del = new ArrayList<Integer>();
-					final String[] empty = {mContext.getResources().getString(R.string.saved_empty)};
-					final String[] items = fv.getSavedFktsArray().length>0?fv.getSavedFktsArray():empty;
-					b.setTitle(R.string.saved_delete);
-					b.setMultiChoiceItems(items, null, new OnMultiChoiceClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-							if (isChecked)
-								del.add(which);
-						}
-					});
-					b.setPositiveButton(R.string.saved_delete_bt, new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							Collections.sort(del);
-							for (int i=del.size()-1;i>=0;i--)
-								fv.deleteSavedFkt(del.get(i));
-							dialog.cancel();
-						}
-					});
-					b.create().show();}}});*/
-		/*more.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				qa=new QuickAction(v);
-				qa.addActionItem(dIntegral);
-				qa.addActionItem(save);
-				qa.addActionItem(open);
-				qa.addActionItem(manage);
-				qa.show();}});*/
 	}
 	
 	public void setId(int id){

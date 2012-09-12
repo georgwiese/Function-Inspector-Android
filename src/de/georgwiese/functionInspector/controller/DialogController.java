@@ -3,11 +3,18 @@ package de.georgwiese.functionInspector.controller;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Map;
+
+import com.appbarbecue.AppBarbecueClient;
+import com.appbarbecue.core.BoomCodesListener;
+import com.appbarbecue.core.Feature;
 
 import de.georgwiese.calculationFunktions.CalcFkts;
 import de.georgwiese.calculationFunktions.Function;
-import de.georgwiese.functionInspectorLite.MainScreen;
-import de.georgwiese.functionInspectorLite.R;
+import de.georgwiese.functionInspectorLite.*;
+import de.georgwiese.functionInspectorPro.*;
+import de.georgwiese.functionInspectorUnlock.*;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -45,6 +52,7 @@ public class DialogController {
 	public static final int SET_X_DIALOG     	= 10;
 	public static final int TANGENT_EQ_DIALOG	= 11;
 	public static final int HELP_DIALOG			= 12;
+	public static final int UNLOCK_DIALOG		= 13;
 	
 	
 	Context c;
@@ -54,14 +62,17 @@ public class DialogController {
 	
 	DecimalFormat df1, df2;
 	Resources r;
+	Activity a;
 	
-	public DialogController(Context context, FragmentManager fragmentManager, StateHolder stateHolder) {
+	public DialogController(Context context, FragmentManager fragmentManager, StateHolder stateHolder, Activity activity) {
 		c = context;
 		fm = fragmentManager;
 		sh = stateHolder;
 		df1 = new DecimalFormat("0.0##");
 		df2 = new DecimalFormat("0.00");
 		r = c.getResources();
+		
+		a = activity;
 	}
 	
 	/**
@@ -336,6 +347,56 @@ public class DialogController {
 	        
 		case HELP_DIALOG:
 			alert(R.string.help_title, R.string.help_message, "help");
+			break;
+			
+		case UNLOCK_DIALOG:
+	        new DialogFragment(){
+	        	@Override
+	        	public Dialog onCreateDialog(Bundle savedInstanceState) {
+	        		AlertDialog d = new AlertDialog.Builder(c)
+	        				.setTitle(R.string.unlock_title)
+	        				.setMessage(R.string.unlock_message)
+	        				.setNegativeButton(R.string.unlock_lite, new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=de.georgwiese.functionInspectorLite"));
+									startActivity(intent);
+								}
+							})
+	        				.setNeutralButton(R.string.unlock_pro, new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=de.georgwiese.functionInspectorPro"));
+									startActivity(intent);
+								}
+							})
+	        				.setPositiveButton(R.string.unlock_unlock, new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									// showBoomCodes displays the main BoomCodes window where users can redeem, request codes
+					                // It also handles syncing features, and prompting for user sign in when required
+					                AppBarbecueClient.getInstance().showBoomCodes(a, new BoomCodesListener() {
+					                    @Override
+					                    public void onFeaturesSynced(Map<String, Feature> featureMap) {
+					                        if (featureMap.containsKey(MainScreen.KEY_UNLOCK_FEATURE) &&
+					                        		featureMap.get(MainScreen.KEY_UNLOCK_FEATURE).isEarned())
+					                            ((MainScreen) c).restart();
+					                    }
+					                    @Override
+					                    public void onFeatureUnlocked(Feature feature) {
+					                        // getId() returns the unique Id for the feature you defined on the dashboard http://boomcodes.com/developers
+					                        if(feature.getId().equals(MainScreen.KEY_UNLOCK_FEATURE))
+					                            ((MainScreen) c).restart();
+					                    }
+					                });
+								}
+							})
+	        				.create();
+	        		d.setCancelable(false);
+	        		d.setCanceledOnTouchOutside(false);
+	        		return d;
+	        	}
+	        }.show(fm, "unlock");
 			break;
 			
 		default:
