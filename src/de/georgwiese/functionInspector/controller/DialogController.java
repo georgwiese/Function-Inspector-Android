@@ -75,23 +75,9 @@ public class DialogController {
 	public void showDialog(int id){
 		switch (id) {
 		case ABOUT_DIALOG:
-			final String title = sh.isPro ? r.getString(R.string.about_title_pro) :
+			String title = sh.isPro ? r.getString(R.string.about_title_pro) :
 				r.getString(R.string.about_title_lite);
-	        new DialogFragment(){
-	        	@Override
-	        	public Dialog onCreateDialog(Bundle savedInstanceState) {
-	        		return new AlertDialog.Builder(c)
-	        				.setTitle(R.string.menu_about_str)
-	        				.setMessage(title + r.getString(R.string.about))
-	        				.setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog, int which) {
-									dialog.dismiss();
-								}
-							})
-	        				.create();
-	        	}
-	        }.show(fm, "about");
+			alert(R.string.menu_about_str, title + r.getString(R.string.about), "about");
 			break;
 			
 		case WELCOME_DIALOG:
@@ -349,25 +335,35 @@ public class DialogController {
 	        break;
 	        
 		case HELP_DIALOG:
-			new DialogFragment(){
-	        	@Override
-	        	public Dialog onCreateDialog(Bundle savedInstanceState) {
-	        		return new AlertDialog.Builder(c)
-	        				.setTitle(R.string.help_title)
-	        				.setMessage(R.string.help_message)
-	        				.setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog, int which) {
-									dialog.dismiss();
-								}
-							})
-	        				.create();
-	        	}
-	        }.show(fm, "help");
+			alert(R.string.help_title, R.string.help_message, "help");
 			break;
 			
 		default:
 			break;
 		}
+	}
+
+	public void alert(int titleID, int messageID, String tag){
+		alert(titleID, c.getResources().getString(messageID), tag);
+	}
+	
+	public void alert(int titleID, String message, String tag){
+		final int titleIDf = titleID;
+		final String messagef = message;
+		new DialogFragment(){
+        	@Override
+        	public Dialog onCreateDialog(Bundle savedInstanceState) {
+        		return new AlertDialog.Builder(c)
+        				.setTitle(titleIDf)
+        				.setMessage(messagef)
+        				.setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								dialog.dismiss();
+							}
+						})
+        				.create();
+        	}
+        }.show(fm, tag);
 	}
 }
