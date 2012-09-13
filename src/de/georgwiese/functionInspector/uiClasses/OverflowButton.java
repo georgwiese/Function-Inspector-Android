@@ -1,24 +1,16 @@
 package de.georgwiese.functionInspector.uiClasses;
 
-import android.R.color;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageButton;
-import android.widget.PopupMenu.OnMenuItemClickListener;
-
 import com.actionbarsherlock.internal.view.View_HasStateListenerSupport;
 import com.actionbarsherlock.internal.view.View_OnAttachStateChangeListener;
 import com.actionbarsherlock.internal.view.menu.MenuBuilder;
-import com.actionbarsherlock.internal.view.menu.MenuPopupHelper;
-
 import de.georgwiese.functionInspector.controller.UIController;
 import de.georgwiese.functionInspectorLite.*;
 import de.georgwiese.functionInspectorPro.*;
@@ -61,19 +53,9 @@ public class OverflowButton extends ImageButton implements View_HasStateListener
 		theme = THEME_DARK;
 		c = context;
 		setOnClickListener(this);
-		color = Color.BLACK;
+		color = Color.argb(0, 0, 0, 0);
 		setBackgroundColor(color);
 		setImageResource(R.drawable.ic_menu_moreoverflow_normal_holo_dark);
-	}
-	
-	private Drawable cropIcon(int id){
-		Drawable icon = c.getResources().getDrawable(id);
-		Rect bounds = icon.getBounds();
-		bounds.left  = 10;
-		bounds.right = 11;
-		icon.setBounds(bounds);
-
-		return icon;
 	}
 	
 	public void buildMenu(String[] options,

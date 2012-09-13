@@ -8,9 +8,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import de.georgwiese.functionInspectorLite.*;
-import de.georgwiese.functionInspectorPro.*;
-import de.georgwiese.functionInspectorUnlock.*;
 
 /**
  * This class still needs review.
@@ -69,34 +66,6 @@ public class SwitchButtonSet extends LinearLayout {
 	public SwitchButtonSet(Context context){
 		this(context, null);
 	}
-	/*
-	public void setState(int newState){
-		resetButtons();
-		if (newState<buttonCount){
-			if (newState == 0)
-				bts[0].setBackgroundResource(R.drawable.sb_left_pressed);
-			else if (newState == buttonCount-1)
-				bts[newState].setBackgroundResource(R.drawable.sb_right_pressed);
-			else
-				bts[newState].setBackgroundResource(R.drawable.sb_middle_pressed);
-			bts[newState].setTextSize(22);
-			if (state!=newState & listener!=null)
-				listener.onStateChanged(newState);
-				
-			state = newState;
-		}
-	}
-	
-	private void resetButtons(){
-		bts[0].setBackgroundResource(R.drawable.sb_left);
-		bts[buttonCount-1].setBackgroundResource(R.drawable.sb_right);
-		for (int i=1; i<buttonCount-1; i++){
-			bts[i].setBackgroundResource(R.drawable.sb_middle);
-		}
-		for (int i = 0; i<buttonCount; i++)
-			bts[i].setTextSize(16);
-	}
-	*/
 	public void setState(int newState){
 		resetButtons();
 		if (newState<buttonCount){

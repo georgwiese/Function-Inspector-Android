@@ -9,7 +9,6 @@
             android:summary="@string/prefs_startFullscreen_summary"
             android:title="@string/prefs_startFullscreen_title" >
         </CheckBoxPreference>
-<!-- 
         <ListPreference
             android:defaultValue="1"
             android:dialogTitle="@string/prefs_color_title"
@@ -18,7 +17,7 @@
             android:key="prefs_color"
             android:summary="@string/prefs_color_summary"
             android:title="@string/prefs_color_title" >
-        </ListPreference> -->
+        </ListPreference>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefs_pcBehavior" >
         <CheckBoxPreference

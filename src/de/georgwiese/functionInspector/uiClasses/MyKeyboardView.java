@@ -122,7 +122,7 @@ public class MyKeyboardView extends LinearLayout {
 		del = new ImageButton(mContext);
 		del.setImageResource(R.drawable.key_icon_del);
 		del.setBackgroundResource(R.drawable.key_light);
-		del.setLayoutParams(new LayoutParams(0, LayoutParams.WRAP_CONTENT,2));
+		del.setLayoutParams(new LayoutParams(0, LayoutParams.FILL_PARENT,2));
 		del.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -132,7 +132,7 @@ public class MyKeyboardView extends LinearLayout {
 		down = new ImageButton(mContext);
 		down.setImageResource(R.drawable.key_icon_down);
 		down.setBackgroundResource(R.drawable.key_light);
-		down.setLayoutParams(new LayoutParams(0, LayoutParams.WRAP_CONTENT,1));
+		down.setLayoutParams(new LayoutParams(0, LayoutParams.FILL_PARENT,1));
 		
 		down.setOnClickListener(new OnClickListener() {
 			@Override
@@ -143,7 +143,7 @@ public class MyKeyboardView extends LinearLayout {
 		info = new ImageButton(mContext);
 		info.setImageResource(R.drawable.key_icon_info);
 		info.setBackgroundResource(R.drawable.key_light);
-		info.setLayoutParams(new LayoutParams(0, LayoutParams.WRAP_CONTENT,1));
+		info.setLayoutParams(new LayoutParams(0, LayoutParams.FILL_PARENT,1));
 		info.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

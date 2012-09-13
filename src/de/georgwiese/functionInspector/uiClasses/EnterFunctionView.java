@@ -1,34 +1,20 @@
 package de.georgwiese.functionInspector.uiClasses;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
-import android.annotation.TargetApi;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
-import android.net.Uri;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.text.style.ClickableSpan;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import de.georgwiese.calculationFunktions.CalcFkts;
 import de.georgwiese.functionInspector.controller.UIController;
 import de.georgwiese.functionInspectorLite.*;
@@ -52,10 +38,8 @@ public class EnterFunctionView extends LinearLayout {
 	Button close;
 	TextView tv;
 	EditText et;
-	//ImageButton more;
 	OverflowButton overflow;
 	boolean refresh;
-	//QuickAction qa;
 	
 	public EnterFunctionView(Context context, MyKeyboardView keyboardView, UIController uic, String f) {
 		this(context, keyboardView, uic);
@@ -178,12 +162,6 @@ public class EnterFunctionView extends LinearLayout {
 			}
 		});
 		addView(et);
-		
-		
-		
-		//more=new ImageButton(mContext);
-		//more.setImageResource(R.drawable.more);
-		//addView(more);
 		
 		overflow = new OverflowButton(mContext, OverflowButton.THEME_LIGHT);
 		String[] options = new String[4];

@@ -41,12 +41,18 @@ import android.widget.LinearLayout;
  */
 public class FktCanvas extends LinearLayout {
 	// Color constants
-	public static final int COLOR_BACKGROUND   = Color.BLACK;
-	public static final int COLOR_AXES         = Color.WHITE;
-	public static final int COLOR_LINES        = Color.parseColor("#222222");
-	public static final int[] COLORS_GRAPHS    = {Color.RED, Color.GREEN,
+	//public static final int COLOR_BACKGROUND   = Color.BLACK;
+	//public static final int COLOR_AXES         = Color.WHITE;
+	//public static final int COLOR_LINES        = Color.parseColor("#222222");
+	public static final int[] COLOR_BACKGROUND   = {Color.BLACK, Color.WHITE};
+	public static final int[] COLOR_AXES         = {Color.WHITE, Color.BLACK};
+	public static final int[] COLOR_LINES        = {Color.parseColor("#222222"), Color.parseColor("#cccccc")};
+	public static final int[][] COLORS_GRAPHS    = {{Color.RED, Color.GREEN,
 								Color.CYAN, Color.parseColor("#FFC400"),
-								Color.parseColor("#FF00DD"), Color.BLUE, Color.YELLOW};
+								Color.parseColor("#FF00DD"), Color.BLUE, Color.YELLOW},
+								{Color.RED, Color.parseColor("#00780A"), Color.BLUE,
+									Color.parseColor("#FFC400"), Color.parseColor("#FF00DD"),
+									Color.CYAN, Color.YELLOW}};
 	public static final int COLOR_ACTIVE_POINT = Color.YELLOW;
 	public static final int COLOR_INTERSECTION = Color.GRAY;
 	public static final int COLOR_TRACELINE    = Color.argb(100, 255, 255, 255);
@@ -99,24 +105,15 @@ public class FktCanvas extends LinearLayout {
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		
-		// For testing:
-		//sh.redraw = true;
+		int colorSchema = sh.getColorSchema();
 		
-		//if (!redrawThreadStarted){
-		//	redrawThreadStarted=true;
-		//	redrawThread.start();
-		//}
 		//if(sh.redraw){
 			steps[0] = Helper.getSteps(sh.getZoom(0), sh.getFactor(0));
 			steps[1] = Helper.getSteps(sh.getZoom(1), sh.getFactor(1));
 		//}
-		//if(bZoom | bZoomDyn){
-		//	middleX=zoomToX-((zoomToX-lastMiddleX)*oldZoomX/totalZoomX);
-		//	middleY=zoomToY-((zoomToY-lastMiddleY)*oldZoomY/totalZoomY);
-		//}
 		
 		// Fill background and set paint properties
-		canvas.drawColor(COLOR_BACKGROUND);
+		canvas.drawColor(COLOR_BACKGROUND[colorSchema]);
 		paint.setTextAlign(Align.CENTER);
 		paint.setTextSize(15);
 		paint.setStyle(Style.FILL_AND_STROKE);
@@ -132,10 +129,10 @@ public class FktCanvas extends LinearLayout {
 		
 		// Draw vertical lines of coordinate system
 		for (double i = leftBorder; i <= rightBorder; i++){
-			paint.setColor(COLOR_LINES);
+			paint.setColor(COLOR_LINES[colorSchema]);
 			float x = (float) Helper.unitToPx(i*steps[0], 0, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).x;
 			canvas.drawLine(x, 0, x, getHeight(), paint);
-			paint.setColor(COLOR_AXES);
+			paint.setColor(COLOR_AXES[colorSchema]);
 			canvas.drawLine(x, (float)zero.y, x, (float)zero.y+5, paint);
 			paint.setStrokeWidth(1);
 			if (i!=0 & i%2==0){
@@ -163,24 +160,15 @@ public class FktCanvas extends LinearLayout {
 		// Draw horizontal lines of coordinate system
 		paint.setTextAlign(Align.RIGHT);
 		for (double i = topBorder; i>=bottomBorder; i--){
-			paint.setColor(COLOR_LINES);
+			paint.setColor(COLOR_LINES[colorSchema]);
 			float y = (float)Helper.unitToPx(0, i*steps[1], sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).y;
 			canvas.drawLine(0, y, getWidth(), y, paint);
-			paint.setColor(COLOR_AXES);
+			paint.setColor(COLOR_AXES[colorSchema]);
 			canvas.drawLine((float) zero.x, y, (float) zero.x-3, y, paint);
 			paint.setStrokeWidth(1);
 			if (i!=0 & i%2==0){
 				double factoredOut = i * steps[1] / sh.getFactor(1);
 				String text = df1.format(factoredOut) + Helper.getFactorString(sh.getFactor(1));
-				/*if (sh.getFactor(1) == Math.PI)
-					text=df1.format(i*steps[1]/Math.PI)+"\u03C0";
-				else if (sh.getFactor(1) == Math.PI/180)
-					text=df1.format(i*steps[1]/Math.PI*180)+"\u00B0";
-				else if (sh.getFactor(1) == Math.E)
-					text=df1.format(i*steps[1]/Math.E)+"e";
-				else
-					text=df1.format(i*steps[1]);*/
-				
 				if (zero.x <= getWidth() && zero.x>=45)
 					canvas.drawText(text, (float) (zero.x-10), y+5, paint);
 				else if (zero.x > getWidth())
@@ -194,7 +182,7 @@ public class FktCanvas extends LinearLayout {
 		}
 		
 		// Draw axes
-		paint.setColor(COLOR_AXES);
+		paint.setColor(COLOR_AXES[colorSchema]);
 		canvas.drawLine((float)zero.x, 0, (float)zero.x, getHeight(), paint);
 		canvas.drawLine(0, (float)zero.y, getWidth(), (float) zero.y, paint);
 		paint.setStyle(Style.STROKE);
@@ -210,7 +198,7 @@ public class FktCanvas extends LinearLayout {
 			ArrayList<Point> intersections = pathCollector.getIntersections();
 			
 			for (int i=0; i<paths.size();i++){
-				paint.setColor(COLORS_GRAPHS[i%COLORS_GRAPHS.length]);
+				paint.setColor(COLORS_GRAPHS[colorSchema][i%COLORS_GRAPHS[colorSchema].length]);
 				
 				paint.setStyle(Style.FILL_AND_STROKE);
 				if (sh.disRoots)
@@ -324,9 +312,9 @@ public class FktCanvas extends LinearLayout {
 						texts.add("f" + (i + 1) + "(x) = " + df2.format(yU / sh.getFactor(1)) +
 								Helper.getFactorString(sh.getFactor(1)));
 						textsS.add("f'" + (i + 1) + "(x) = " + df2.format(slope));
-						colors.add(COLORS_GRAPHS[i % COLORS_GRAPHS.length]);
+						colors.add(COLORS_GRAPHS[colorSchema][i % COLORS_GRAPHS[colorSchema].length]);
 						
-						paint.setColor(COLORS_GRAPHS[i % COLORS_GRAPHS.length]);
+						paint.setColor(COLORS_GRAPHS[colorSchema][i % COLORS_GRAPHS[colorSchema].length]);
 						paint.setStyle(Style.FILL_AND_STROKE);
 						if (!Double.isNaN(yU)){
 							canvas.drawCircle(x, y, 5, paint);

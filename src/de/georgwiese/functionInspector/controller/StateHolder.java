@@ -83,11 +83,13 @@ public class StateHolder {
 	public static String KEY_SFKTS		= "savedF";
 	public static String VAL_SFKTS_END	= "savedF_end";
 	public static String KEY_FIRSTSTART	= "firstStart";
+	public static String KEY_COLORS		= "colorSchema";
 	
 	PrefsController pc;
 	String screenshotFolder;
 	public boolean fullscreen;
 	ArrayList<String> savedFkts;
+	int colorSchema;
 	
 	public StateHolder(Context c, boolean isPro){
 		pc = new PrefsController(c);
@@ -168,6 +170,7 @@ public class StateHolder {
         		savedFkts.add(value);
         	else break;
         }
+        colorSchema = isPro? pc.getPrefsInt(KEY_COLORS, 0) : 0;
 	}
 	
 	public void reset(){
@@ -387,6 +390,10 @@ public class StateHolder {
 	public void deleteSavedFkt(int index){
 		if (index<savedFkts.size())
 			savedFkts.remove(index);
+	}
+	
+	public int getColorSchema() {
+		return colorSchema;
 	}
 	
 	public void saveCurrentState(){

@@ -43,19 +43,17 @@ public class Prefs extends PreferenceActivity {
 				return true;
 			}
 		});
-		/*
 		Preference color = findPreference("prefs_color");
 		color.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 			
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				SharedPreferences.Editor editor = prefs.edit();
-				editor.putString("prefs_color", (String) newValue);
+				editor.putInt(StateHolder.KEY_COLORS, Integer.parseInt((String) newValue));
 				editor.commit();
 				return true;
 			}
 		});
-		*/
 		Preference zoomXY = findPreference("prefs_zoomXY");
 		zoomXY.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 			@Override
@@ -205,7 +203,7 @@ public class Prefs extends PreferenceActivity {
 			startFullscreen.setEnabled(false);
 			zoomXY.setDefaultValue(false);
 			zoomXY.setEnabled(false);
-			//color.setEnabled(false);
+			color.setEnabled(false);
 		}
 		
 	}

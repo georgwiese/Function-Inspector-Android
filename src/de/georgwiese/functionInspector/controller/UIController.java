@@ -404,7 +404,7 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 		}
 		for (int i=0; i<efv.size(); i++){
 			efv.get(i).setNr(i+1);
-			efv.get(i).setColor(FktCanvas.COLORS_GRAPHS[i % FktCanvas.COLORS_GRAPHS.length]);
+			efv.get(i).setColor(FktCanvas.COLORS_GRAPHS[sh.getColorSchema()][i % FktCanvas.COLORS_GRAPHS[sh.getColorSchema()].length]);
 		}
 		llEfvs.removeAllViews();
 		for (int i = 0; i < efv.size(); i++){
