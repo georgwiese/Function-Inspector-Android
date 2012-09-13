@@ -161,7 +161,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="#00ff00"
-        android:gravity="right"
+        android:gravity="center_horizontal"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -387,6 +387,16 @@
 	        
 	    </LinearLayout>
 
+            <com.google.ads.AdView
+                android:id="@+id/adView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                ads:adSize="BANNER"
+                ads:adUnitId="a14cf957c728954"
+                ads:loadAdOnCreate="true"
+                android:gravity="center"
+                android:visibility="visible" />
+
         <de.georgwiese.functionInspector.uiClasses.MyKeyboardView
             android:id="@+id/keyboardView"
             android:layout_width="fill_parent"
@@ -405,16 +415,6 @@
             android:background="#000000"
             android:gravity="right|center_vertical"
             android:orientation="horizontal" >
-
-            <com.google.ads.AdView
-                android:id="@+id/adView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                ads:adSize="BANNER"
-                ads:adUnitId="a14cf957c728954"
-                ads:loadAdOnCreate="true"
-                android:gravity="center"
-                android:visibility="gone" />
 
             <Button
                 android:id="@+id/center_button"

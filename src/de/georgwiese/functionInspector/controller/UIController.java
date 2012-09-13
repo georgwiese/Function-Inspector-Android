@@ -130,6 +130,7 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 		traceTv   = (TextView) ms.findViewById(R.id.mode_trace_tv);
 		kv   = (MyKeyboardView) ms.findViewById(R.id.keyboardView);
 		ad   = (AdView) ms.findViewById(R.id.adView);
+		ad.setVisibility(sh.isPro? View.GONE : View.VISIBLE);
 		
 		//Initialize evfs
 		efv  = new ArrayList<EnterFunctionView>();
@@ -355,6 +356,7 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 			if (optionsBar.getVisibility() == View.VISIBLE){
 				optionsBar.setVisibility(View.GONE);
 				optionsBar.startAnimation(optionsOut);
+				ad.setVisibility(View.GONE);
 			}
 		}
 		else{
@@ -362,6 +364,7 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 			if (optionsBar.getVisibility() != View.VISIBLE){
 				optionsBar.setVisibility(View.VISIBLE);
 				optionsBar.startAnimation(optionsIn);
+				ad.setVisibility(sh.isPro? View.GONE: View.VISIBLE);
 			}
 		}
 	}

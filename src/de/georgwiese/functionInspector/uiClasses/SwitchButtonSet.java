@@ -3,6 +3,7 @@ package de.georgwiese.functionInspector.uiClasses;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +18,9 @@ import de.georgwiese.functionInspectorUnlock.*;
  *
  */
 public class SwitchButtonSet extends LinearLayout {
+
+	public static final int COLOR_NORMAL = Color.parseColor("#1c3640");
+	public static final int COLOR_ACTIVE = Color.parseColor("#3691b3");
 
 	int buttonCount = 3;
 	int state;
@@ -33,13 +37,17 @@ public class SwitchButtonSet extends LinearLayout {
 		state = 0;
 		setOrientation(HORIZONTAL);
 		setGravity(Gravity.CENTER);
+		setPadding(0, 0, 0, 0);
 		bts = new Button[buttonCount];
 		View[] ph = new View[buttonCount-1];
 		for (int i=0; i<buttonCount; i++){
 			final int i2=i;
 			bts[i] = new Button(context);
 			bts[i].setLayoutParams(new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1));
-			bts[i].setMinWidth(50);
+			bts[i].setMinWidth((int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+					80, context.getResources().getDisplayMetrics()));
+			bts[i].setMinHeight((int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+					40, context.getResources().getDisplayMetrics()));
 			bts[i].setGravity(Gravity.CENTER);
 			bts[i].setPadding(0, 0, 0, 0);
 			bts[i].setTextColor(Color.BLACK);
@@ -51,6 +59,7 @@ public class SwitchButtonSet extends LinearLayout {
 			if (i<buttonCount-1){
 				ph[i] = new View(context);
 				ph[i].setLayoutParams(new LayoutParams(2,2));
+				addView(ph[i]);
 			}
 		}
 		
@@ -60,7 +69,7 @@ public class SwitchButtonSet extends LinearLayout {
 	public SwitchButtonSet(Context context){
 		this(context, null);
 	}
-	
+	/*
 	public void setState(int newState){
 		resetButtons();
 		if (newState<buttonCount){
@@ -86,6 +95,36 @@ public class SwitchButtonSet extends LinearLayout {
 		}
 		for (int i = 0; i<buttonCount; i++)
 			bts[i].setTextSize(16);
+	}
+	*/
+	public void setState(int newState){
+		resetButtons();
+		if (newState<buttonCount){
+			if (newState == 0)
+				bts[0].setBackgroundColor(COLOR_ACTIVE);
+			else if (newState == buttonCount-1)
+				bts[newState].setBackgroundColor(COLOR_ACTIVE);
+			else
+				bts[newState].setBackgroundColor(COLOR_ACTIVE);
+			bts[newState].setTextSize(TypedValue.COMPLEX_UNIT_DIP, 28);
+			bts[newState].setTextColor(Color.BLACK);
+			if (state!=newState & listener!=null)
+				listener.onStateChanged(newState);
+				
+			state = newState;
+		}
+	}
+	
+	private void resetButtons(){
+		bts[0].setBackgroundColor(COLOR_NORMAL);
+		bts[buttonCount-1].setBackgroundColor(COLOR_NORMAL);
+		for (int i=1; i<buttonCount-1; i++){
+			bts[i].setBackgroundColor(COLOR_NORMAL);
+		}
+		for (int i = 0; i<buttonCount; i++){
+			bts[i].setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
+			bts[i].setTextColor(Color.WHITE);
+		}
 	}
 	
 	public int getState(){

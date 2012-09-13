@@ -44,7 +44,9 @@ public class FktCanvas extends LinearLayout {
 	public static final int COLOR_BACKGROUND   = Color.BLACK;
 	public static final int COLOR_AXES         = Color.WHITE;
 	public static final int COLOR_LINES        = Color.parseColor("#222222");
-	public static final int[] COLORS_GRAPHS    = {Color.RED, Color.GREEN, Color.CYAN};
+	public static final int[] COLORS_GRAPHS    = {Color.RED, Color.GREEN,
+								Color.CYAN, Color.parseColor("#FFC400"),
+								Color.parseColor("#FF00DD"), Color.BLUE, Color.YELLOW};
 	public static final int COLOR_ACTIVE_POINT = Color.YELLOW;
 	public static final int COLOR_INTERSECTION = Color.GRAY;
 	public static final int COLOR_TRACELINE    = Color.argb(100, 255, 255, 255);
@@ -73,8 +75,8 @@ public class FktCanvas extends LinearLayout {
 		df1 = new DecimalFormat("0.0##");
 		df2 = new DecimalFormat("0.00");
 		
-		// Anything 40 dips from the bottom edge is obscured by the bar
-		borderBottom = 40 * context.getResources().getDisplayMetrics().density;
+		// Anything 50 dips from the bottom edge is obscured by the bar
+		borderBottom = 50 * context.getResources().getDisplayMetrics().density;
 		
 		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB)
 			setLayerType(LAYER_TYPE_SOFTWARE, null);
