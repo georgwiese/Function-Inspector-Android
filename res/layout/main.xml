@@ -406,6 +406,7 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
+            android:onClick="onButtonClick"
             android:background="#888888" />
 
         <LinearLayout
@@ -413,14 +414,15 @@
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:background="#000000"
+            android:paddingLeft="5dp"
             android:gravity="right|center_vertical"
             android:orientation="horizontal" >
 
-            <Button
+            <ImageView
                 android:id="@+id/center_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/reset"
+                android:background="@drawable/bt_reset"
                 android:onClick="onButtonClick" />
 
             <Button
@@ -428,7 +430,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="4.0 Beta Feedback"
+                android:visibility="gone"
                 android:onClick="onButtonClick" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <com.google.ads.AdView
+                android:id="@+id/adView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                ads:adSize="BANNER"
+                ads:adUnitId="a14cf957c728954"
+                ads:loadAdOnCreate="true"
+                android:gravity="center"
+                android:visibility="visible" />
 
             <View
                 android:layout_width="0dp"
@@ -477,6 +495,7 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
+            android:onClick="onButtonClick"
             android:background="#555555" />
     </de.georgwiese.functionInspector.uiClasses.FktCanvas>
 

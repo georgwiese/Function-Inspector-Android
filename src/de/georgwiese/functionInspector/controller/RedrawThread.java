@@ -41,11 +41,8 @@ public class RedrawThread extends Thread{
 	public void run() {
 		while (true){
 			startTime = AnimationUtils.currentAnimationTimeMillis();
-			if(sh.redraw){ // && !(bZoom | bZoomDyn)){//|bZoom|bZoomDyn){
+			if(sh.redraw){
 				sh.redraw = false;
-				Point2D _lastOrigin = Helper.unitToPx(0, 0, sh.getZoom(), sh.getMiddle(), canvas.getWidth(), canvas.getHeight());
-				double _totalZoomX = sh.getZoom(0);
-				double _totalZoomY = sh.getZoom(0);
 				
 				double[] _zoomFactor = sh.getZoom().clone();
 				double[] _middle = sh.getMiddle().clone();
@@ -53,14 +50,14 @@ public class RedrawThread extends Thread{
 				int _height = canvas.getHeight();
 				// Clone fkts
 				ArrayList<Function> _fkts = new ArrayList<Function>();
-				for (Function f:sh.getFkts()){
-					if (f == null)
-						_fkts.add(null);
-					else
-						_fkts.add(f.clone());
+				synchronized(sh.getFkts()){
+					for (Function f:sh.getFkts()){
+						if (f == null)
+							_fkts.add(null);
+						else
+							_fkts.add(f.clone());
+					}
 				}
-				//minX = pxToUnitX(-50,_totalZoomX,_middleX);
-				//maxX = pxToUnitX(getWidth()+50,_zoomFactorX,_middleX);
 				
 				ArrayList<Path> helperPaths = new ArrayList<Path>();
 				

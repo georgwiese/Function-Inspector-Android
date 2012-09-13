@@ -42,6 +42,7 @@ public class MyKeyboardView extends LinearLayout {
 	LinearLayout[] pages = new LinearLayout[2];
 	LinearLayout[][] ll_hor= new LinearLayout[2][4];
 	Button[][] buttons1 = new Button[7][4];
+	View[][] ph1 = new View[6][4];
 	Button[][] buttons2 = new Button[4][4];
 	ImageButton del, down, info;
 	EditText et;
@@ -85,6 +86,13 @@ public class MyKeyboardView extends LinearLayout {
 		
 		setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		setOrientation(VERTICAL);
+		setBackgroundColor(Color.BLACK);
+		// Do nothing on click, not even trigger the onClick() method
+		// of the underlying view...
+		setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {}
+		});
 		
 		if (mContext.getSharedPreferences("data", Activity.MODE_PRIVATE).getBoolean("showKeyboardAdvice", true)){
 			advice = new TextView(mContext);
@@ -115,6 +123,7 @@ public class MyKeyboardView extends LinearLayout {
 			for (int i=0;i<4;i++){
 				ll_hor[j][i]=new LinearLayout(context);
 				ll_hor[j][i].setOrientation(HORIZONTAL);
+				//ll_hor[j][i].setPadding(5, 0, 5, 5);
 				ll_hor[j][i].setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 				pages[j].addView(ll_hor[j][i]);
 			}
@@ -160,6 +169,11 @@ public class MyKeyboardView extends LinearLayout {
 
 		for (int x=0; x<7;x++){
 			for (int y=0; y<4; y++){
+				if (x != 0){
+					ph1[x-1][y] = new View(mContext);
+					ph1[x-1][y].setLayoutParams(new LayoutParams(5, 0));
+				}
+				
 				final int x2=x;
 				final int y2=y;
 				buttons1[x][y]= new Button(context){
@@ -230,6 +244,8 @@ public class MyKeyboardView extends LinearLayout {
 		for (int y=0; y<4; y++){
 			for (int x=0; x<7;x++){
 				if (!((x==5) && (y==0))){
+					//if (x != 0)
+					//	ll_hor[0][y].addView(ph1[x-1][y]);
 					if (x==6 && y==0)
 						ll_hor[0][y].addView(del);
 					else if (x==6 && y==3)

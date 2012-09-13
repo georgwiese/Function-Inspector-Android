@@ -82,7 +82,7 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 	LinearLayout llButtons, llTrace, menuContainer, optionsBar, llEfvs, llSlope;
 	TextView traceTv;
 	MyKeyboardView kv;
-	AdView ad;
+	AdView ad, ad2;
 	ArrayList<EnterFunctionView> efv;
 	SwitchButtonSet menuParamSbs;
 	Button menuParamMin, menuParamValue, menuParamMax, menuFktPro, menuPointsPro, disTangentEq;
@@ -131,11 +131,15 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 		kv   = (MyKeyboardView) ms.findViewById(R.id.keyboardView);
 		ad   = (AdView) ms.findViewById(R.id.adView);
 		ad.setVisibility(sh.isPro? View.GONE : View.VISIBLE);
+		ad2   = (AdView) ms.findViewById(R.id.adView2);
+		ad2.setVisibility(sh.isPro? View.GONE : View.VISIBLE);
 		
 		//Initialize evfs
 		efv  = new ArrayList<EnterFunctionView>();
-		for (Function f: sh.getFkts())
-			efv.add(new EnterFunctionView(c, kv, this, f.getString()));
+		synchronized (sh.getFkts()) {
+			for (Function f: sh.getFkts())
+				efv.add(new EnterFunctionView(c, kv, this, f.getString()));
+		}
 		
 		menuButton = (OverflowButton) ms.findViewById(R.id.menuButton);
 		//String[] options = {"About", "Pro", "Welcome", "Try", "Facebook", "Pic", "Buy", "set Param.", "set min Param.", "set max Param.", "switch LITE / PRO"};
@@ -217,9 +221,9 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 	
 	public void setParam(double value){
 		sh.setParam(menuParamSbs.getState(), value);
-		if (value < sh.getMinParams()[menuParamSbs.getState()])
+		if (value < sh.getMinParam(menuParamSbs.getState()))
 			sh.setMinParam(menuParamSbs.getState(), value);
-		if (value > sh.getMaxParams()[menuParamSbs.getState()])
+		if (value > sh.getMaxParam(menuParamSbs.getState()))
 			sh.setMaxParam(menuParamSbs.getState(), value);
 		updateMenuParam(true);
 	}
@@ -230,7 +234,7 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 	}
 	
 	public void setCurrentX(double value){
-		sh.currentX = value;
+		sh.setCurrentX(value);
 		updateTraceTv();
 		sh.moveDyn(value, sh.getMiddle(1));
 		fktCanvas.invalidate();
@@ -245,11 +249,11 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 		int id = newState;
 		menuParamValue.setText(paramNames[id] + ":\n" + df2.format(sh.getParams()[id]));
 		if(complete){
-			menuParamMin.setText("min. " + paramNames[id] + ":\n" + df2.format(sh.getMinParams()[id]));
-			menuParamMax.setText("max. " + paramNames[id] + ":\n" + df2.format(sh.getMaxParams()[id]));
+			menuParamMin.setText("min. " + paramNames[id] + ":\n" + df2.format(sh.getMinParam(id)));
+			menuParamMax.setText("max. " + paramNames[id] + ":\n" + df2.format(sh.getMaxParam(id)));
 			sbChangedByClick = true;
-			menuParamSb.setProgress((int)Math.round(((sh.getParams()[id] - sh.getMinParams()[id]) /
-					(sh.getMaxParams()[id] - sh.getMinParams()[id])) * menuParamSb.getMax()));
+			menuParamSb.setProgress((int)Math.round(((sh.getParams()[id] - sh.getMinParam(id)) /
+					(sh.getMaxParam(id) - sh.getMinParam(id))) * menuParamSb.getMax()));
 			boolean enabled = (newState == 0) || sh.isPro;
 			menuParamMax.setEnabled(enabled);
 			menuParamMin.setEnabled(enabled);
@@ -357,6 +361,7 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 				optionsBar.setVisibility(View.GONE);
 				optionsBar.startAnimation(optionsOut);
 				ad.setVisibility(View.GONE);
+				ad2.setVisibility(View.GONE);
 			}
 		}
 		else{
@@ -364,7 +369,10 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 			if (optionsBar.getVisibility() != View.VISIBLE){
 				optionsBar.setVisibility(View.VISIBLE);
 				optionsBar.startAnimation(optionsIn);
-				ad.setVisibility(sh.isPro? View.GONE: View.VISIBLE);
+				if(!sh.isPro){
+					ad.setVisibility(!(isTablet && isLandscape)? View.VISIBLE : View.GONE);
+					ad2.setVisibility((isTablet && isLandscape)? View.VISIBLE : View.GONE);
+				}
 			}
 		}
 	}
@@ -404,7 +412,7 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 		}
 		for (int i=0; i<efv.size(); i++){
 			efv.get(i).setNr(i+1);
-			efv.get(i).setColor(FktCanvas.COLORS_GRAPHS[sh.getColorSchema()][i % FktCanvas.COLORS_GRAPHS[sh.getColorSchema()].length]);
+			efv.get(i).setColor(FktCanvas.COLORS_GRAPHS[sh.getColorScheme()][i % FktCanvas.COLORS_GRAPHS[sh.getColorScheme()].length]);
 		}
 		llEfvs.removeAllViews();
 		for (int i = 0; i < efv.size(); i++){
@@ -451,7 +459,7 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 	}
 	
 	public void updateTraceTv(){
-		traceTv.setText("x = " + df2.format(sh.currentX / sh.getFactor(0)) +
+		traceTv.setText("x = " + df2.format(sh.getCurrentX() / sh.getFactor(0)) +
 				Helper.getFactorString(sh.getFactor(0)));
 	}
 	
@@ -461,6 +469,9 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 	}
 	
 	public void onConfigChange(){
+		// TODO: This is dirty! Find a better way to get new width.
+		int newWidth = fktCanvas.getHeight();
+		
 		boolean first = true;
 		int id = -1;
 		for(int i=0; i<menus.length; i++){
@@ -474,9 +485,13 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 				dividers[i].setBackgroundColor(HIGHLIGHT_COLOR);
 			}
 		}
+
+		if(!sh.isPro){
+			ad.setVisibility(!(isTablet && isLandscape)? View.VISIBLE : View.GONE);
+			ad2.setVisibility((isTablet && isLandscape)? View.VISIBLE : View.GONE);
+		}
 		
-		// TODO: This is dirty! Find a better way to get new width.
-		updateMenuWidth(id, fktCanvas.getHeight());
+		updateMenuWidth(id, newWidth);
 	}
 
 	// Interface for Seekbar in Parameter Menu
@@ -486,8 +501,8 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 		if (!sbChangedByClick){
 			int id = menuParamSbs.getState();
 			double value = (double)progress / (double)seekBar.getMax() *
-					(sh.getMaxParams()[id] - sh.getMinParams()[id]) +
-					sh.getMinParams()[id];
+					(sh.getMaxParam(id) - sh.getMinParam(id)) +
+					sh.getMinParam(id);
 			sh.setParam(menuParamSbs.getState(), value);
 			updateMenuParam(false);
 			sh.redraw = true;
@@ -527,15 +542,17 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 				Intent iTable = new Intent(c, TableActivity.class);
 				iTable.putExtra(StateHolder.KEY_ISPRO, sh.isPro);
 				ArrayList<Function> fkts = sh.getFkts();
-				for (int j = 0 ; j<=fkts.size(); j++){
-					if (j==fkts.size())
-						iTable.putExtra("fkt"+Integer.toString(j), "end");
-					else
-						iTable.putExtra("fkt"+Integer.toString(j), fkts.size()>0 && fkts.get(j)!=null?fkts.get(j).getString():"empty");
+				synchronized (fkts) {
+					for (int j = 0 ; j<=fkts.size(); j++){
+						if (j==fkts.size())
+							iTable.putExtra("fkt"+Integer.toString(j), "end");
+						else
+							iTable.putExtra("fkt"+Integer.toString(j), fkts.size()>0 && fkts.get(j)!=null?fkts.get(j).getString():"empty");
+					}
 				}
-				iTable.putExtra("paramA", sh.getParams()[0]);
-				iTable.putExtra("paramB", sh.getParams()[1]);
-				iTable.putExtra("paramC", sh.getParams()[2]);
+				iTable.putExtra("paramA", sh.getParam(0));
+				iTable.putExtra("paramB", sh.getParam(1));
+				iTable.putExtra("paramC", sh.getParam(2));
 				c.startActivity(iTable);
 				break;
 			case 2:

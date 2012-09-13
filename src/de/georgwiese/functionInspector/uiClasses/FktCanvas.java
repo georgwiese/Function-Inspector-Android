@@ -105,7 +105,7 @@ public class FktCanvas extends LinearLayout {
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		
-		int colorSchema = sh.getColorSchema();
+		int colorScheme = sh.getColorScheme();
 		
 		//if(sh.redraw){
 			steps[0] = Helper.getSteps(sh.getZoom(0), sh.getFactor(0));
@@ -113,7 +113,7 @@ public class FktCanvas extends LinearLayout {
 		//}
 		
 		// Fill background and set paint properties
-		canvas.drawColor(COLOR_BACKGROUND[colorSchema]);
+		canvas.drawColor(COLOR_BACKGROUND[colorScheme]);
 		paint.setTextAlign(Align.CENTER);
 		paint.setTextSize(15);
 		paint.setStyle(Style.FILL_AND_STROKE);
@@ -129,10 +129,10 @@ public class FktCanvas extends LinearLayout {
 		
 		// Draw vertical lines of coordinate system
 		for (double i = leftBorder; i <= rightBorder; i++){
-			paint.setColor(COLOR_LINES[colorSchema]);
+			paint.setColor(COLOR_LINES[colorScheme]);
 			float x = (float) Helper.unitToPx(i*steps[0], 0, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).x;
 			canvas.drawLine(x, 0, x, getHeight(), paint);
-			paint.setColor(COLOR_AXES[colorSchema]);
+			paint.setColor(COLOR_AXES[colorScheme]);
 			canvas.drawLine(x, (float)zero.y, x, (float)zero.y+5, paint);
 			paint.setStrokeWidth(1);
 			if (i!=0 & i%2==0){
@@ -160,10 +160,10 @@ public class FktCanvas extends LinearLayout {
 		// Draw horizontal lines of coordinate system
 		paint.setTextAlign(Align.RIGHT);
 		for (double i = topBorder; i>=bottomBorder; i--){
-			paint.setColor(COLOR_LINES[colorSchema]);
+			paint.setColor(COLOR_LINES[colorScheme]);
 			float y = (float)Helper.unitToPx(0, i*steps[1], sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).y;
 			canvas.drawLine(0, y, getWidth(), y, paint);
-			paint.setColor(COLOR_AXES[colorSchema]);
+			paint.setColor(COLOR_AXES[colorScheme]);
 			canvas.drawLine((float) zero.x, y, (float) zero.x-3, y, paint);
 			paint.setStrokeWidth(1);
 			if (i!=0 & i%2==0){
@@ -182,7 +182,7 @@ public class FktCanvas extends LinearLayout {
 		}
 		
 		// Draw axes
-		paint.setColor(COLOR_AXES[colorSchema]);
+		paint.setColor(COLOR_AXES[colorScheme]);
 		canvas.drawLine((float)zero.x, 0, (float)zero.x, getHeight(), paint);
 		canvas.drawLine(0, (float)zero.y, getWidth(), (float) zero.y, paint);
 		paint.setStyle(Style.STROKE);
@@ -198,7 +198,7 @@ public class FktCanvas extends LinearLayout {
 			ArrayList<Point> intersections = pathCollector.getIntersections();
 			
 			for (int i=0; i<paths.size();i++){
-				paint.setColor(COLORS_GRAPHS[colorSchema][i%COLORS_GRAPHS[colorSchema].length]);
+				paint.setColor(COLORS_GRAPHS[colorScheme][i%COLORS_GRAPHS[colorScheme].length]);
 				
 				paint.setStyle(Style.FILL_AND_STROKE);
 				if (sh.disRoots)
@@ -292,7 +292,7 @@ public class FktCanvas extends LinearLayout {
 			
 			// Trace
 			if (sh.getMode() == StateHolder.MODE_TRACE){
-				float x = (float)Helper.unitToPx(sh.currentX, 0, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).x;
+				float x = (float)Helper.unitToPx(sh.getCurrentX(), 0, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).x;
 				paint.setStrokeWidth(2);
 				paint.setColor(COLOR_TRACELINE);
 				canvas.drawLine(x, 0, x, getHeight(), paint);
@@ -305,16 +305,16 @@ public class FktCanvas extends LinearLayout {
 					Function f = sh.getFkts().get(i);
 					if (f != null){
 						f.setParams(sh.getParams());
-						double yU = f.calculate(sh.currentX);
-						float slope	= (float) f.slope(sh.currentX);
+						double yU = f.calculate(sh.getCurrentX());
+						float slope	= (float) f.slope(sh.getCurrentX());
 						float y = (float)Helper.unitToPx(0, yU, sh.getZoom(), sh.getMiddle(), getWidth(), getHeight()).y;
 						
 						texts.add("f" + (i + 1) + "(x) = " + df2.format(yU / sh.getFactor(1)) +
 								Helper.getFactorString(sh.getFactor(1)));
 						textsS.add("f'" + (i + 1) + "(x) = " + df2.format(slope));
-						colors.add(COLORS_GRAPHS[colorSchema][i % COLORS_GRAPHS[colorSchema].length]);
+						colors.add(COLORS_GRAPHS[colorScheme][i % COLORS_GRAPHS[colorScheme].length]);
 						
-						paint.setColor(COLORS_GRAPHS[colorSchema][i % COLORS_GRAPHS[colorSchema].length]);
+						paint.setColor(COLORS_GRAPHS[colorScheme][i % COLORS_GRAPHS[colorScheme].length]);
 						paint.setStyle(Style.FILL_AND_STROKE);
 						if (!Double.isNaN(yU)){
 							canvas.drawCircle(x, y, 5, paint);

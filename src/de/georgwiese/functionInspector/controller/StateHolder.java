@@ -62,7 +62,7 @@ public class StateHolder {
 	public boolean disRoots,
 	disExtrema, disInflections,		// public booleans for whether or not those points should be displayed
 	disIntersections, disDiscon;
-	public double currentX;
+	double currentX;
 	
 	// Prefs
 	public static String KEY_ISPRO	 	= "isPro";
@@ -89,7 +89,7 @@ public class StateHolder {
 	String screenshotFolder;
 	public boolean fullscreen;
 	ArrayList<String> savedFkts;
-	int colorSchema;
+	int colorScheme;
 	
 	public StateHolder(Context c, boolean isPro){
 		pc = new PrefsController(c);
@@ -99,7 +99,7 @@ public class StateHolder {
 		initialize(c);
 	}
 	
-	public void initialize(Context c){
+	public synchronized void initialize(Context c){
 		redraw   = true;
 		doDyn    = false;
 		doMove   = false;
@@ -170,10 +170,10 @@ public class StateHolder {
         		savedFkts.add(value);
         	else break;
         }
-        colorSchema = isPro? pc.getPrefsInt(KEY_COLORS, 0) : 0;
+        colorScheme = isPro? pc.getPrefsInt(KEY_COLORS, 0) : 0;
 	}
 	
-	public void reset(){
+	public synchronized void reset(){
 		redraw 	= true;
 		zoom 	= new double[]{1.0, 1.0};
 		middle 	= new double[]{0.0, 0.0};
@@ -182,12 +182,12 @@ public class StateHolder {
 		doMove  = false;
 	}
 	
-	public void setIsPro(boolean value){
+	public synchronized void setIsPro(boolean value){
 		isPro = value;
 		pc.putDataBoolean(KEY_ISPRO, isPro);
 	}
 
-	public void addFkt(String f){
+	public synchronized void addFkt(String f){
 		if (CalcFkts.check(f)){
 			fkts.add(new Function(CalcFkts.formatFktString(f)));
 			redraw=true;
@@ -197,7 +197,7 @@ public class StateHolder {
 		redraw = true;
 	}
 	
-	public void clearFkts(){
+	public synchronized void clearFkts(){
 		fkts.clear();
 	}
 	
@@ -209,15 +209,15 @@ public class StateHolder {
 		this.activePoint = activePoint;
 	}
 	
-	public double getZoom(int dimension){
+	public synchronized double getZoom(int dimension){
 		return zoom[dimension];
 	}
 	
-	public double[] getZoom(){
+	public synchronized double[] getZoom(){
 		return zoom;
 	}
 	
-	public void zoomIn(){
+	public synchronized void zoomIn(){
 		desiredZoom[0] = zoom[0] * ZOOM_IN_FACTOR;
 		desiredZoom[1] = zoom[1] * ZOOM_IN_FACTOR;
 		speed = new double[]{0, 0};
@@ -225,7 +225,7 @@ public class StateHolder {
 		doZoom = true;
 	}
 	
-	public void zoomOut(){
+	public synchronized void zoomOut(){
 		desiredZoom[0] = zoom[0] / ZOOM_IN_FACTOR;
 		desiredZoom[1] = zoom[1] / ZOOM_IN_FACTOR;
 		speed = new double[]{0, 0};
@@ -233,7 +233,7 @@ public class StateHolder {
 		zoomIn = false;
 	}
 	
-	public void moveDyn(double toX, double toY){
+	public synchronized void moveDyn(double toX, double toY){
 		desiredMiddle = new double[]{toX, toY};
 		speed = new double[]{0, 0};
 		double[] moveBy = new double[]{toX - middle[0], toY - middle[1]};
@@ -248,16 +248,16 @@ public class StateHolder {
 		zoom(factor, factor);
 	}
 	
-	public void zoom(double factorX, double factorY){
+	public synchronized void zoom(double factorX, double factorY){
 		zoom[0] = zoom[0] * factorX;
 		zoom[1] = zoom[1] * factorY;
 	}
 	
-	public double getFactor(int dimension){
+	public synchronized double getFactor(int dimension){
 		return factor[dimension];
 	}
 	
-	public double getMiddle(int dimension){
+	public synchronized double getMiddle(int dimension){
 		return middle[dimension];
 	}
 	
@@ -269,7 +269,7 @@ public class StateHolder {
 		return mode;
 	}
 	
-	public void toggleMode(){
+	public synchronized void toggleMode(){
 		mode = mode==MODE_PAN?MODE_TRACE:MODE_PAN;
 	}
 	
@@ -281,29 +281,41 @@ public class StateHolder {
 		return params;
 	}
 	
-	public double[] getMinParams() {
-		return minParams;
+	public synchronized double getParam(int id) {
+		return params[id];
 	}
 	
-	public double[] getMaxParams() {
-		return maxParams;
+	public synchronized double getMinParam(int id) {
+		return minParams[id];
 	}
 	
-	public void setParam(int id, double value){
+	public synchronized double getMaxParam(int id) {
+		return maxParams[id];
+	}
+	
+	public synchronized void setParam(int id, double value){
 		redraw = true;
 		activePoint = null;
 		params[id] = value;
 	}
 	
-	public void setMinParam(int id, double value){
+	public synchronized void setMinParam(int id, double value){
 		minParams[id] = value;
 	}
 	
-	public void setMaxParam(int id, double value){
+	public synchronized void setMaxParam(int id, double value){
 		maxParams[id] = value;
 	}
 	
-	public void move(double dx, double dy){
+	public synchronized void setCurrentX(double currentX) {
+		this.currentX = currentX;
+	}
+	
+	public synchronized double getCurrentX() {
+		return currentX;
+	}
+	
+	public synchronized void move(double dx, double dy){
 		middle[0] += dx;
 		middle[1] += dy;
 		long currentTime = AnimationUtils.currentAnimationTimeMillis();
@@ -318,7 +330,7 @@ public class StateHolder {
 		prevTimeSpeed = currentTime;
 	}
 	
-	public double getSpeed(int dimension) {
+	public synchronized double getSpeed(int dimension) {
 		return speed[dimension];
 	}
 	
@@ -329,7 +341,7 @@ public class StateHolder {
 	 * 		Number of frames that have been skipped, assuming
 	 * 		60 frames / s
 	 */
-	public void updatePos(long timeElapsed){
+	public synchronized void updatePos(long timeElapsed){
 		//Log.d("Developer", "Exponent: " + (double)timeElapsed / (1000 / 60));
 		if (doMove){
 			middle[0] += moveUpdate[0] * (double) timeElapsed / (1000 / 60);
@@ -353,7 +365,7 @@ public class StateHolder {
 		}
 	}
 	
-	public void updateZoom(long timeElapsed){
+	public synchronized void updateZoom(long timeElapsed){
 		double factor = Math.pow(ZOOM_IN_UPDATE, (double)timeElapsed / (1000 / 60));
 		if (zoomIn)
 			zoom(factor);
@@ -374,29 +386,29 @@ public class StateHolder {
 		this.screenshotFolder = screenshotFolder;
 	}
 	
-	public String[] getSavedFktsArray(){
+	public synchronized String[] getSavedFktsArray(){
 		String[] result = new String[savedFkts.size()];
 		for (int i=0;i<savedFkts.size();i++)
 			result[i]=savedFkts.get(i);
 		return result;
 	}
 	
-	public void addSavedFkt(String fkt){
+	public synchronized void addSavedFkt(String fkt){
 		if (savedFkts.size()>=100)
 			savedFkts.remove(0);
 		savedFkts.add(fkt);
 	}
 	
-	public void deleteSavedFkt(int index){
+	public synchronized void deleteSavedFkt(int index){
 		if (index<savedFkts.size())
 			savedFkts.remove(index);
 	}
 	
-	public int getColorSchema() {
-		return colorSchema;
+	public int getColorScheme() {
+		return colorScheme;
 	}
 	
-	public void saveCurrentState(){
+	public synchronized void saveCurrentState(){
 		pc.putDataFloat(KEY_MIDDLE + 0, (float)middle[0]);
 		pc.putDataFloat(KEY_MIDDLE + 1, (float)middle[1]);
 		pc.putDataFloat(KEY_ZOOM + 0, (float)zoom[0]);
