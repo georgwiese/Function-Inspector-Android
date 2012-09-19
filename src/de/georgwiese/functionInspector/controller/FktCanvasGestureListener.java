@@ -99,10 +99,12 @@ public class FktCanvasGestureListener extends SimpleOnGestureListener implements
 	public void onLongPress(MotionEvent e) {
 		super.onLongPress(e);
 		
-		sh.toggleMode();
-		sh.currentX = Helper.pxToUnit(e.getX(), 0, sh.getZoom(), sh.getMiddle(), canvas.getWidth(), canvas.getHeight()).x;
-		uic.updateMode();
-		canvas.invalidate();
+		if (e.getPointerCount() == 1){
+			sh.toggleMode();
+			sh.currentX = Helper.pxToUnit(e.getX(), 0, sh.getZoom(), sh.getMiddle(), canvas.getWidth(), canvas.getHeight()).x;
+			uic.updateMode();
+			canvas.invalidate();
+		}
 	}
 	
 	/*

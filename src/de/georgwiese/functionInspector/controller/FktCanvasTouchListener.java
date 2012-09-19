@@ -6,6 +6,7 @@ import de.georgwiese.calculationFunktions.Point;
 import de.georgwiese.functionInspector.controller.FktCanvasGestureListener.SpanStorage;
 import de.georgwiese.functionInspector.uiClasses.FktCanvas;
 import de.georgwiese.functionInspector.uiClasses.Helper;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -49,6 +50,12 @@ public class FktCanvasTouchListener implements OnTouchListener {
 		
 		if(sh.getMode() == StateHolder.MODE_TRACE)
 			uic.updateTraceTv();
+
+		// TODO: Use code that is commented out and fix jumping issue
+		float xPos = // event.getPointerCount() == 2 ? (event.getX(0) + event.getX(1)) / 2 :
+													event.getX(0);
+		float yPos = // event.getPointerCount() == 2 ? (event.getY(0) + event.getY(1)) / 2 :
+													event.getY(0);
 		
 		/*
 		if (SHOW_TOUCH_POSITION){
@@ -91,11 +98,13 @@ public class FktCanvasTouchListener implements OnTouchListener {
 		*/
 		switch(event.getAction()){
 		case MotionEvent.ACTION_DOWN:
-			lastTouchX = event.getX();
-			lastTouchY = event.getY();
+			lastTouchX = xPos;
+			lastTouchY = yPos;
 			firstTouchX = lastTouchX;
 			firstTouchY = lastTouchY;
 			sh.doDyn = false;
+			
+			//Log.d("Developer", "ACTION_DOWN");
 			/*
 			velStoreX=0.0;
 			velStoreY=0.0;
@@ -138,8 +147,8 @@ public class FktCanvasTouchListener implements OnTouchListener {
 		case MotionEvent.ACTION_MOVE:
 			if ((sh.getMode()==StateHolder.MODE_PAN) || (event.getPointerCount()==2)){
 				//if(AnimationUtils.currentAnimationTimeMillis()-timeLastZoomStop>500){
-					sh.move(Helper.getDeltaUnit(lastTouchX-event.getX(0), sh.getZoom(0)),
-							Helper.getDeltaUnit(event.getY(0)-lastTouchY, sh.getZoom(1)));
+					sh.move(Helper.getDeltaUnit(lastTouchX-xPos, sh.getZoom(0)),
+							Helper.getDeltaUnit(yPos-lastTouchY, sh.getZoom(1)));
 					/*
 					if (distance(mFirstTouchX, mFirstTouchY, event.getX(0), event.getY(0))>30 && AnimationUtils.currentAnimationTimeMillis()-mLastTime>0){
 						velStoreX=(event.getX(0)-mLastTouchX)/(AnimationUtils.currentAnimationTimeMillis()-mLastTime)*50;
@@ -154,8 +163,8 @@ public class FktCanvasTouchListener implements OnTouchListener {
 				pointDisplay.setVisibility(VISIBLE);
 			}
 			*/
-			lastTouchX=event.getX();
-			lastTouchY=event.getY();
+			lastTouchX=xPos;
+			lastTouchY=yPos;
 			//mLastTime=AnimationUtils.currentAnimationTimeMillis();
 			//if (pxToUnitX(0)<minX | pxToUnitX(getWidth())>maxX)
 			//	redraw=true;
