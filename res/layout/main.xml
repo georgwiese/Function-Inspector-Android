@@ -425,14 +425,6 @@
                 android:background="@drawable/bt_reset"
                 android:onClick="onButtonClick" />
 
-            <Button
-                android:id="@+id/beta_feedback"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="4.0 Beta Feedback"
-                android:visibility="gone"
-                android:onClick="onButtonClick" />
-
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -447,7 +439,13 @@
                 ads:loadAdOnCreate="true"
                 android:gravity="center"
                 android:visibility="visible" />
-
+            <Button
+                android:id="@+id/beta_feedback"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Feedback"
+                android:visibility="gone"
+                android:onClick="onButtonClick" />
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"

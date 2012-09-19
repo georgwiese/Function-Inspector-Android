@@ -33,6 +33,11 @@
     <string name="about">Diese Anwendung wurde von
 		Georg Wiese entwickelt.\n
 		Bitten berichten Sie über Fehler und geben Sie Feedback! In den Einstellungen finden Sie Kontaktinformationen.\n\n
+		Update 4.0:\n
+		 - Neues Design\n
+		 - Hilfe\n
+		 - Verbessertes User Interface (Tablet Unterstützung)\n
+		 - Fehlerbehebungen\n\n
 		Update 3.2:\n
 		 - Bestimmtes Integral (integriert)\n
 		 - Tangentengleichung\n
@@ -254,5 +259,106 @@
     <string name="ic_error_fieldsEmpty">FEHLER: Felder sind leer!</string>
     <string name="ic_error_inputInvalid">FEHLER: Eingabe ist fehlerhaft!</string>
     <string name="ic_result">Ergebnis</string>
+
+    <!-- NEW NEW NEW NEW NEW -->
+
+    <string name="trace_advice">Antippen, um zurückzukehren</string>
+    <string name="table_functionValue">Funktionswert</string>
+    <string name="trace_disSlope">Anstieg einblenden</string>
+    <string name="reset">Reset</string>
+    <string name="help_title">Hilfe</string>
+    <string name="help_message">Function Inspector ist ein Werkzeug, das
+        						es Ihnen erlaubt Funktionsgraphen zu
+        						zeichnen und weitere Informationen über
+        						sie zu erhalten.
+        						\n\n
+        						--> Das Koordinatensystem\n
+        						Sie können genau so navigieren, wie Sie es vermutlich auch
+        						erwarten würden: Verschieben Sie es einfach mit dem Finger
+        						und zoomen Sie per Doppelklick oder indem Sie zwei Finger
+        						auseinander ziehen. Wenn Sie den Reset-Button unten links
+        						drücken, wird das Koordinatensystem auf seine Ausgangsposition
+        						zurückgesetzt.
+        						\n\n
+        						--> Menü \"Funktionen\"\n
+        						Drücken Sie das \"f(x)\" Symbol, um das \"Funktionen\"-Menü
+        						zu öffnen. \n
+        						Hier können Sie das Mathe-Keyboard benutzen, um beliebige
+        						Funktionen einzugeben. Wischen Sie zur Seite, um auf mehr
+        						Funktionen zugreifen zu können. Die Graphen werden sofort
+        						gezeichnet. Weiterhin kann der \"Mehr\"-Button neben den
+        						Funktionen dazu genutzt werden, das bestimmte Integral zu
+        						berechnen oder die Funktion zu speichern (setzt PRO-Version
+        						voraus).
+        						\n\n
+        						--> Menü \"Parameter festlegen\"\n
+        						Hier können Sie die Parameter a, b und c beliebig festlegen.
+        						\n\n
+        						--> Menü \"Besondere Punkte\"\n
+        						In diesem Menü können Sie zum Beispiel Nullstellen oder
+        						Extrempunkte der Funktionen einblenden. Um dazu die exakten
+        						Koordinaten zu erhalten, genügt ein Klick auf den Punkt im
+        						Koordinatensystem.
+        						\n\n
+        						--> \"Trace\" Modus\n
+        						Wenn Sie lange of das Koordinatensystem klicken, gelangen Sie in
+        						den Trace Modus. Hier verändert jede Berührung den x-Wert, der
+        						dann für die Berechnung der Funktionswerte herangezogen wird.
+        						Wenn Sie diesen x-Wert genauer bestimmen wollen, klicken Sie auf
+        						die entsprechende Anzeige und geben Sie den gewünschten Wert im
+        						aufkommenden Dialog ein. Falls Sie die PRO-Version benutzen, können
+        						Sie hier auch die Einstige der Graphen einblenden und die Tangentengleichungen
+        						der Graphen an dieser Stelle erhalten. Sie kommen zurück in den normalen
+        						Modus, indem Sie das Koordinatensystem kurz antippen.
+        						\n\n
+        						--> Wertetabelle\n
+        						Wenn Sie eine Liste von Funktions- oder Anstiegswerten benötigen,
+        						können Sie diese generieren, indem Sie den Menüpunkt
+        						\"Wertetabelle\" im Menü aufrufen. Diese Funktionalität sollte
+        						selbsterklärend sein.
+        						\n\n
+        						--> Screenshot und Einstellungen\n
+        						Das \"Screenshot\"-Menü lässt Sie den momentanen Bildschirminhalt
+        						speichern und teilen. Es speichert das Bildschirmfoto auf Ihrer
+        						SD-Karte und in den Ordner, den Sie in den Einstellungen festlegen.
+        						Dort finden Sie noch weitere Einstellungsmöglichkeiten.
+        						\n\n\n
+        						Ich hoffe Sie fanden diese Hilfe nützlich. Falls trotzdem noch
+        						Fragen entstehen, schreiben Sie mir eine Email ;)
+        						
+        						</string>
+    <string name="facebook_dialog_title">Function Inspector auf Facebook und Google+!</string>
+    <string name="facebook_dialog_message"> Wenn Sie Function Inspector mögen sollten Sie sich dessen
+        									Profile auf Facebook und Google Plus unsehen!
+											</string>
+    <string name="facebook_dialog_visitFB">Facebook</string>
+    <string name="facebook_dialog_visitGB">Google+</string>
+    <string name="prefs_socialMedia_title">Soziale Netzwerke</string>
+    <string name="prefs_socialMedia_subtitle">Besuchen Sie die Function Inspector Profile auf Facebook und Google Plus</string>
+    
+    <!-- UNLOCK -->
+    <string name="unlock_title">Entsperren</string>
+    <string name="unlock_message">Willkommen bei Function Inspector PRO Unlock. \n
+        							Der Sinn dieser Version von Function Inspector
+        							ist es, Codes einzulösen, die Sie irgendwo
+        							bekommen haven. Wenn Sie über keinen
+        							Freischaltcode verfügen, sollten Sie sich
+        							entweder die LITE Version herunterladen
+        							oder die PRO Version kaufen. \n
+        							Wenn Sie über einen Code verfügen, klicken
+        							Sie \"Entsperren\" und geben Sie ihn ein.
+        							Sie brauchen sich dazu an keiner Stelle
+        							einloggen. Buchstaben werden bei Eingabe
+        							des Codes automatisch großgeschrieben. \n
+        							Falls Sie Function Inspector bereits auf
+        							diesem Gerät freigeschalten haben, klicken
+        							Sie auf \"Entsperren\", \"Options\"
+        							und \"Sync features\", um ohne
+        							Codeeingabe den freigeschalteten Zustand
+        							wiederherzustellen.
+        							</string>
+    <string name="unlock_lite">LITE Version</string>
+    <string name="unlock_pro">PRO Version kaufen</string>
+    <string name="unlock_unlock">Entsperren</string>
 
 </resources>

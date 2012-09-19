@@ -195,6 +195,8 @@ public class MainScreen extends FragmentActivity {
     protected void onPause() {
     	super.onPause();
     	stateHolder.saveCurrentState();
+    	// So it won't bother to restore them (causes errors)
+    	dialogController.closeAllDialogs();
     }
     
     @Override

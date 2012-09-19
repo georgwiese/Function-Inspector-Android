@@ -149,8 +149,8 @@ public class UIController implements OnSeekBarChangeListener, OnStateChangedList
 				c.getResources().getString(R.string.menu_screenshot_str),
 				c.getResources().getString(R.string.menu_about_str),
 				c.getResources().getString(R.string.help_title),
-				c.getResources().getString(R.string.pro_dialog_title),
-				"Switch to PRO"
+				c.getResources().getString(R.string.pro_dialog_title)
+				//,"Switch to PRO"
 		};
 		String[] optionsPro = {optionsLite[0], optionsLite[1], optionsLite[2], optionsLite[3], optionsLite[4]};
 		menuButton.buildMenu(sh.isPro?optionsPro:optionsLite, this);

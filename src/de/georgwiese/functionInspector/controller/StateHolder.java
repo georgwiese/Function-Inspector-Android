@@ -24,7 +24,7 @@ public class StateHolder {
 	public static final int MODE_TRACE = 1;
 	
 	// Constants dealing with speed
-	static final double FRICTION_FACTOR = 0.96;
+	static final double FRICTION_FACTOR = 0.9;
 	static final double MAX_SPEED       = 0.8;	 // in dp / ms
 	static final double MIN_SPEED		= 0.001; // in px / ms
 	

@@ -26,7 +26,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
@@ -39,6 +41,8 @@ import android.widget.TextView;
 
 public class DialogController {
 
+	public static final int NO_DIALOG     	= -1;
+	
 	public static final int ABOUT_DIALOG     	= 0;
 	public static final int PRO_DIALOG       	= 1;
 	public static final int WELCOME_DIALOG   	= 2;
@@ -54,6 +58,7 @@ public class DialogController {
 	public static final int HELP_DIALOG			= 12;
 	public static final int UNLOCK_DIALOG		= 13;
 	
+	public static final String KEY_DIALOG = "dialog";
 	
 	Context c;
 	FragmentManager fm;
@@ -84,11 +89,16 @@ public class DialogController {
 	}
 	
 	public void showDialog(int id){
+	    // Remove any existing Dialog
+	    DialogFragment prev = (DialogFragment) fm.findFragmentByTag(KEY_DIALOG);
+	    if (prev != null)
+	    	prev.dismiss();
+	    
 		switch (id) {
 		case ABOUT_DIALOG:
 			String title = sh.isPro ? r.getString(R.string.about_title_pro) :
 				r.getString(R.string.about_title_lite);
-			alert(R.string.menu_about_str, title + r.getString(R.string.about), "about");
+			alert(R.string.menu_about_str, title + r.getString(R.string.about), KEY_DIALOG);
 			break;
 			
 		case WELCOME_DIALOG:
@@ -113,11 +123,12 @@ public class DialogController {
 							})
 	        				.create();
 	        	}
-	        }.show(fm, "welcome");
+	        }.show(fm, KEY_DIALOG);
 			break;
 			
 		case PRO_DIALOG:
 	        new DialogFragment(){
+	        	
 	        	@Override
 	        	public Dialog onCreateDialog(Bundle savedInstanceState) {
 	        		return new AlertDialog.Builder(c)
@@ -135,7 +146,7 @@ public class DialogController {
 	        				.setNeutralButton(R.string.pro_dialog_try, new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
-									dialog.dismiss();
+									//dialog.dismiss();
 									showDialog(TRY_DIALOG);
 								}
 							})
@@ -147,7 +158,8 @@ public class DialogController {
 							})
 	        				.create();
 	        	}
-	        }.show(fm, "welcome");
+	        }.show(fm, KEY_DIALOG);
+			
 			break;
 			
 		case TRY_DIALOG:
@@ -172,7 +184,7 @@ public class DialogController {
 							})
 	        				.create();
 	        	}
-	        }.show(fm, "welcome");
+	        }.show(fm, KEY_DIALOG);
 			break;
 			
 		case PIC_DIALOG:
@@ -226,7 +238,7 @@ public class DialogController {
 		    					sh.getScreenshotFolder() + "/");
 					return v;
 				};
-			}.show(fm, "screenshot");
+			}.show(fm, KEY_DIALOG);
 			break;
 			
 		case FACEBOOK_DIALOG:
@@ -262,7 +274,7 @@ public class DialogController {
 							})
 	        				.create();
 	        	}
-	        }.show(fm, "socialMedia");
+	        }.show(fm, KEY_DIALOG);
 			break;
 			
 		case SET_PARAM_DIALOG:
@@ -307,7 +319,7 @@ public class DialogController {
 		    		});
 					return v;
 				};
-			}.show(fm, "param");
+			}.show(fm, KEY_DIALOG);
 			break;
 			
 		case TANGENT_EQ_DIALOG:
@@ -342,7 +354,7 @@ public class DialogController {
 	    			})
 	        				.create();
 	        	}
-	        }.show(fm, "tangent");
+	        }.show(fm, KEY_DIALOG);
 	        break;
 	        
 		case HELP_DIALOG:
@@ -396,7 +408,7 @@ public class DialogController {
 	        		d.setCanceledOnTouchOutside(false);
 	        		return d;
 	        	}
-	        }.show(fm, "unlock");
+	        }.show(fm, KEY_DIALOG);
 			break;
 			
 		default:
@@ -426,5 +438,9 @@ public class DialogController {
         				.create();
         	}
         }.show(fm, tag);
+	}
+	
+	public void closeAllDialogs(){
+		showDialog(NO_DIALOG);
 	}
 }

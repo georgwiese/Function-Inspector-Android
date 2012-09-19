@@ -62,6 +62,11 @@
 		desarrollada por Georg Wiese.\n
 		Traducción al español  por Mario Aguirre Bárcenas.\n
 		Por favor dame tus comentarios y reporta cualquier error!, la información de contacto esta en la configuración.\n\n
+		Update 4.0:\n
+		 - Nuovo design\n
+		 - Guida\n
+		 - Migliore interfaccia utente (supporto Tablet)\n
+		 - bug fixes\n\n
 		Update 3.2:\n
 		 - Integral definida integrada\n
 		 - Ecuación de la tangente\n
@@ -259,5 +264,85 @@
     <string name="ic_error_fieldsEmpty">ERROR: 	Campos vacíos!</string>
     <string name="ic_error_inputInvalid">ERROR: Entrada invalida!</string>
     <string name="ic_result">Resultado</string>
+    
+    
+        <string name="trace_advice">Premi per uscire</string>
+    <string name="table_functionValue">Valore funzione</string>
+    <string name="trace_disSlope">Visualizza inclinazione</string>
+    <string name="reset">Resetta</string>
+        <!--    Update 4.0:\n
+                 - New Design\n
+                 - Help\n
+                 - Improved UI (Tablet support)\n
+                 - Several bug fixes\n\n -->
+    <string name="help_title">Guida</string>
+    <string name="help_message">Function Inspector è un tool che
+                                                        permette di disegnare grafici e ottenere
+                                                        diverse informazioni.
+                                                        \n\n
+                                                        --> Sistema di coordinate\n
+                                                        È possibile muoversi proprio come ci si aspetterebbe,
+                                                        trascinando il sistema di coordinate, facendo pinch-to-zoom e
+                                                        premendo due volte per aumentare lo zoom. Premendo il pulsante
+                                                        Resetta in basso a sinistra il sistema di coordinate
+                                                        verrà centrato e lo zoom portato al valore di default.
+                                                        \n\n
+                                                        --> Menù \"Inserisci funzione\"\n
+                                                        Premi l\'icona \"f(x)\" per aprire il menù \"Inserisci
+                                                        funzione\".\n
+                                                        Qui, è possibile utilizzare la tastiera custom Math per
+                                                        inserire qualsiasi equazione. Fai swipe verso sinistra
+                                                        sulla tastiera per ottenere più funzioni.
+                                                        Qualunque sia la versione inserita, verrà disegnata
+                                                        immediatamente. È anche possibile utilizzare il pulsante \"Altro\"
+                                                        accanto ad ogni funzione per calcolare l\'integrale
+                                                        definito o salvare / aprire l\'equazione (PRO feature).
+                                                        \n\n
+                                                        --> Menù \"Imposta parametro\"\n
+                                                        Qui è possibile impostare i parametri a, b e c.
+                                                        \n\n
+                                                        --> Menù \"Punti speciali\"\n
+                                                        In questo menù, è possibile scegliere se visualizzare le
+                                                        radici o gli estremi. Una volta fatto questo, si può
+                                                        cliccare su di esso per ottenere le coordinate attuali.
+                                                        \n\n
+                                                        --> Modalità \"Trace\"\n
+                                                        Quando si tiene premuto il sistema di coordinate, si entra nella
+                                                        modalità Trace. Ogni tocco imposterà il valore di x attuale
+                                                        che sarà poi utilizzato per calcolare i valori della
+                                                                funzioni in quella specifica posizione. Se si vuole essere più precisi,
+                                                        fare click sul valore attuale della x e inserire qualsiasi valore
+                                                        nella finestra di dialogo. Se stai usando la versione PRO,
+                                                        potrai visualizzare l\'inclinazione attuale e ottenere l\'equazione
+                                                        tangente di ogni grafico in quel punto specifico. Potrai tornare
+                                                        nella modalità normale
+                                                        toccando lo schermo una volta.
+                                                        \n\n
+                                                        --> Tabella\n
+                                                        Se necessiti di un elenco di valori di funzione (o, in
+PRO, inclinazione),
+                                                        è possibile generare una tabella selezionando \"Tabella\" dal menù
+                                                        che si ottiene cliccando l\'icona Altro in basso a desta.
+                                                        \n\n
+                                                        --> Screenshot e impostazioni\n
+                                                        Il menù \"Ottieni screenshot\" salverà e condivide quello
+                                                        che stai vedendo. Sarà salvata nella SD nella cartella
+                                                        specificata nelle impostazioni. Ci sono anche altre
+                                                        impostazioni da scoprire.
+                                                        \n\n\n
+                                                        Spero che questa guida sia stata utile. Se hai domande,
+                                                        non esitare a contattarmi via Email ;)
+
+                                                        </string>
+    <string name="facebook_dialog_title">Function Inspector su
+Facebook and Google+!</string>
+    <string name="facebook_dialog_message">Se ti piace Function Inspector,
+                                                                                        potresti seguire il profilo su Facebook e Google Plus.
+                                                                                        </string>
+    <string name="facebook_dialog_visitFB">Facebook</string>
+    <string name="facebook_dialog_visitGB">Google+</string>
+    <string name="prefs_socialMedia_title">Social media</string>
+    <string name="prefs_socialMedia_subtitle">Visita il profilo di
+Function Inspector su Facebook e Google Plus</string>
 
 </resources>
