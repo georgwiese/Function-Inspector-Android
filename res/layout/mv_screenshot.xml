@@ -1,17 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical">
-    <TextView android:text="TextView" android:gravity="center" android:id="@+id/mv_pic_path" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textColor="#ffffff" android:textSize="14dip"></TextView>
-    <LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent">
-        <EditText android:id="@+id/mv_pic_et" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="1"></EditText>
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="14dip" android:textColor="#ffffff" android:text=".jpg"></TextView>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/mv_pic_path"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="14dip" >
+    </TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <EditText
+            android:id="@+id/mv_pic_et"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+        </EditText>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=".jpg"
+            android:textSize="14dip" >
+        </TextView>
     </LinearLayout>
-    <Button android:id="@+id/mv_pic_save" android:layout_height="wrap_content" android:text="@string/pic_save" android:layout_width="fill_parent"></Button>
-    <LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent">
-        <Button android:id="@+id/mv_pic_open" android:layout_height="wrap_content" android:text="@string/pic_open" android:layout_weight="1" android:layout_width="0pt" android:enabled="false"></Button>
-        <Button android:id="@+id/mv_pic_share" android:layout_height="wrap_content" android:text="@string/pic_share" android:layout_weight="1" android:layout_width="0pt" android:enabled="false"></Button>
+
+    <Button
+        android:id="@+id/mv_pic_save"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/pic_save" >
+    </Button>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/mv_pic_open"
+            android:layout_width="0pt"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:text="@string/pic_open" >
+        </Button>
+
+        <Button
+            android:id="@+id/mv_pic_share"
+            android:layout_width="0pt"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:text="@string/pic_share" >
+        </Button>
     </LinearLayout>
+
 </LinearLayout>

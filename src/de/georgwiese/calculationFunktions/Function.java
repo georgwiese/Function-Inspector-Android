@@ -45,6 +45,11 @@ public class Function {
 		this(function);
 		this.a=a; this.b=b; this.c=c;
 	}
+	public Function clone(){
+		Function f = new Function(getString());
+		f.setParams(new double[]{a, b, c});
+		return f;
+	}
 	public String getString(){
 		return string;
 	}
@@ -61,6 +66,11 @@ public class Function {
 		this.c=c;}
 	public double getC(){
 		return this.c;}
+	public void setParams(double[] params){
+		a = params[0];
+		b = params[1];
+		c = params[2];
+	}
 	
 	public double slope(double x){
 		return (calculate(x)-calculate(x-0.000001))/(0.000001);
@@ -442,6 +452,10 @@ public class Function {
 					result.addAll(f.getDiscontinuities(startX, endX, precision));
 			return result;
 		}
+	}
+	@Override
+	public String toString() {
+		return super.toString() + ": " + string;
 	}
 }
 

@@ -18,6 +18,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import de.georgwiese.calculationFunktions.CalcFkts;
 import de.georgwiese.calculationFunktions.Function;
+import de.georgwiese.functionInspector.controller.StateHolder;
 
 public class TableActivity extends Activity {
 	Function function1, function2, function3;
@@ -32,14 +34,14 @@ public class TableActivity extends Activity {
 	//String[] functions;
 	ArrayList<String> fktStrs;
 	Double a,b,c;
-	Boolean bSlope;
 	CheckBox[] cbs;
 	//CheckBox cbShowPoints;
 	int checkCount;
+	RadioButton rbFunctionValue, rbSlope;
+	boolean isPro;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.table_activity);
 		mContext=this;
@@ -94,8 +96,12 @@ public class TableActivity extends Activity {
 		final EditText etInterval = (EditText) findViewById(R.id.table_activity_edInterval);
 		final TableLayout table = (TableLayout) findViewById(R.id.table_activity_table);
 		//cbShowPoints = (CheckBox)findViewById(R.id.cbShowPoints);
+
+		isPro = extras.getBoolean(StateHolder.KEY_ISPRO);
+		rbFunctionValue = (RadioButton) findViewById(R.id.table_activity_rbFunctionValue);
+		rbSlope 		= (RadioButton) findViewById(R.id.table_activity_rbSlope);
+		rbSlope.setEnabled(isPro);
 		
-		bSlope = extras.getBoolean("bool_slope");
 		//if (bSlope)
 			//cbShowPoints.setVisibility(View.GONE);
 		
@@ -109,6 +115,8 @@ public class TableActivity extends Activity {
 						function1=null;
 						function2=null;
 						function3=null;
+						
+						boolean bSlope = rbSlope.isChecked();
 						
 						for (int i = 0; i<cbs.length; i++){
 							Function f;

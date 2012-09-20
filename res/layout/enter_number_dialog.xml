@@ -7,12 +7,12 @@
   android:layout_height="wrap_content">
   <EditText
     android:id="@+id/param_et"
-    android:layout_width="wrap_content"
+    android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_weight="1" />
   <Button
     android:id="@+id/param_bt"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="OK" />
+    android:text="@string/ok" />
 </LinearLayout>

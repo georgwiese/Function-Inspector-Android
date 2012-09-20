@@ -18,26 +18,27 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import de.georgwiese.functionInspector.FrameView;
-import de.georgwiese.functionInspector.SwitchButtonSet;
+import de.georgwiese.functionInspector.uiClasses.SwitchButtonSet;
+import de.georgwiese.functionInspector.controller.PrefsController;
+import de.georgwiese.functionInspector.controller.StateHolder;
 
 public class Prefs extends PreferenceActivity {
-	int version;
+	boolean isPro;
 	Context mContext;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mContext=this;
-		version = getIntent().getExtras().getInt("version");
+		isPro = getIntent().getExtras().getBoolean(StateHolder.KEY_ISPRO);
 		addPreferencesFromResource(R.xml.prefs);
-		final SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+		final SharedPreferences prefs = getSharedPreferences(PrefsController.KEY_PREFS, MODE_PRIVATE);
 		Preference startFullscreen = findPreference("prefs_startFullscreen");
 		startFullscreen.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				SharedPreferences.Editor editor = prefs.edit();
-				editor.putBoolean("prefs_startFullscreen", (Boolean) newValue);
+				editor.putBoolean(StateHolder.KEY_FULLSCREEN, (Boolean) newValue);
 				editor.commit();
 				return true;
 			}
@@ -48,7 +49,7 @@ public class Prefs extends PreferenceActivity {
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				SharedPreferences.Editor editor = prefs.edit();
-				editor.putString("prefs_color", (String) newValue);
+				editor.putInt(StateHolder.KEY_COLORS, Integer.parseInt((String) newValue));
 				editor.commit();
 				return true;
 			}
@@ -58,7 +59,7 @@ public class Prefs extends PreferenceActivity {
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				SharedPreferences.Editor editor = prefs.edit();
-				editor.putBoolean("prefs_zoomXY", (Boolean) newValue);
+				editor.putBoolean(StateHolder.KEY_ZOOMXY, !((Boolean) newValue));
 				editor.commit();
 				return true;
 			}
@@ -68,7 +69,7 @@ public class Prefs extends PreferenceActivity {
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				SharedPreferences.Editor editor = prefs.edit();
-				editor.putString("prefs_folder", (String) newValue);
+				editor.putString(StateHolder.KEY_FOLDER, (String) newValue);
 				editor.commit();
 				return true;
 			}
@@ -82,6 +83,7 @@ public class Prefs extends PreferenceActivity {
 				LinearLayout ll = new LinearLayout(mContext);
 				ll.setOrientation(LinearLayout.VERTICAL);
 				ll.setPadding(20, 0, 20, 20);
+				ll.setGravity(Gravity.CENTER);
 				LinearLayout ll2 = new LinearLayout(mContext);
 				ll2.setOrientation(LinearLayout.VERTICAL);
 				TextView x = new TextView(mContext);
@@ -93,23 +95,23 @@ public class Prefs extends PreferenceActivity {
 				SwitchButtonSet sbx = new SwitchButtonSet(mContext, null, 4);
 				sbx.setCaptions(new String[]{"1","PI","e", "DEG"});
 				sbx.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-				sbx.setState(prefs.getInt("prefs_factor_x", 0));
+				sbx.setState(prefs.getInt(StateHolder.KEY_FACTOR + 0, 0));
 				sbx.setOnStateChangedListener(new SwitchButtonSet.OnStateChangedListener() {
 					@Override
 					public void onStateChanged(int newState) {
 						SharedPreferences.Editor editor = prefs.edit();
-						editor.putInt("prefs_factor_x", newState);
+						editor.putInt(StateHolder.KEY_FACTOR + 0, newState);
 						editor.commit();
 					}
 				});
 				SwitchButtonSet sby = new SwitchButtonSet(mContext, null, 4);
-				sby.setState(prefs.getInt("prefs_factor_y", 0));
+				sby.setState(prefs.getInt(StateHolder.KEY_FACTOR + 1, 0));
 				sby.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 				sby.setOnStateChangedListener(new SwitchButtonSet.OnStateChangedListener() {
 					@Override
 					public void onStateChanged(int newState) {
 						SharedPreferences.Editor editor = prefs.edit();
-						editor.putInt("prefs_factor_y", newState);
+						editor.putInt(StateHolder.KEY_FACTOR + 1, newState);
 						editor.commit();
 					}
 				});
@@ -154,7 +156,7 @@ public class Prefs extends PreferenceActivity {
 				Intent i = new Intent(Intent.ACTION_SEND);
 				i.setType("plain/text");
 				i.putExtra(Intent.EXTRA_EMAIL, new String[]{"georgwiese@gmail.com"});
-				i.putExtra(Intent.EXTRA_SUBJECT, getString(version==FrameView.VERSION_LITE?R.string.prefs_email_subjectLite:R.string.prefs_email_subjectPro));
+				i.putExtra(Intent.EXTRA_SUBJECT, getString(isPro?R.string.prefs_email_subjectPro:R.string.prefs_email_subjectLite));
 				startActivity(Intent.createChooser(i, getString(R.string.prefs_email_send)));
 				return false;
 			}
@@ -180,7 +182,7 @@ public class Prefs extends PreferenceActivity {
 			}
 		});
 		Preference pro = findPreference("prefs_pro");
-		if (version == FrameView.VERSION_PRO){
+		if (isPro){
 			pro.setTitle(getString(R.string.prefs_proPro_title));
 			pro.setSummary(getString(R.string.prefs_proPro_summary));
 		}
@@ -190,16 +192,17 @@ public class Prefs extends PreferenceActivity {
 			pro.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 				@Override
 				public boolean onPreferenceClick(Preference preference) {
-					// TODO Auto-generated method stub
-					Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=de.georgwiese.functionInspectorPro"));
+					Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=de.georgwiese.functionInspectorPro"));
 					startActivity(intent);
 					return false;
 				}
 			});
 		}
-		if (version==FrameView.VERSION_LITE){
+		if (!isPro){
 			startFullscreen.setDefaultValue(false);
 			startFullscreen.setEnabled(false);
+			zoomXY.setDefaultValue(false);
+			zoomXY.setEnabled(false);
 			color.setEnabled(false);
 		}
 		
