@@ -80,8 +80,8 @@ public class StateHolder {
 	public static String KEY_DISSLOPE  	= "disSlope";
 	public static String KEY_FULLSCREEN	= "fullscreen";
 	public static String KEY_FACTOR		= "factor";
-	public static String KEY_SFKTS		= "savedF";
-	public static String VAL_SFKTS_END	= "savedF_end";
+	public static String KEY_SFKTS		= "f_";
+	public static String VAL_SFKTS_END	= "null";
 	public static String KEY_FIRSTSTART	= "firstStart";
 	public static String KEY_COLORS		= "colorSchema";
 	
