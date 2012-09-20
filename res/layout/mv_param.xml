@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  android:gravity="center_horizontal">
+    <de.georgwiese.functionInspector.SwitchButtonSet android:id="@+id/mv_param_sbs" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    <View android:layout_width="wrap_content" android:layout_height="10dip"></View>
+    <SeekBar android:layout_height="wrap_content" android:id="@+id/mv_param_sb" android:layout_width="match_parent"></SeekBar>
+    <View android:layout_width="wrap_content" android:layout_height="15dip"></View>
+    <LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:orientation="horizontal">
+        <Button android:text="Button" android:id="@+id/mv_param_btMin" android:layout_weight="1" android:layout_width="0pt" android:layout_height="wrap_content"></Button>
+        <Button android:text="Button" android:id="@+id/mv_param_btParam" android:layout_weight="1" android:layout_width="0pt" android:layout_height="wrap_content"></Button>
+        <Button android:text="Button" android:id="@+id/mv_param_btMax" android:layout_weight="1" android:layout_width="0pt" android:layout_height="wrap_content"></Button>
+    </LinearLayout>
+</LinearLayout>
