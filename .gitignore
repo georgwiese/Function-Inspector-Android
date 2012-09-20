@@ -1,0 +1,11 @@
+bin
+gen
+src/de/georgwiese/functionInspectorLite/FunctionInspectorApplication.java
+src/de/georgwiese/functionInspectorPro/FunctionInspectorApplication.java
+src/de/georgwiese/functionInspectorUnlock/FunctionInspectorApplication.java
+FunctionInspectorPro.apk
+FunctionInspectorLite.apk
+FunctionInspectorUnlock.apk
+Function InspectorPro.apk
+Function InspectorLite.apk
+Function InspectorUnlock.apk
