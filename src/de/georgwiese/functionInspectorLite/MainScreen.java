@@ -194,9 +194,15 @@ public class MainScreen extends FragmentActivity {
     @Override
     protected void onPause() {
     	super.onPause();
-    	stateHolder.saveCurrentState();
+    	if (stateHolder != null)
+    		stateHolder.saveCurrentState();
+    	else
+    		Log.e("Developer", "stateHolder null");
     	// So it won't bother to restore them (causes errors)
-    	dialogController.closeAllDialogs();
+    	if (dialogController != null)
+    		dialogController.closeAllDialogs();
+    	else
+    		Log.e("Developer", "dialogController null");
     }
     
     @Override

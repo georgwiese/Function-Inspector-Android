@@ -50,8 +50,8 @@ possibile utilizzare nelle funzioni:\n\n
     <string name="menu_screenshot_str">Effettua screenshot</string>
     <string name="menu_fullscreen_str">Attiva/disattiva tutto schermo</string>
     <string name="menu_fullscreen_disabled">Ci spiace ma questa è una funzione della versione PRO!</string>
-    <string name="about_title_lite">Function Inspector LITE 4.0\n\n</string>
-    <string name="about_title_pro">Function Inspector PRO 4.0\n\n</string>
+    <string name="about_title_lite">Function Inspector LITE 4.0.1\n\n</string>
+    <string name="about_title_pro">Function Inspector PRO 4.0.1\n\n</string>
     <string name="about">Questa applicazione è stata
 			sviluppata da Georg Wiese e tradotta da Gabriele Ravanetti (Italiano).\n
 			Si prega di fornire feedback e report per qualsiasi bug! Puoi trovare

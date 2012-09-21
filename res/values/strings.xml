@@ -32,8 +32,8 @@
     <string name="menu_screenshot_str">Take screenshot</string>
     <string name="menu_fullscreen_str">Toggle fullscreen</string>
     <string name="menu_fullscreen_disabled">Sorry, but this is a PRO feature!</string>
-    <string name="about_title_lite">Function Inspector LITE 4.0\n\n</string>
-    <string name="about_title_pro">Function Inspector PRO 4.0\n\n</string>
+    <string name="about_title_lite">Function Inspector LITE 4.0.1\n\n</string>
+    <string name="about_title_pro">Function Inspector PRO 4.0.1\n\n</string>
     <string name="about">This application was developed by Georg Wiese.\n
 		Please give some feedback and report any bugs! You can find contact information in the settings.\n\n
 		Update 4.0:\n

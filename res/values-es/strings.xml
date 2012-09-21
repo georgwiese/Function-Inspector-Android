@@ -56,8 +56,8 @@
     <string name="menu_upgrade_str">Actualizar a PRO</string>
     <string name="menu_fullscreen_str">Cambiar a pantalla completa</string>
     <string name="menu_fullscreen_disabled">Disculpa, pero está es una característica PRO!</string>
-    <string name="about_title_lite">Function Inspector LITE 4.0\n\n</string>
-    <string name="about_title_pro">Function Inspector PRO 4.0\n\n</string>
+    <string name="about_title_lite">Function Inspector LITE 4.0.1\n\n</string>
+    <string name="about_title_pro">Function Inspector PRO 4.0.1\n\n</string>
     <string name="about">Está aplicación es
 		desarrollada por Georg Wiese.\n
 		Traducción al español  por Mario Aguirre Bárcenas.\n
