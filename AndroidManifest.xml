@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.georgwiese.functionInspectorLite"
-    android:versionCode="26"
-    android:versionName="4.0.1" >
+    android:versionCode="27"
+    android:versionName="4.0.2" >
 
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="16" />
-<!-- -->
+    
+    <!-- For LITE -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> 
+    
+    <!-- For Unlock 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> 
+    -->
+    <!-- For PRO, LITE and Unlock -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
