@@ -188,17 +188,21 @@ public class StateHolder {
 	}
 
 	public synchronized void addFkt(String f){
-		if (CalcFkts.check(f)){
-			fkts.add(new Function(CalcFkts.formatFktString(f)));
-			redraw=true;
+		synchronized(fkts){
+			if (CalcFkts.check(f)){
+				fkts.add(new Function(CalcFkts.formatFktString(f)));
+				redraw=true;
+			}
+			else
+				fkts.add(null);
 		}
-		else
-			fkts.add(null);
 		redraw = true;
 	}
 	
 	public synchronized void clearFkts(){
-		fkts.clear();
+		synchronized (fkts) {
+			fkts.clear();
+		}
 	}
 	
 	public Point getActivePoint() {
