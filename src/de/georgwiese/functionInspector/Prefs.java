@@ -204,8 +204,8 @@ public class Prefs extends PreferenceActivity {
 		if (!isPro){
 			startFullscreen.setDefaultValue(false);
 			startFullscreen.setEnabled(false);
-			zoomXY.setDefaultValue(false);
-			zoomXY.setEnabled(false);
+			//zoomXY.setDefaultValue(false);
+			//zoomXY.setEnabled(false);
 			color.setEnabled(false);
 		}
 		

@@ -105,7 +105,7 @@ public class StateHolder {
 		doMove   = false;
 		doZoom   = false;
 		preview  = false;
-		zoomXY   = pc.getPrefsBoolean(KEY_ZOOMXY, false) && isPro;
+		zoomXY   = pc.getPrefsBoolean(KEY_ZOOMXY, false);
 		fullscreen = pc.getPrefsBoolean(KEY_FULLSCREEN, false) && isPro;
 		tryUsed  = pc.getDataBoolean(KEY_TRY_USED, false);
 		disSlope = pc.getDataBoolean(KEY_DISSLOPE, false) && isPro;
@@ -130,7 +130,7 @@ public class StateHolder {
 			maxParams[i] = pc.getDataFloat(KEY_MAXP + i, 5);
 		zoom = new double[2];
 		zoom[0] = pc.getDataFloat(KEY_ZOOM + 0, 1);
-		zoom[1] = (isPro && zoomXY)?pc.getDataFloat(KEY_ZOOM + 1, 1):zoom[0];
+		zoom[1] = zoomXY?pc.getDataFloat(KEY_ZOOM + 1, 1):zoom[0];
 		desiredZoom = zoom.clone();
 		middle = new double[2];
 		middle[0] = pc.getDataFloat(KEY_MIDDLE + 0, 0);
