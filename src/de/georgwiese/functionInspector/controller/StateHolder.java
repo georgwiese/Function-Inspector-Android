@@ -171,6 +171,10 @@ public class StateHolder {
         	else break;
         }
         colorScheme = isPro? pc.getPrefsInt(KEY_COLORS, 0) : 0;
+        // Because wrong values have been stored in the past,
+        // check if colorScheme is smaller than 2
+        if (colorScheme>1)
+        	colorScheme = 1;
 	}
 	
 	public synchronized void reset(){
