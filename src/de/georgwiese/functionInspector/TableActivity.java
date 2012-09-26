@@ -1,4 +1,4 @@
-package de.georgwiese.functionInspectorLite;
+package de.georgwiese.functionInspector;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -27,6 +27,9 @@ import android.widget.Toast;
 import de.georgwiese.calculationFunktions.CalcFkts;
 import de.georgwiese.calculationFunktions.Function;
 import de.georgwiese.functionInspector.controller.StateHolder;
+import de.georgwiese.functionInspectorLite.*;
+import de.georgwiese.functionInspectorPro.*;
+import de.georgwiese.functionInspectorUnlock.*;
 
 public class TableActivity extends Activity {
 	Function function1, function2, function3;

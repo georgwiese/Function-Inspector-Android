@@ -50,6 +50,7 @@ import de.georgwiese.functionInspector.uiClasses.SwitchButtonSet.OnStateChangedL
 import de.georgwiese.functionInspectorLite.*;
 import de.georgwiese.functionInspectorPro.*;
 import de.georgwiese.functionInspectorUnlock.*;
+import de.georgwiese.functionInspector.*;
 
 /**
  * Class to control verious UI Elements, for example

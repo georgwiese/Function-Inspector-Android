@@ -1,4 +1,4 @@
-package de.georgwiese.functionInspectorLite;
+package de.georgwiese.functionInspector;
 
 import java.util.Random;
 import com.appbarbecue.AppBarbecueClient;
@@ -18,6 +18,9 @@ import android.view.View;
 import android.view.WindowManager;
 import de.georgwiese.functionInspector.controller.*;
 import de.georgwiese.functionInspector.uiClasses.*;
+import de.georgwiese.functionInspectorLite.*;
+import de.georgwiese.functionInspectorPro.*;
+import de.georgwiese.functionInspectorUnlock.*;
 
 /*
  * To do when switching versions

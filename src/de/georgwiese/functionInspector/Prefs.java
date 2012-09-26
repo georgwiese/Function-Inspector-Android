@@ -1,4 +1,4 @@
-package de.georgwiese.functionInspectorLite;
+package de.georgwiese.functionInspector;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -21,6 +21,9 @@ import android.widget.TextView;
 import de.georgwiese.functionInspector.uiClasses.SwitchButtonSet;
 import de.georgwiese.functionInspector.controller.PrefsController;
 import de.georgwiese.functionInspector.controller.StateHolder;
+import de.georgwiese.functionInspectorLite.*;
+import de.georgwiese.functionInspectorPro.*;
+import de.georgwiese.functionInspectorUnlock.*;
 
 public class Prefs extends PreferenceActivity {
 	boolean isPro;
