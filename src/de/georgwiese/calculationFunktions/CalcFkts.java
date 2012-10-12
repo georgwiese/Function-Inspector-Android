@@ -226,6 +226,12 @@ public class CalcFkts {
 	}
 
 	public static Boolean check (String s){
+		if (s=="")
+			return false;
+		if (s.length() >= 2 && (s.substring(0, 2).equals("**") ||
+				s.substring(0, 2).equals("//")))
+			return false;
+			
 		s=formatFktString(s);
 		//Log.d("Developer", s);
 		int brackets2 = 0;
@@ -276,9 +282,10 @@ public class CalcFkts {
 			}
 			parts[addends-1]=s.substring(il);
 			
-			for (int i=0;i<addends;i++)		//adding all parts
+			for (int i=0;i<addends;i++){
 				if(!check(parts[i]))
 					result=false;
+			}
 			return result;
 		}
 		
