@@ -226,7 +226,8 @@ public class MainScreen extends FragmentActivity {
     public void onConfigurationChanged(Configuration newConfig) {
     	super.onConfigurationChanged(newConfig);
     	Log.d("Developer", "ConfigChange" + (newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE));
-    	uiController.setLandscape(newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE);
+    	if(uiController != null)
+    		uiController.setLandscape(newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE);
     }
     
     public void restart(){
