@@ -226,8 +226,6 @@ public class CalcFkts {
 	}
 
 	public static Boolean check (String s){
-		if (s=="")
-			return false;
 		if (s.length() >= 2 && (s.substring(0, 2).equals("**") ||
 				s.substring(0, 2).equals("//")))
 			return false;
