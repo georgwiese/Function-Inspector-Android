@@ -30,6 +30,7 @@ import de.georgwiese.functionInspector.controller.StateHolder;
 import de.georgwiese.functionInspectorLite.*;
 import de.georgwiese.functionInspectorPro.*;
 import de.georgwiese.functionInspectorUnlock.*;
+import de.georgwiese.functionInspectorSpecial.*;
 
 public class TableActivity extends Activity {
 	Function function1, function2, function3;

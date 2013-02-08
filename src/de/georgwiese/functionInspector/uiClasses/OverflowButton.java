@@ -15,6 +15,7 @@ import de.georgwiese.functionInspector.controller.UIController;
 import de.georgwiese.functionInspectorLite.*;
 import de.georgwiese.functionInspectorPro.*;
 import de.georgwiese.functionInspectorUnlock.*;
+import de.georgwiese.functionInspectorSpecial.*;
 
 public class OverflowButton extends ImageButton implements View_HasStateListenerSupport, OnClickListener {
 

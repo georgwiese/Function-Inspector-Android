@@ -6,15 +6,16 @@ import com.actionbarsherlock.internal.view.menu.MenuBuilder;
 import com.actionbarsherlock.internal.view.menu.MenuPopupHelper;
 
 import de.georgwiese.functionInspector.uiClasses.FktCanvas;
-import de.georgwiese.functionInspectorLite.*;
-import de.georgwiese.functionInspectorPro.*;
-import de.georgwiese.functionInspectorUnlock.*;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import de.georgwiese.functionInspectorLite.*;
+import de.georgwiese.functionInspectorPro.*;
+import de.georgwiese.functionInspectorUnlock.*;
+import de.georgwiese.functionInspectorSpecial.*;
 
 public class InputController {
 	StateHolder sh;

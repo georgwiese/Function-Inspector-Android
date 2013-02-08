@@ -25,6 +25,7 @@ import de.georgwiese.functionInspector.controller.UIController;
 import de.georgwiese.functionInspectorLite.*;
 import de.georgwiese.functionInspectorPro.*;
 import de.georgwiese.functionInspectorUnlock.*;
+import de.georgwiese.functionInspectorSpecial.*;
 
 /**
  * THIS CLASS STILL NEEDS REVIEW

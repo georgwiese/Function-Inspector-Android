@@ -21,6 +21,7 @@ import de.georgwiese.functionInspector.uiClasses.*;
 import de.georgwiese.functionInspectorLite.*;
 import de.georgwiese.functionInspectorPro.*;
 import de.georgwiese.functionInspectorUnlock.*;
+import de.georgwiese.functionInspectorSpecial.*;
 
 /*
  * To do when switching versions
@@ -31,8 +32,13 @@ import de.georgwiese.functionInspectorUnlock.*;
 public class MainScreen extends FragmentActivity {
 	
 	Context mContext;
-	
+
 	public static final String KEY_UNLOCK_FEATURE = "proUnlock";
+	
+	public static final String PACKAGE_PRO = "de.georgwiese.functionInspectorPro";
+	public static final String PACKAGE_LITE = "de.georgwiese.functionInspectorLite";
+	public static final String PACKAGE_UNLOCK = "de.georgwiese.functionInspectorUnlock";
+	public static final String PACKAGE_SPECIAL = "de.georgwiese.functionInspectorSpecial";
 	
 	// Controllers
 	StateHolder stateHolder;
@@ -63,8 +69,14 @@ public class MainScreen extends FragmentActivity {
 			@Override
 			public void run() {
 		    	setContentView(R.layout.main);
-		    	boolean isPro = getClass().getPackage().getName().equals("de.georgwiese.functionInspectorPro");
-		    	if(getClass().getPackage().getName().equals("de.georgwiese.functionInspectorUnlock"))
+		    	
+		    	String packageName = getApplicationContext().getPackageName();
+		    	boolean isPro = packageName.equals(PACKAGE_PRO) ||
+		    						packageName.equals(PACKAGE_SPECIAL);
+		    	Log.d("Dev", "isPro: "+isPro);
+		    	Log.d("Dev", "packageName: "+packageName);
+		    	Log.d("Dev", "should: "+PACKAGE_SPECIAL);
+		    	if(packageName.equals(PACKAGE_UNLOCK))
 		    		isPro |= AppBarbecueClient.getInstance().isFeatureUnlocked(KEY_UNLOCK_FEATURE);
 		    	stateHolder = new StateHolder(mContext, isPro);
 		    	DisplayMetrics dm = getResources().getDisplayMetrics();
@@ -131,7 +143,7 @@ public class MainScreen extends FragmentActivity {
     	        SharedPreferences sp = getSharedPreferences("data", MODE_PRIVATE);
     	    	Random r = new Random();
     	    	//((AdView) findViewById(R.id.adView)).setVisibility(View.VISIBLE);
-                if (getClass().getPackage().getName().equals("de.georgwiese.functionInspectorUnlock") &&
+                if (getApplicationContext().getPackageName().equals(PACKAGE_PRO) &&
                 		!AppBarbecueClient.getInstance().isFeatureUnlocked(KEY_UNLOCK_FEATURE))
     	    		dialogController.showDialog(DialogController.UNLOCK_DIALOG);
     	    	else if (sp.getBoolean(StateHolder.KEY_FIRSTSTART, true)){

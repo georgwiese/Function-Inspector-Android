@@ -12,6 +12,7 @@ import android.widget.TextView;
 import de.georgwiese.functionInspectorLite.*;
 import de.georgwiese.functionInspectorPro.*;
 import de.georgwiese.functionInspectorUnlock.*;
+import de.georgwiese.functionInspectorSpecial.*;
 
 /**
  * Class that encapsulates an empty menu with title

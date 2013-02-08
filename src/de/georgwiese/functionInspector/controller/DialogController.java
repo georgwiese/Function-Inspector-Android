@@ -11,9 +11,6 @@ import com.appbarbecue.core.Feature;
 
 import de.georgwiese.calculationFunktions.CalcFkts;
 import de.georgwiese.calculationFunktions.Function;
-import de.georgwiese.functionInspectorLite.*;
-import de.georgwiese.functionInspectorPro.*;
-import de.georgwiese.functionInspectorUnlock.*;
 import de.georgwiese.functionInspector.*;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -39,6 +36,10 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import de.georgwiese.functionInspectorLite.*;
+import de.georgwiese.functionInspectorPro.*;
+import de.georgwiese.functionInspectorUnlock.*;
+import de.georgwiese.functionInspectorSpecial.*;
 
 public class DialogController {
 

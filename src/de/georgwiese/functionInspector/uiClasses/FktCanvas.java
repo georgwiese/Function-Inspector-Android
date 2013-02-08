@@ -11,9 +11,6 @@ import de.georgwiese.calculationFunktions.Function;
 import de.georgwiese.calculationFunktions.Point;
 import de.georgwiese.functionInspector.controller.PathCollector;
 import de.georgwiese.functionInspector.controller.StateHolder;
-import de.georgwiese.functionInspectorLite.*;
-import de.georgwiese.functionInspectorPro.*;
-import de.georgwiese.functionInspectorUnlock.*;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -33,6 +30,10 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.LinearLayout;
+import de.georgwiese.functionInspectorLite.*;
+import de.georgwiese.functionInspectorPro.*;
+import de.georgwiese.functionInspectorUnlock.*;
+import de.georgwiese.functionInspectorSpecial.*;
 
 /**
  * This View will be used to display the coordinate System width the graphs.
