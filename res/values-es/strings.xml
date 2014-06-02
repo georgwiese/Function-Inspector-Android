@@ -2,10 +2,6 @@
 <resources>
 
     <string name="cancel">Cancelar</string>
-    <string name="facebook_dialog_title">Function Inspector en Facebook!</string>
-    <string name="facebook_dialog_message">Si le gusta Function Inspector,
-										le sugiero que visite la nueva
-										página en  Facebook ;)</string>
     <string name="facebook_dialog_visit">Visitar</string>
     <string name="prefs_facebook_title">Facebook</string>
     <string name="prefs_facebook_summary">Visita la página de Facebook para estar al tanto!</string>

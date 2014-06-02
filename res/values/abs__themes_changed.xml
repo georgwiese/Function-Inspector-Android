@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<resources>
-    <style name="Theme.Sherlock.Dialog.FunctionInspector" parent="Theme.Sherlock.Dialog">
-        <!-- EDITED by Georg Wiese: windowNoTitle set to false -->
-        <item name="android:windowNoTitle">false</item>
-    </style>
-   
-</resources>

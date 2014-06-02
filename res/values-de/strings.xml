@@ -119,10 +119,6 @@
 											- Screenshots ohne Wasserzeichen\n\n
 											Sie können die PRO-Version auch kurz testen,
 											indem Sie auf den Trial-Button klicken.\n\n</string>
-    <string name="facebook_dialog_title">Function Inspector auf Facebook!</string>
-    <string name="facebook_dialog_message">Wenn Sie Function Inspector mögen,
-										möchte ich Ihnen vorschlagen, die
-										FI Facebook-Seite zu besuchen ;)</string>
     <string name="facebook_dialog_visit">Besuchen</string>
     <string name="buy_dialog_message">Function Inspector PRO wird auf mehreren Plattformen
 									verkauft. Diese können jeweils unterschiedliche
@@ -327,10 +323,6 @@
         						Fragen entstehen, schreiben Sie mir eine Email ;)
         						
         						</string>
-    <string name="facebook_dialog_title">Function Inspector auf Facebook und Google+!</string>
-    <string name="facebook_dialog_message"> Wenn Sie Function Inspector mögen sollten Sie sich dessen
-        									Profile auf Facebook und Google Plus unsehen!
-											</string>
     <string name="facebook_dialog_visitFB">Facebook</string>
     <string name="facebook_dialog_visitGB">Google+</string>
     <string name="prefs_socialMedia_title">Soziale Netzwerke</string>
