@@ -143,7 +143,7 @@ public class MainScreen extends FragmentActivity {
     	        SharedPreferences sp = getSharedPreferences("data", MODE_PRIVATE);
     	    	Random r = new Random();
     	    	//((AdView) findViewById(R.id.adView)).setVisibility(View.VISIBLE);
-                if (getApplicationContext().getPackageName().equals(PACKAGE_PRO) &&
+                if (getApplicationContext().getPackageName().equals(PACKAGE_UNLOCK) &&
                 		!AppBarbecueClient.getInstance().isFeatureUnlocked(KEY_UNLOCK_FEATURE))
     	    		dialogController.showDialog(DialogController.UNLOCK_DIALOG);
     	    	else if (sp.getBoolean(StateHolder.KEY_FIRSTSTART, true)){
